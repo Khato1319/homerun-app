@@ -1,12 +1,83 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <v-app>
+    <div id="app">
+      <!--    <nav>-->
+      <!--      <router-link to="/">Home</router-link> |-->
+      <!--      <router-link to="/about">About</router-link>-->
+      <!--    </nav>-->
+      <TheHeader/>
+      <v-container fluid>
+        <v-layout>
+          <v-row no-gutters>
+            <v-col>
+              <RoomButtons cols="6" :rooms="rooms"/>
+              <div>
+                <v-btn
+                    color="primary"
+                    :elevation="8"
+                    depressed
+                    x-large
+                    class="ma-6"
+                    :style="{opacity: addingRoom ? 100 : 0}"
+                ><input  @click.stop class="primary white--text px-2" type="text"
+                         v-model="inputValue" @keydown.enter="enterRoom"
+                         placeholder="Nueva habitación"
+                         ref="roomadd"/></v-btn>
+              </div>
+
+            </v-col>
+            <v-btn class="ml-auto mt-auto ma-2"
+                   elevation="4"
+                   fab
+                   color="primary"
+                   @click="addRoom"
+            >+
+            </v-btn>
+            <v-col>
+              <router-view cols="6"/>
+            </v-col>
+          </v-row>
+        </v-layout>
+      </v-container>
+    </div>
+  </v-app>
 </template>
+
+<script>
+import TheHeader from "@/components/TheHeader";
+import RoomButtons from "@/components/RoomButtons"
+
+export default {
+  components: {
+    TheHeader,
+    RoomButtons
+  },
+  data() {
+    return {
+      rooms: ['Bedroom', 'Living', 'Uno', 'Bathroom'],
+      inputValue: "",
+      addingRoom: true
+    }
+  },
+  methods: {
+    addRoom() {
+      console.log("1");
+      this.addingRoom = !this.addingRoom;
+      if (this.addingRoom)
+        this.focusInput();
+    },
+    enterRoom() {
+      this.addingRoom = false;
+      this.rooms.push(this.inputValue)
+      this.inputValue = ""
+    },
+    focusInput() {
+      console.log("1");
+      this.$refs.roomadd.focus();
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
