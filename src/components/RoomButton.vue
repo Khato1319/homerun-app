@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-btn
-        :color="isActive ? 'light-grey' : 'primary'"
-        :elevation="isActive ? 0 : 8"
+        :color="selected() === room ? 'light-grey' : 'primary'"
+        :elevation="selected() === room ? 0 : 8"
         depressed
         x-large
         class="ma-6"
         @click="toggle"
-    ><slot></slot></v-btn>
+    >{{room }}</v-btn>
   </div>
 
 </template>
@@ -15,16 +15,23 @@
 <script>
 export default {
   name: "RoomButton",
+  inject: ['setter', 'selected'],
+  props: ['room'],
   data() {
     return {
       isActive: false
     }
   },
+  computed: {
+    selected() {
+      return this.selected();
+    }
+  },
   methods: {
     toggle() {
-      this.isActive = !this.isActive;
+      this.setter(this.room);
     }
-  }
+  },
 }
 </script>
 

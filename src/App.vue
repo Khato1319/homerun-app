@@ -19,10 +19,10 @@
                     x-large
                     class="ma-6"
                     :style="{opacity: addingRoom ? 100 : 0}"
-                ><input  @click.stop class="primary white--text px-2" type="text"
-                         v-model="inputValue" @keydown.enter="enterRoom"
-                         placeholder="Nueva habitación"
-                         ref="roomadd"/></v-btn>
+                ><input @click.stop class="primary white--text px-2" type="text"
+                        v-model="inputValue" @keydown.enter="enterRoom"
+                        placeholder="Nueva habitación"
+                        ref="roomadd"/></v-btn>
               </div>
 
             </v-col>
@@ -52,16 +52,26 @@ export default {
     TheHeader,
     RoomButtons
   },
+  provide() {
+    // use function syntax so that we can access `this`
+    return {
+      selected: () => this.selectedRoom,
+      setter: this.setter,
+    }
+  },
   data() {
     return {
       rooms: ['Bedroom', 'Living', 'Uno', 'Bathroom'],
+      selectedRoom: "",
       inputValue: "",
-      addingRoom: true
+      addingRoom: true,
+      setter: (room) => {
+        this.selectedRoom = room;
+      }
     }
   },
   methods: {
     addRoom() {
-      console.log("1");
       this.addingRoom = !this.addingRoom;
       if (this.addingRoom)
         this.focusInput();
@@ -74,8 +84,8 @@ export default {
     focusInput() {
       console.log("1");
       this.$refs.roomadd.focus();
-    }
-  }
+    },
+  },
 }
 </script>
 
