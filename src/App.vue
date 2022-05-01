@@ -6,7 +6,8 @@
       <!--      <router-link to="/about">About</router-link>-->
       <!--    </nav>-->
       <TheHeader/>
-      <v-container fluid>
+      <v-container fluid cols="12">
+        <v-card-title>Habitaciones</v-card-title>
         <v-layout>
           <v-row no-gutters>
             <v-col>
@@ -26,15 +27,9 @@
               </div>
 
             </v-col>
-            <v-btn class="ml-auto mt-auto ma-2"
-                   elevation="4"
-                   fab
-                   color="primary"
-                   @click="addRoom"
-            >+
-            </v-btn>
+            <AddButton @onClick="addRoom"></AddButton>
             <v-col>
-              <router-view cols="6"/>
+              <router-view :id="$route.fullPath" cols="6"/>
             </v-col>
           </v-row>
         </v-layout>
@@ -44,13 +39,15 @@
 </template>
 
 <script>
+import AddButton from "@/components/AddButton";
 import TheHeader from "@/components/TheHeader";
 import RoomButtons from "@/components/RoomButtons"
 
 export default {
   components: {
     TheHeader,
-    RoomButtons
+    RoomButtons,
+    AddButton
   },
   provide() {
     // use function syntax so that we can access `this`
@@ -64,7 +61,7 @@ export default {
       rooms: ['Bedroom', 'Living', 'Uno', 'Bathroom'],
       selectedRoom: "",
       inputValue: "",
-      addingRoom: true,
+      addingRoom: false,
       setter: (room) => {
         this.selectedRoom = room;
       }

@@ -13,6 +13,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: "RoomButton",
   inject: ['setter', 'selected'],
@@ -30,6 +32,7 @@ export default {
   methods: {
     toggle() {
       this.setter(this.room);
+      this.$router.push({ name: 'rooms', params: { room: this.room.replace(' ','_').toLowerCase() } })
     }
   },
 }

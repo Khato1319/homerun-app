@@ -1,6 +1,6 @@
 <template>
 <div>
-  AddDeviceView
+  Adding device to {{$route.params.room}}
 </div>
 </template>
 
