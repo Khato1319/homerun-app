@@ -14,10 +14,10 @@
     ></v-text-field>
 
     <v-select
-        v-model="room"
-        :items="rooms"
+        v-model="type"
+        :items="possibleDevices"
         :rules="[v => !!v || 'El item es obligatorio']"
-        label="Habitación"
+        label="Tipo de dispositivo"
         required
     ></v-select>
 
@@ -58,7 +58,7 @@
 import CloseButton from "@/components/CloseButton";
 export default {
   name: "AddDeviceView",
-  inject: ['rooms'],
+  inject: ['rooms', 'supportedDevices', 'devices'],
   components: {
     CloseButton
   },
@@ -68,16 +68,26 @@ export default {
       checkbox: false,
       group: "",
       room: this.$route.params.room,
+      type: "",
       deviceName: ""
     }
   },
   methods: {
-    close() {
+    resetValues() {
       this.password =  "";
       this.checkbox = false;
       this.group = "";
       this.room =  "";
       this.deviceName =  "";
+    },
+    close() {
+      this.resetValues();
+      this.$router.go(-1);
+    },
+    validate() {
+      this.type = this.supportedDevices.get(this.type);
+      this.devices.push({name: this.deviceName, room: this.room, type: this.type, group: this.group});
+      this.resetValues();
       this.$router.go(-1);
     }
   },
@@ -85,6 +95,9 @@ export default {
     valid() {
       return this.deviceName !== "" && this.group !== "" &&
           (!this.checkbox || this.password !== "")
+    },
+    possibleDevices() {
+      return Array.from(this.supportedDevices.keys());
     }
   }
 }

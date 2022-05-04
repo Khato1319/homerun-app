@@ -25,7 +25,7 @@
         dark
         large
         :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>clicked = !clicked"
-        :elevation="clicked ? 0 : 8"
+        elevation="8"
     ><v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'">
       mdi-android
     </v-icon></v-btn>
@@ -40,12 +40,12 @@ export default {
       clicked: false
     }
   },
-  props: ['room', 'device'],
-  inject: ['setter'],
+  props: ['room', 'device', 'type'],
+  inject: ['setter', 'supportedDevices'],
   methods: {
     goToDeviceView() {
       this.setter(this.room);
-      this.$router.push({ name: 'device', params: { device: this.device, room:  this.room} })
+      this.$router.push({ name: this.type, params: { deviceName: this.device } })
     }
   }
 }

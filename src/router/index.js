@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RoomView from "@/views/RoomView";
 import AddDeviceView from "@/views/AddDeviceView";
-import DeviceView from "@/views/DeviceView";
+import DeviceView from "@/views/devices/DeviceView";
+import LightView from "@/views/devices/LightView";
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: DeviceView
+  },
+  {
+    path: '/rooms/:room/:deviceName',
+    name: 'light',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: LightView
   }
 ]
 

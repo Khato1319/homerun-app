@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-btn
-        :color="selected() === room ? 'light-grey' : 'primary'"
-        :elevation="selected() === room ? 0 : 8"
+        :color="selected() === room ? 'primary' : 'blue lighten-4'"
+        :elevation="selected() === room ? 4 : 8"
         depressed
         x-large
         class="ma-6"

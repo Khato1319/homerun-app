@@ -1,17 +1,16 @@
 <template>
-  <v-container >
-    <v-row class="d-flex justify-center ">
-      <DeviceCard class="pa-2" v-for="num in [1, 2, 3, 4,5,6]" :key="num" device="Luz 1" room="Bedroom"></DeviceCard>
-    </v-row>
-  </v-container>
+  <div>
+  <v-card-title>Dispositivos recientes</v-card-title>
+<DevicesView ></DevicesView>
+  </div>
 </template>
 
 <script>
-import DeviceCard from "@/components/DeviceCard";
+import DevicesView from "@/components/DevicesView";
 export default {
   name: "RecentsView",
   components: {
-    DeviceCard
+    DevicesView
   }
 }
 </script>
