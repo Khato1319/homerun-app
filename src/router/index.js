@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RoomView from "@/views/RoomView";
 import AddDeviceView from "@/views/AddDeviceView";
+import DeviceView from "@/views/DeviceView";
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/rooms/:room',
+    path: '/rooms/:slug',
     name: 'rooms',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -29,12 +30,20 @@ const routes = [
     component: RoomView
   },
   {
-    path: 'add_device',
+    path: '/rooms/:slug/add_device',
     name: 'addDevice',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: AddDeviceView
+  },
+  {
+    path: '/rooms/:room/:device',
+    name: 'device',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: DeviceView
   }
 ]
 

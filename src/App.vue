@@ -7,11 +7,16 @@
       <!--    </nav>-->
       <TheHeader/>
       <v-container fluid cols="12">
-        <v-card-title>Habitaciones</v-card-title>
+
+
         <v-layout>
           <v-row no-gutters>
             <v-col>
-              <RoomButtons cols="6" :rooms="rooms"/>
+              <v-card-title>Habitaciones<v-spacer></v-spacer>
+                <v-btn>EDITAR</v-btn></v-card-title>
+              <v-slide-x-transition mode="out-in">
+              <RoomButtons :key="rooms.length" cols="6" :rooms="rooms"/>
+                </v-slide-x-transition>
               <div>
                 <v-btn
                     color="primary"
@@ -29,8 +34,25 @@
             </v-col>
             <AddButton @onClick="addRoom"></AddButton>
             <v-col>
-              <router-view :id="$route.fullPath" cols="6"/>
+
+
+                  <v-slide-x-reverse-transition mode="out-in">
+                    <v-card height="100%" class="py-3 px-2" :key="$route.fullPath">
+                    <router-view :key="$route.fullPath" cols="6"/>
+                    </v-card>
+                      </v-slide-x-reverse-transition>
+
             </v-col>
+<!--            <v-col>-->
+<!--              <v-card height="100%" class="py-3 px-2">-->
+<!--              <router-view :id="$route.fullPath" cols="6" v-slot="{ Component }">-->
+<!--                <transition name="fade">-->
+<!--                  <component :is="Component" />-->
+<!--                </transition>-->
+<!--              </router-view>-->
+<!--                </v-card>-->
+<!--            </v-col>-->
+
           </v-row>
         </v-layout>
       </v-container>
@@ -54,6 +76,7 @@ export default {
     return {
       selected: () => this.selectedRoom,
       setter: this.setter,
+      rooms: this.rooms
     }
   },
   data() {

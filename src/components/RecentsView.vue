@@ -1,7 +1,7 @@
 <template>
   <v-container >
-    <v-row>
-      <DeviceCard v-for="num in [1, 2, 3, 4,5,6]" :key="num">{{ num }}</DeviceCard>
+    <v-row class="d-flex justify-center ">
+      <DeviceCard class="pa-2" v-for="num in [1, 2, 3, 4,5,6]" :key="num" device="Luz 1" room="Bedroom"></DeviceCard>
     </v-row>
   </v-container>
 </template>
