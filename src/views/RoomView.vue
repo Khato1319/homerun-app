@@ -1,6 +1,8 @@
 <template>
 <div>
-  Room is {{$route.params.room}}
+  Room is {{
+    this.converter(roomName)
+  }}
   <AddButton @onClick="addDevice"></AddButton>
   <CloseButton @onClick="close"/>
   <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>
@@ -13,12 +15,19 @@
 import AddButton from "@/components/AddButton";
 import CloseButton from "@/components/CloseButton";
 import DevicesView from "@/components/DevicesView";
+import slugConverter from "../../utils/Utils";
 export default {
   name: "RoomView",
   components: {
     AddButton,
     CloseButton,
     DevicesView
+  },
+  data() {
+    return {
+      roomName: this.$route.params.room,
+      converter: slugConverter
+    }
   },
   methods: {
     addDevice() {

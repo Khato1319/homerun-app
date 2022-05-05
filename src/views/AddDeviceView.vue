@@ -1,6 +1,6 @@
 <template>
 <div>
-  Adding device to {{$route.params.theRoom}} <v-spacer></v-spacer> <CloseButton @onClick="close"></CloseButton>
+  Adding device to {{roomName}} <v-spacer></v-spacer> <CloseButton @onClick="close"></CloseButton>
   <v-form
       ref="form"
       v-model="valid"
@@ -29,7 +29,7 @@
         messages="Si se ingresa un grupo nuevo, este será creado"
     ></v-text-field>
 
-    <v-btn x-small v-for="groupp in ['Grupo 1', 'Grupo 2', 'Grupo 3']" :key="groupp"
+    <v-btn x-small v-for="groupp in groupsForRoom" :key="groupp"
     @click="()=> group = groupp" style="margin: 2px">{{groupp}}</v-btn>
 
     <v-checkbox
@@ -56,6 +56,7 @@
 
 <script>
 import CloseButton from "@/components/CloseButton";
+import slugConverter from "../../utils/Utils";
 export default {
   name: "AddDeviceView",
   inject: ['rooms', 'supportedDevices', 'devices'],
@@ -67,9 +68,9 @@ export default {
       password: "",
       checkbox: false,
       group: "",
-      room: this.$route.params.room,
       type: "",
-      deviceName: ""
+      deviceName: "",
+      converter: slugConverter
     }
   },
   methods: {
@@ -77,7 +78,6 @@ export default {
       this.password =  "";
       this.checkbox = false;
       this.group = "";
-      this.room =  "";
       this.deviceName =  "";
     },
     close() {
@@ -98,6 +98,15 @@ export default {
     },
     possibleDevices() {
       return Array.from(this.supportedDevices.keys());
+    },
+    room() {
+      return this.$route.params.room;
+    },
+    roomName() {
+      return this.converter(this.room);
+    },
+    groupsForRoom() {
+      return this.devices.filter(d=>d.room === this.room).map(d => this.converter(d.group));
     }
   }
 }

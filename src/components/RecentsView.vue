@@ -1,7 +1,7 @@
 <template>
   <div>
   <v-card-title>Dispositivos recientes</v-card-title>
-<DevicesView ></DevicesView>
+<DevicesView :devices="recentDevices"></DevicesView>
   </div>
 </template>
 
@@ -11,6 +11,12 @@ export default {
   name: "RecentsView",
   components: {
     DevicesView
+  },
+  inject: ['devices', 'recent'],
+  computed: {
+    recentDevices() {
+      return this.devices.filter(d => this.recent.includes(d.name));
+    }
   }
 }
 </script>

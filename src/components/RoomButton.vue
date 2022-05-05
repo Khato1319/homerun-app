@@ -32,7 +32,7 @@ export default {
   methods: {
     toggle() {
       this.setter(this.room);
-      this.$router.push({ name: 'rooms', params: { room: this.room,  slug: this.room.replace(' ','_').toLowerCase() } })
+      this.$router.push({ name: 'rooms', params: { room: this.room } })
     }
   },
 }

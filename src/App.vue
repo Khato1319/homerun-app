@@ -36,12 +36,10 @@
                           v-model="inputValue" @keydown.enter="enterRoom"
                           placeholder="Nueva habitación"
                           ref="roomadd"/></v-btn>
-                  <AddButton @onClick="addRoom"></AddButton>
-
-
+                  <AddButton key='roomAdd' v-show="selectedRoom === ''" @onClick="addRoom"></AddButton>
                 </v-tab-item>
-                <v-tab-item style="overflow-y: scroll; height: 80vh ">Rutinas
-                  <AddButton @onClick="addRoom"></AddButton>
+                <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">Rutinas
+                  <AddButton key="routineAdd" @onClick="addRoom"></AddButton>
                 </v-tab-item>
               </v-tabs>
 
@@ -83,12 +81,14 @@ export default {
       setter: this.setter,
       rooms: this.rooms,
       devices: this.devices,
-      supportedDevices: this.supportedDevices
+      supportedDevices: this.supportedDevices,
+      recent: this.recent,
+      addToRecent: this.addToRecent
     }
   },
   data() {
     return {
-      rooms: ['Bedroom', 'Living', 'Uno', 'Bathroom'],
+      rooms: ['bedroom', 'living', 'uno', 'bathroom', 'gameroom', 'office', 'kitchen'],
       supportedDevices: new Map([
         ['Lámpara', 'light'],
         ['Aspiradora', 'vacuum'],
@@ -103,22 +103,31 @@ export default {
         this.selectedRoom = room;
       },
       devices: [{
-        name: "Luz 1",
-        room: "Bedroom",
+        name: "luz-1",
+        room: "bedroom",
         type: "light",
-        group: "grupo 1"
+        group: "grupo-1"
       }, {
-        name: "Luz 2",
-        room: "Bedroom",
+        name: "luz-2",
+        room: "bedroom",
         type: "light",
-        group: "grupo 2"
+        group: "grupo-2"
       },
         {
-          name: "Aspiradora",
-          room: "Living",
+          name: "aspiradora",
+          room: "living",
           type: "vacuum",
-          group: "grupo 1"
-        }]
+          group: "grupo-1"
+        }],
+      recent: [],
+      addToRecent: (string) => {
+        console.log('adding ' + string)
+        if (this.recent.includes(string))
+          return;
+        if (this.recent.length === 5)
+          this.recent.pop();
+        this.recent.unshift(string);
+      }
     }
   },
   methods: {
@@ -171,25 +180,29 @@ nav {
   }
 }
 
-body::-webkit-scrollbar {
+::-webkit-scrollbar{
   background-color: #fff;
   width: 16px;
 }
 
 /* background of the scrollbar except button or resizer */
-body::-webkit-scrollbar-track {
+::-webkit-scrollbar-track{
   background-color: #fff;
 }
 
 /* scrollbar itself */
-body::-webkit-scrollbar-thumb {
-  background-color: #babac0;
+::-webkit-scrollbar-thumb{
+  background-color: #CFD8DC;
   border-radius: 16px;
   border: 4px solid #fff;
 }
 
 /* set button(top and bottom of the scrollbar) */
-body::-webkit-scrollbar-button {
+::-webkit-scrollbar-button {
   display: none;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #90A4AE;
 }
 </style>

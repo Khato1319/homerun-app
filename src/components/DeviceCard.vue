@@ -7,15 +7,15 @@
   >
     <div class="d-flex justify-space-between align-content-center">
       <div class="d-flex flex-column">
-        <v-card-title>{{device}}<v-btn class="mx-2"
+        <v-card-title>{{converter(device)}}<v-btn class="mx-2"
                                          fab
                                          dark
                                          small
                                          color="blue-grey lighten-4"
-        @click="goToDeviceView"><v-icon dark>
+        @click="()=> {addToRecents(); goToDeviceView()}"><v-icon dark>
           mdi-cog
         </v-icon></v-btn></v-card-title>
-        <v-card-subtitle>{{room}}</v-card-subtitle>
+        <v-card-subtitle>{{converter(room)}}</v-card-subtitle>
       </div>
 
     </div>
@@ -24,8 +24,9 @@
         fab
         dark
         large
-        :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>clicked = !clicked"
+        :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>{clicked = !clicked; addToRecents()}"
         elevation="8"
+
     ><v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'">
       mdi-android
     </v-icon></v-btn>
@@ -33,19 +34,24 @@
 </template>
 
 <script>
+import slugConverter from "../../utils/Utils";
 export default {
   name: "DeviceCard",
   data() {
     return {
-      clicked: false
+      clicked: false,
+      converter: slugConverter
     }
   },
   props: ['room', 'device', 'type'],
-  inject: ['setter', 'supportedDevices'],
+  inject: ['setter', 'supportedDevices', 'addToRecent'],
   methods: {
     goToDeviceView() {
       this.setter(this.room);
       this.$router.push({ name: this.type, params: { deviceName: this.device } })
+    },
+    addToRecents() {
+      this.addToRecent(this.device)
     }
   }
 }
