@@ -1,6 +1,6 @@
 <template>
 <div>
-  {{converter(deviceName)}} Light
+  {{converter(deviceName)}} A/C
   <CloseButton @onClick="close"></CloseButton>
 </div>
 </template>

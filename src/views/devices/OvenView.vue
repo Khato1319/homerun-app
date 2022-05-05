@@ -1,6 +1,6 @@
 <template>
 <div>
-  {{converter(deviceName)}} Light
+  {{converter(deviceName)}} Oven
   <CloseButton @onClick="close"></CloseButton>
 </div>
 </template>
@@ -9,7 +9,7 @@
 import CloseButton from "@/components/CloseButton";
 import slugConverter from "../../../utils/Utils";
 export default {
-  name: "LightView",
+  name: "OvenView",
   components: {
     CloseButton
   },

@@ -1,6 +1,6 @@
 <template>
 <div>
-  {{converter(deviceName)}} Light
+  {{converter(deviceName)}} Alarm
   <CloseButton @onClick="close"></CloseButton>
 </div>
 </template>
