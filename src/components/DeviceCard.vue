@@ -48,7 +48,7 @@ export default {
   methods: {
     goToDeviceView() {
       this.setter(this.room);
-      this.$router.push({ name: this.type, params: { deviceName: this.device } })
+      this.$router.push({ name: this.type, params: { deviceName: this.device, room: this.room } })
     },
     addToRecents() {
       this.addToRecent(this.device)
