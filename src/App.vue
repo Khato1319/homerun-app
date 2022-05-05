@@ -21,7 +21,8 @@
                   Rutinas
                 </v-tab>
                 <v-tab-item style="overflow-y: scroll; height: 80vh ">
-                  <v-btn>EDITAR</v-btn>
+<!--                  <v-btn>EDITAR</v-btn>-->
+
                   <v-slide-x-transition mode="out-in">
                     <RoomButtons :key="rooms.length" cols="6" :rooms="rooms"/>
                   </v-slide-x-transition>
@@ -37,9 +38,11 @@
                           placeholder="Nueva habitación"
                           ref="roomadd"/></v-btn>
                   <AddButton key='roomAdd' v-show="selectedRoom === ''" @onClick="addRoom"></AddButton>
+                  <EditButton key='roomEdit' v-show="selectedRoom === ''" ></EditButton>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">Rutinas
                   <AddButton key="routineAdd" @onClick="addRoom"></AddButton>
+                  <EditButton key='roomEdit'></EditButton>
                 </v-tab-item>
               </v-tabs>
 
@@ -67,9 +70,11 @@
 import AddButton from "@/components/AddButton";
 import TheHeader from "@/components/TheHeader";
 import RoomButtons from "@/components/RoomButtons"
+import EditButton from "@/components/EditButton";
 
 export default {
   components: {
+    EditButton,
     TheHeader,
     RoomButtons,
     AddButton

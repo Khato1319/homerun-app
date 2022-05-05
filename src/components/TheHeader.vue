@@ -2,10 +2,11 @@
   <v-app-bar
       elevation="4"
       color="primary"
-      class="flex"
   >
-    <v-toolbar-title class="white--text mr-auto">HomeRun</v-toolbar-title>
-    <v-btn>?</v-btn>
+    <v-toolbar-title class="white--text mr-auto" >HomeRun</v-toolbar-title>
+    <v-btn>
+      <v-icon>mdi-help</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 

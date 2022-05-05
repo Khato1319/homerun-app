@@ -4,6 +4,7 @@
     this.converter(roomName)
   }}
   <AddButton @onClick="addDevice"></AddButton>
+  <EditButton @onClick="editDevice"></EditButton>
   <CloseButton @onClick="close"/>
   <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>
 <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
@@ -15,12 +16,14 @@
 import AddButton from "@/components/AddButton";
 import CloseButton from "@/components/CloseButton";
 import DevicesView from "@/components/DevicesView";
+import EditButton from "@/components/EditButton";
 import slugConverter from "../../utils/Utils";
 export default {
   name: "RoomView",
   components: {
     AddButton,
     CloseButton,
+    EditButton,
     DevicesView
   },
   data() {
@@ -36,6 +39,9 @@ export default {
     close() {
       this.setter("");
       this.$router.push({ path: '/'})
+    },
+    editDevice(){
+
     }
   },
   inject: ['selected', 'setter', 'devices'],
