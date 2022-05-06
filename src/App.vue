@@ -123,6 +123,7 @@ export default {
       this.addingRoom = !this.addingRoom;
       if (this.addingRoom)
         this.focusInput();
+
     },
     restorePage() {
       this.$router.push("/");
@@ -130,7 +131,7 @@ export default {
     },
     enterRoomValue() {
       this.addingRoom = false;
-      this.addRoom(this.inputValue);
+      this.rooms.push(this.inputValue);
       this.inputValue = ""
     },
     focusInput() {
