@@ -57,9 +57,10 @@
 <script>
 import CloseButton from "@/components/CloseButton";
 import slugConverter from "../../utils/Utils";
+import {mapState} from "vuex";
 export default {
   name: "AddDeviceView",
-  inject: ['rooms', 'supportedDevices', 'devices'],
+  inject: ['supportedDevices'],
   components: {
     CloseButton
   },
@@ -92,6 +93,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['devices', 'rooms']),
     valid() {
       return this.deviceName !== "" && this.group !== "" &&
           (!this.checkbox || this.password !== "")

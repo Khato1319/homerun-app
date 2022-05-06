@@ -7,17 +7,20 @@
 
 <script>
 import DevicesView from "@/components/DevicesView";
+import {mapState} from "vuex";
 export default {
   name: "RecentsView",
   components: {
     DevicesView
   },
-  inject: ['devices', 'recent'],
+  inject: ['recent'],
   computed: {
+    ...mapState(['devices']),
     recentDevices() {
       return this.devices.filter(d => this.recent.includes(d.name));
     }
-  }
+  },
+
 }
 </script>
 

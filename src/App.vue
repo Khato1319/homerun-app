@@ -34,7 +34,7 @@
                       class="ma-6"
                       :style="{opacity: addingRoom ? 100 : 0}"
                   ><input @click.stop class="primary white--text px-2" type="text"
-                          v-model="inputValue" @keydown.enter="enterRoom"
+                          v-model="inputValue" @keydown.enter="enterRoomValue"
                           placeholder="Nueva habitación"
                           ref="roomadd"/></v-btn>
                   <AddButton key='roomAdd' v-show="selectedRoom === ''" @onClick="addRoom"></AddButton>
@@ -71,6 +71,7 @@ import AddButton from "@/components/AddButton";
 import TheHeader from "@/components/TheHeader";
 import RoomButtons from "@/components/RoomButtons"
 import EditButton from "@/components/EditButton";
+import {mapMutations, mapState} from "vuex";
 
 export default {
   components: {
@@ -80,12 +81,9 @@ export default {
     AddButton
   },
   provide() {
-    // use function syntax so that we can access `this`
     return {
       selected: () => this.selectedRoom,
       setter: this.setter,
-      rooms: this.rooms,
-      devices: this.devices,
       supportedDevices: this.supportedDevices,
       recent: this.recent,
       addToRecent: this.addToRecent
@@ -93,7 +91,6 @@ export default {
   },
   data() {
     return {
-      rooms: ['bedroom', 'living', 'uno', 'bathroom', 'gameroom', 'office', 'kitchen'],
       supportedDevices: new Map([
         ['Lámpara', 'light'],
         ['Aspiradora', 'vacuum'],
@@ -107,26 +104,8 @@ export default {
       setter: (room) => {
         this.selectedRoom = room;
       },
-      devices: [{
-        name: "luz-1",
-        room: "bedroom",
-        type: "light",
-        group: "grupo-1"
-      }, {
-        name: "luz-2",
-        room: "bedroom",
-        type: "light",
-        group: "grupo-2"
-      },
-        {
-          name: "aspiradora",
-          room: "living",
-          type: "vacuum",
-          group: "grupo-1"
-        }],
       recent: [],
       addToRecent: (string) => {
-        console.log('adding ' + string)
         if (this.recent.includes(string))
           return;
         if (this.recent.length === 5)
@@ -136,6 +115,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+                   'addRoom',
+        'addDevice'
+                 ]),
     addRoom() {
       this.addingRoom = !this.addingRoom;
       if (this.addingRoom)
@@ -145,16 +128,16 @@ export default {
       this.$router.push("/");
       this.selectedRoom = "";
     },
-    enterRoom() {
+    enterRoomValue() {
       this.addingRoom = false;
-      this.rooms.push(this.inputValue)
+      this.addRoom(this.inputValue);
       this.inputValue = ""
     },
     focusInput() {
-      console.log("1");
       this.$refs.roomadd.focus();
     },
   },
+  computed: mapState(['devices', 'rooms'])
 }
 </script>
 

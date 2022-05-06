@@ -18,6 +18,7 @@ import CloseButton from "@/components/CloseButton";
 import DevicesView from "@/components/DevicesView";
 import EditButton from "@/components/EditButton";
 import slugConverter from "../../utils/Utils";
+import {mapState} from "vuex";
 export default {
   name: "RoomView",
   components: {
@@ -44,7 +45,8 @@ export default {
 
     }
   },
-  inject: ['selected', 'setter', 'devices'],
+  inject: ['selected', 'setter'],
+  computed: mapState(['devices'])
 }
 </script>
 

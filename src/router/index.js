@@ -7,8 +7,25 @@ import LightView from "@/views/devices/LightView";
 import AlarmView from "@/views/devices/AlarmView";
 import OvenView from "@/views/devices/OvenView";
 import VacuumView from "@/views/devices/VacuumView";
+import store from '../store'
 
 Vue.use(VueRouter)
+
+const deviceExistsFunc = (to, from, next) => {
+  // reject the navigation
+  if (!store.getters.deviceExists(to.name, to.params.deviceName))
+    next({name: 'notFound'})
+
+  next();
+}
+
+const roomExistsFunc = (to, from, next) => {
+  // reject the navigation
+  if (!store.state.rooms.includes(to.params.room))
+    next({name: 'notFound'})
+
+  next();
+}
 
 const routes = [
   {
@@ -17,23 +34,16 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
     path: '/rooms/:room',
     name: 'rooms',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: RoomView
+    component: RoomView,
+    beforeEnter: roomExistsFunc
   },
   {
-    path: '/rooms/:room/add_device',
+    path: '/rooms/:room/add-device',
     name: 'addDevice',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -41,36 +51,46 @@ const routes = [
     component: AddDeviceView
   },
   {
-    path: '/rooms/:room/:deviceName',
+    path: '/rooms/:room/light/:deviceName',
     name: 'light',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: LightView
+    component: LightView,
+    beforeEnter: deviceExistsFunc,
   },
   {
-    path: '/rooms/:room/:deviceName',
+    path: '/rooms/:room/vacuum/:deviceName',
     name: 'vacuum',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: VacuumView
+    component: VacuumView,
+    beforeEnter: deviceExistsFunc,
   },
   {
-    path: '/rooms/:room/:deviceName',
+    path: '/rooms/:room/oven/:deviceName',
     name: 'oven',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: OvenView
+    component: OvenView,
+    beforeEnter: deviceExistsFunc,
   },
   {
-    path: '/rooms/:room/:deviceName',
+    path: '/rooms/:room/alarm/:deviceName',
     name: 'alarm',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: AlarmView
+    component: AlarmView,
+    beforeEnter: deviceExistsFunc,
+  },
+  {
+    path: '/404',
+    alias: '*',
+    name: 'notFound',
+    component: () => import(/* webpackChunkName: "about" */ '../views/NotFound.vue')
   }
 ]
 
