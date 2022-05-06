@@ -9,23 +9,22 @@
 import { mapState } from "vuex";
 export default {
 
-    props: ['placeholder'],
+    props: ['placeholder', 'setter'],
     data() {
         return {
-            addingBoolean: false
+            addingBoolean: false,
+          inputValue: ''
         }
     },
-    inject: ['setter'],
     methods: {
     adding() {
         this.addingBoolean = !this.addingBoolean;
         this.$refs.inputElem.focus();
     },
-    // restorePage() {
-    //   this.$router.push("/");
-    //   this.setter('');
-    //   this.addingBoolean = false;
-    // },
+    restorePage() {
+      this.$store.commit(this.setter, '');
+      this.addingBoolean = false;
+    },
     submitValue() {
     console.log('submitted');
       this.addingBoolean = false;

@@ -44,10 +44,10 @@ export default {
     }
   },
   props: ['room', 'device', 'type'],
-  inject: ['setter', 'supportedDevices', 'addToRecent'],
+  inject: ['supportedDevices', 'addToRecent'],
   methods: {
     goToDeviceView() {
-      this.setter(this.room);
+      this.$store.commit('selectRoom', this.room);
       this.$router.push({ name: this.type, params: { deviceName: this.device, room: this.room } })
     },
     addToRecents() {

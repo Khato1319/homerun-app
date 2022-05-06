@@ -8,6 +8,9 @@ export default new Vuex.Store({
 
     state: {
         rooms: ['bedroom', 'living', 'uno', 'bathroom', 'gameroom', 'office', 'kitchen'],
+        routines: ['buen-dia', 'a-dormir'],
+        selectedRoom: "",
+        selectedRoutine: "",
         devices: [{
             name: "luz-1",
             room: "bedroom",
@@ -34,8 +37,9 @@ export default new Vuex.Store({
             console.log(type);
             console.log(name);
             return state.devices.find(d => d.type === type && d.name === name);
-        }
-
+        },
+        selectedRoom: (state) => state.selectedRoom,
+        selectedRoutine: (state) => state.selectedRoutine
     },
 
     mutations: {
@@ -44,6 +48,12 @@ export default new Vuex.Store({
         },
         addDevice (state, device) {
             state.devices.push(device);
+        },
+        selectRoom(state, room) {
+            state.selectedRoom = room;
+        },
+        selectRoutine(state, routine) {
+            state.selectedRoutine = routine;
         }
     },
     actions: {

@@ -1,42 +1,42 @@
 <template>
   <div>
-    Habitación {{
-      this.converter(roomName)
+    La Rutina es {{
+      converter(routine)
     }}
     <AddButton @onClick="addDevice"></AddButton>
     <EditButton @onClick="editDevice"></EditButton>
     <CloseButton @onClick="close"/>
-    <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>
-  <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
-  <!--  :device="device.name" :room="device.room"></DeviceCard>-->
+<!--    <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>-->
+    <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
+    <!--  :device="device.name" :room="device.room"></DeviceCard>-->
   </div>
 </template>
 
 <script>
 import AddButton from "@/components/AddButton";
 import CloseButton from "@/components/CloseButton";
-import DevicesView from "@/components/DevicesView";
 import EditButton from "@/components/EditButton";
 import slugConverter from "../../utils/Utils";
 import {mapGetters, mapState} from "vuex";
 export default {
-  name: "RoomView",
+  name: "RoutineView",
   components: {
     AddButton,
     CloseButton,
-    EditButton,
-    DevicesView
+    EditButton
   },
   data() {
     return {
-      roomName: this.$route.params.room,
-      converter: slugConverter
+      routine: this.$route.params.routine,
     }
   },
   methods: {
-    ...mapGetters(['selectedRoom']),
+    converter(string) {
+      return slugConverter(string)
+    },
+    ...mapGetters(['selectedRoutine']),
     addDevice() {
-      this.$router.push({ name: 'addDevice', params: { theRoom:  this.selectedRoom()} })
+      // this.$router.push({ name: 'addRoutineDevice', params: { theRoom:  this.selectedRoom()} })
     },
     close() {
       this.$store.commit('selectRoom',"");

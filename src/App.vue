@@ -3,7 +3,7 @@
 
 
     <v-app>
-      <TheHeader />
+      <TheHeader/>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
         <v-layout>
           <v-row no-gutters>
@@ -17,16 +17,19 @@
                 </v-tab>
                 <v-tab-item style="overflow-y: scroll; height: 80vh ">
                   <v-slide-x-transition mode="out-in">
-                    <ElementButtons :setter='roomSetter' :selected="selectedRoom" :key="rooms.length" cols="6" :elements="rooms" routerName="room" />
+                    <ElementButtons setter='selectRoom' selected="selectedRoom" :key="rooms.length" cols="6"
+                                    :elements="rooms" routerName="room"/>
                   </v-slide-x-transition>
-                  <AddButton key='roomAdd' v-show="selectedRoom === ''" @onClick="addRoom"/>
-                  <InputComponent ref='roomInput' placeholder='Nueva habitación'/>
-                  <EditButton key='roomEdit' v-show="selectedRoom === ''"/>
+                  <AddButton key='roomAdd' v-show="selectedRoom() === ''" @onClick="addRoom"/>
+                  <InputComponent ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"/>
+                  <EditButton key='roomEdit' v-show="selectedRoom() === ''"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
                   <AddButton key="routineAdd" @onClick="addRoutine"/>
-                  <InputComponent ref='routineInput' placeholder='Nueva rutina'/>
-                  <EditButton key='routineEdit' v-show="selectedRoutine === ''"/>
+                  <InputComponent ref='routineInput' placeholder='Nueva rutina' setter="selectRoutine"/>
+                  <EditButton key='routineEdit' v-show="selectedRoutine() === ''"/>
+                  <ElementButtons setter='selectRoutine' selected="selectedRoutine" :key="routines.length" cols="6"
+                                  :elements="routines" routerName="routine"/>
                 </v-tab-item>
               </v-tabs>
 
@@ -36,7 +39,7 @@
             <v-col>
               <v-slide-x-reverse-transition mode="out-in">
                 <v-card height="100%" class="py-3 px-2" :key="$route.fullPath">
-                  <router-view :key="$route.fullPath" cols="6" />
+                  <router-view :key="$route.fullPath" cols="6"/>
                 </v-card>
               </v-slide-x-reverse-transition>
 
@@ -55,7 +58,7 @@ import AddButton from "@/components/AddButton";
 import TheHeader from "@/components/TheHeader";
 import ElementButtons from "@/components/ElementButtons"
 import EditButton from "@/components/EditButton";
-import { mapState } from "vuex";
+import {mapGetters, mapState} from "vuex";
 import InputComponent from "./components/InputComponent.vue";
 
 export default {
@@ -65,7 +68,7 @@ export default {
     ElementButtons,
     AddButton,
     InputComponent
-},
+  },
   provide() {
     return {
       supportedDevices: this.supportedDevices,
@@ -75,7 +78,6 @@ export default {
   },
   data() {
     return {
-      roomSetter: (room) => this.selectedRoom = room,
       supportedDevices: new Map([
         ['Lámpara', 'light'],
         ['Aspiradora', 'vacuum'],
@@ -83,13 +85,6 @@ export default {
         ['Horno', 'oven'],
         ['Aire Acondicionado', 'a/c']
       ]),
-      selectedRoom: "",
-      selectedRoutine: "",
-      inputValue: "",
-      addingRoom: false,
-      setter: (room) => {
-        this.selectedRoom = room;
-      },
       recent: [],
       addToRecent: (string) => {
         if (this.recent.includes(string))
@@ -101,6 +96,7 @@ export default {
     }
   },
   methods: {
+    ...mapGetters(['selectedRoom', 'selectedRoutine']),
     addRoom() {
       this.$refs.roomInput.adding();
     },
@@ -108,11 +104,13 @@ export default {
       this.$refs.routineInput.adding();
     },
     restorePage() {
-      
+      this.$refs.routineInput.restorePage();
+      this.$refs.roomInput.restorePage();
+      this.$router.push("/");
     }
 
   },
-  computed: mapState(['devices', 'rooms'])
+  computed: mapState(['devices', 'rooms', 'routines'])
 }
 </script>
 

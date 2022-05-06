@@ -1,20 +1,19 @@
 <template>
   <div>
-    <space/>
     <v-btn
-        width="170"
+        width="180"
         height="50"
-        :color="selected === element ? 'primary' : 'blue lighten-4'"
-        :elevation="selected === element ? 4 : 8"
+        :color="selectedValue === element ? 'primary' : 'blue lighten-4'"
+        :elevation="selectedValue === element ? 4 : 8"
         depressed
-        class="ma-6"
+        class="ma-6 px-1 element-button"
         @click="toggle"
-    >{{element}}</v-btn>
+    > <span class="text-truncate" style="max-width:150px">{{converter(element)}}</span></v-btn>
   </div>
 </template>
 
 <script>
-
+import slugConverter from "../../utils/Utils";
 
 export default {
   name: "ElementButton",
@@ -24,15 +23,35 @@ export default {
       isActive: false
     }
   },
+  computed: {
+    selectedValue() {
+      return this.$store.getters[this.selected];
+
+    }
+
+  },
   methods: {
+    converter(string) {
+      return slugConverter(string);
+    },
     toggle() {
-      this.setter(this.element);
-      this.router.push({ name: this.routerName, params: { [this.routerName]: this.element } })
+      if (this.selectedValue !== this.element) {
+        this.$store.commit(this.setter, this.element);
+        this.$router.push({ name: this.routerName, params: { [this.routerName]: this.element } })
+      }
+      else {
+        this.$store.commit(this.setter, '');
+        this.$router.push({ path: '/'});
+
+      }
     }
   },
 }
 </script>
 
 <style scoped>
-
+.element-button {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 </style>

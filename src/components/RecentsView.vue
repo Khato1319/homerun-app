@@ -1,6 +1,6 @@
 <template>
   <div>
-  <v-tab>Dispositivos recientes</v-tab>
+  <v-card-title class="text-uppercase justify-space-between text-caption">Dispositivos recientes</v-card-title>
 <DevicesView :devices="recentDevices"></DevicesView>
   </div>
 </template>
