@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <RoomButton v-for="room in rooms" :key="room" :room="room" ></RoomButton>
+      <RoomButton v-for="element in elements" :key="element" :element="element"/>
     </v-row>
   </v-container>
 </template>
@@ -17,7 +17,7 @@ export default {
   data() {
     return {}
   },
-  props: ['rooms']
+  props: ['elements', 'setter', 'selected']
 }
 </script>
 

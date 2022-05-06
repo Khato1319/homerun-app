@@ -1,15 +1,16 @@
 <template>
   <div>
+    <space/>
     <v-btn
+        width="170"
+        height="50"
         :color="selected() === room ? 'primary' : 'blue lighten-4'"
         :elevation="selected() === room ? 4 : 8"
         depressed
-        x-large
         class="ma-6"
         @click="toggle"
     >{{room }}</v-btn>
   </div>
-
 </template>
 
 <script>
@@ -17,8 +18,7 @@
 
 export default {
   name: "RoomButton",
-  inject: ['setter', 'selected'],
-  props: ['room'],
+  props: ['room', 'setter', 'selected'],
   data() {
     return {
       isActive: false
