@@ -24,7 +24,7 @@ export default new Vuex.Store({
                 room: "living",
                 type: "vacuum",
                 group: "grupo-1"
-            }],
+            }]
     },
     getters: {
         groupsNoSlug: (state) => (room) => {

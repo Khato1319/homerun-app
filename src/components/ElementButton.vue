@@ -4,12 +4,12 @@
     <v-btn
         width="170"
         height="50"
-        :color="selected() === room ? 'primary' : 'blue lighten-4'"
-        :elevation="selected() === room ? 4 : 8"
+        :color="selected === element ? 'primary' : 'blue lighten-4'"
+        :elevation="selected === element ? 4 : 8"
         depressed
         class="ma-6"
         @click="toggle"
-    >{{room }}</v-btn>
+    >{{element}}</v-btn>
   </div>
 </template>
 
@@ -17,22 +17,17 @@
 
 
 export default {
-  name: "RoomButton",
-  props: ['room', 'setter', 'selected'],
+  name: "ElementButton",
+  props: ['element', 'setter', 'selected', 'routerName'],
   data() {
     return {
       isActive: false
     }
   },
-  computed: {
-    selected() {
-      return this.selected();
-    }
-  },
   methods: {
     toggle() {
-      this.setter(this.room);
-      this.$router.push({ name: 'rooms', params: { room: this.room } })
+      this.setter(this.element);
+      this.router.push({ name: this.routerName, params: { [this.routerName]: this.element } })
     }
   },
 }

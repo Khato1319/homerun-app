@@ -1,23 +1,23 @@
 <template>
   <v-container>
     <v-row>
-      <RoomButton v-for="element in elements" :key="element" :element="element"/>
+      <ElementButton v-for="element in elements" :key="element" :element="element" :setter='setter' :selected='selected' :routerName='routerName'/>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import RoomButton from "@/components/RoomButton";
+import ElementButton from "./ElementButton.vue";
 
 export default {
-  name: "RoomButtons",
+  name: "ElementButtons",
   components: {
-    RoomButton
-  },
+    ElementButton
+},
   data() {
     return {}
   },
-  props: ['elements', 'setter', 'selected']
+  props: ['elements', 'setter', 'selected', 'routerName']
 }
 </script>
 

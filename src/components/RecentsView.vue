@@ -1,6 +1,6 @@
 <template>
   <div>
-  <v-card-title>Dispositivos recientes</v-card-title>
+  <v-tab>Dispositivos recientes</v-tab>
 <DevicesView :devices="recentDevices"></DevicesView>
   </div>
 </template>

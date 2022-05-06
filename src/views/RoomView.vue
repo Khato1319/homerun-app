@@ -1,15 +1,15 @@
 <template>
-<div>
-  Room is {{
-    this.converter(roomName)
-  }}
-  <AddButton @onClick="addDevice"></AddButton>
-  <EditButton @onClick="editDevice"></EditButton>
-  <CloseButton @onClick="close"/>
-  <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>
-<!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
-<!--  :device="device.name" :room="device.room"></DeviceCard>-->
-</div>
+  <div>
+    Room is {{
+      this.converter(roomName)
+    }}
+    <AddButton @onClick="addDevice"></AddButton>
+    <EditButton @onClick="editDevice"></EditButton>
+    <CloseButton @onClick="close"/>
+    <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>
+  <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
+  <!--  :device="device.name" :room="device.room"></DeviceCard>-->
+  </div>
 </template>
 
 <script>

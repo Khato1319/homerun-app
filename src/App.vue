@@ -3,17 +3,12 @@
 
 
     <v-app>
-      <TheHeader/>
+      <TheHeader />
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
         <v-layout>
           <v-row no-gutters>
             <v-col>
-              <v-tabs
-                  fixed-tabs
-                  background-color="white"
-                  color="primary"
-                  v-model="tab"
-              >
+              <v-tabs grow background-color="white" color="primary" v-model="tab">
                 <v-tab @click="restorePage">
                   Habitaciones
                 </v-tab>
@@ -21,28 +16,17 @@
                   Rutinas
                 </v-tab>
                 <v-tab-item style="overflow-y: scroll; height: 80vh ">
-<!--                  <v-btn>EDITAR</v-btn>-->
-
                   <v-slide-x-transition mode="out-in">
-                    <RoomButtons :key="rooms.length" cols="6" :rooms="rooms"/>
+                    <ElementButtons :setter='roomSetter' :selected="selectedRoom" :key="rooms.length" cols="6" :elements="rooms" routerName="room" />
                   </v-slide-x-transition>
-                  <v-btn
-                      color="primary"
-                      :elevation="8"
-                      depressed
-                      x-large
-                      class="ma-6"
-                      :style="{opacity: addingRoom ? 100 : 0}"
-                  ><input @click.stop class="primary white--text px-2" type="text"
-                          v-model="inputValue" @keydown.enter="enterRoomValue"
-                          placeholder="Nueva habitación"
-                          ref="roomadd"/></v-btn>
-                  <AddButton key='roomAdd' v-show="selectedRoom === ''" @onClick="addRoom"></AddButton>
-                  <EditButton key='roomEdit' v-show="selectedRoom === ''" ></EditButton>
+                  <AddButton key='roomAdd' v-show="selectedRoom === ''" @onClick="addRoom"/>
+                  <InputComponent ref='roomInput' placeholder='Nueva habitación'/>
+                  <EditButton key='roomEdit' v-show="selectedRoom === ''"/>
                 </v-tab-item>
-                <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">Rutinas
-                  <AddButton key="routineAdd" @onClick="addRoom"></AddButton>
-                  <EditButton key='roomEdit'></EditButton>
+                <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
+                  <AddButton key="routineAdd" @onClick="addRoutine"/>
+                  <InputComponent ref='routineInput' placeholder='Nueva rutina'/>
+                  <EditButton key='routineEdit' v-show="selectedRoutine === ''"/>
                 </v-tab-item>
               </v-tabs>
 
@@ -52,7 +36,7 @@
             <v-col>
               <v-slide-x-reverse-transition mode="out-in">
                 <v-card height="100%" class="py-3 px-2" :key="$route.fullPath">
-                  <router-view :key="$route.fullPath" cols="6"/>
+                  <router-view :key="$route.fullPath" cols="6" />
                 </v-card>
               </v-slide-x-reverse-transition>
 
@@ -69,21 +53,21 @@
 <script>
 import AddButton from "@/components/AddButton";
 import TheHeader from "@/components/TheHeader";
-import RoomButtons from "@/components/RoomButtons"
+import ElementButtons from "@/components/ElementButtons"
 import EditButton from "@/components/EditButton";
-import {mapMutations, mapState} from "vuex";
+import { mapState } from "vuex";
+import InputComponent from "./components/InputComponent.vue";
 
 export default {
   components: {
     EditButton,
     TheHeader,
-    RoomButtons,
-    AddButton
-  },
+    ElementButtons,
+    AddButton,
+    InputComponent
+},
   provide() {
     return {
-      selected: () => this.selectedRoom,
-      setter: this.setter,
       supportedDevices: this.supportedDevices,
       recent: this.recent,
       addToRecent: this.addToRecent
@@ -91,6 +75,7 @@ export default {
   },
   data() {
     return {
+      roomSetter: (room) => this.selectedRoom = room,
       supportedDevices: new Map([
         ['Lámpara', 'light'],
         ['Aspiradora', 'vacuum'],
@@ -99,6 +84,7 @@ export default {
         ['Aire Acondicionado', 'a/c']
       ]),
       selectedRoom: "",
+      selectedRoutine: "",
       inputValue: "",
       addingRoom: false,
       setter: (room) => {
@@ -115,35 +101,22 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-                   'addRoom',
-        'addDevice'
-                 ]),
     addRoom() {
-      this.addingRoom = !this.addingRoom;
-      if (this.addingRoom)
-        this.focusInput();
-
+      this.$refs.roomInput.adding();
+    },
+    addRoutine() {
+      this.$refs.routineInput.adding();
     },
     restorePage() {
-      this.$router.push("/");
-      this.selectedRoom = "";
-    },
-    enterRoomValue() {
-      this.addingRoom = false;
-      this.rooms.push(this.inputValue);
-      this.inputValue = ""
-    },
-    focusInput() {
-      this.$refs.roomadd.focus();
-    },
+      
+    }
+
   },
   computed: mapState(['devices', 'rooms'])
 }
 </script>
 
 <style lang="scss">
-
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -151,9 +124,11 @@ export default {
   color: #2c3e50;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #ECEFF1;
-  opacity: 1; /* Firefox */
+  opacity: 1;
+  /* Firefox */
 }
 
 nav {
@@ -169,18 +144,18 @@ nav {
   }
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   background-color: #fff;
   width: 16px;
 }
 
 /* background of the scrollbar except button or resizer */
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
   background-color: #fff;
 }
 
 /* scrollbar itself */
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   background-color: #CFD8DC;
   border-radius: 16px;
   border: 4px solid #fff;
