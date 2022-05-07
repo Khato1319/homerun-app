@@ -54,6 +54,12 @@ export default new Vuex.Store({
         },
         selectRoutine(state, routine) {
             state.selectedRoutine = routine;
+        },
+        deleteRoom(state, room) {
+            state.rooms = state.rooms.filter(el => el !== room)
+        },
+        deleteRoutine(state, routine) {
+            state.routines = state.routines.filter(el => el !== routine)
         }
     },
     actions: {

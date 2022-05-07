@@ -17,19 +17,19 @@
                 </v-tab>
                 <v-tab-item style="overflow-y: scroll; height: 80vh ">
                   <v-slide-x-transition mode="out-in">
-                    <ElementButtons setter='selectRoom' selected="selectedRoom" :key="rooms.length" cols="6"
-                                    :elements="rooms" routerName="room"/>
+                    <ElementButtons :editPressed='editRoomPressed' :key="rooms.length" cols="6"
+                                    :elements="rooms" :prop="roomButtonsProp"/>
                   </v-slide-x-transition>
                   <AddButton key='roomAdd' v-show="selectedRoom() === ''" @onClick="addRoom"/>
-                  <InputComponent ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"/>
-                  <EditButton key='roomEdit' v-show="selectedRoom() === ''"/>
+                  <InputComponent  ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"/>
+                  <EditButton @onClick="() => this.editRoomPressed = !this.editRoomPressed" key='roomEdit' v-show="selectedRoom() === ''"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
-                  <AddButton key="routineAdd" @onClick="addRoutine"/>
-                  <InputComponent ref='routineInput' placeholder='Nueva rutina' setter="selectRoutine"/>
-                  <EditButton key='routineEdit' v-show="selectedRoutine() === ''"/>
-                  <ElementButtons setter='selectRoutine' selected="selectedRoutine" :key="routines.length" cols="6"
-                                  :elements="routines" routerName="routine"/>
+                  <AddButton key="routineAdd" v-show="selectedRoutine() === ''" @onClick="addRoutine"/>
+                  <InputComponent  ref='routineInput' placeholder='Nueva rutina' setter="selectRoutine"/>
+                  <EditButton key='routineEdit' v-show="selectedRoutine() === ''" @onClick="() => this.editRoutinePressed = !this.editRoutinePressed"/>
+                  <ElementButtons :editPressed='editRoutinePressed' :key="routines.length" cols="6"
+                                  :elements="routines" :prop="routineButtonsProp"/>
                 </v-tab-item>
               </v-tabs>
 
@@ -78,6 +78,22 @@ export default {
   },
   data() {
     return {
+      editRoutinePressed: false,
+      editRoomPressed: false,
+      routineButtonsProp: {
+        setter: 'selectRoutine',
+        selected: "selectedRoutine",
+        routerName:"routine",
+        deleter: "deleteRoutine",
+        name: 'rutina'
+      },
+      roomButtonsProp: {
+        setter: 'selectRoom',
+        selected: "selectedRoom",
+        routerName:"room",
+        deleter: "deleteRoom",
+        name: 'habitación'
+      },
       supportedDevices: new Map([
         ['Lámpara', 'light'],
         ['Aspiradora', 'vacuum'],

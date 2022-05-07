@@ -1,20 +1,34 @@
 <template>
   <v-slide-x-transition>
-    <v-btn class="edit-button"
-           elevation="4"
-           color="primary"
-           outlined
-           absolute
-           rounded
-           @click="$emit('onClick')"
-    ><v-icon>mdi-pencil</v-icon>
+    <v-btn class="edit-button" style="height: 35px"
+                              elevation="4"
+                              :color="color"
+                              :key="editing ? 'editing' : 'not-editing'"
+                              absolute
+                              rounded
+                              @click="clickHandler"
+    ><v-icon v-if="!editing">mdi-pencil</v-icon>
+      <div class="edit-text">{{editing ? 'LISTO' : ''}}</div>
     </v-btn>
+
   </v-slide-x-transition>
 </template>
 
 <script>
 export default {
   name: "EditButton",
+  data() {
+    return {
+      color: 'primary',
+      editing: false
+    }
+  },
+  methods: {
+    clickHandler() {
+      this.editing = !this.editing;
+      this.$emit('onClick')
+    },
+  },
   props: ['onClick']
 }
 </script>
@@ -22,6 +36,10 @@ export default {
 <style scoped>
 .edit-button {
   top: 10px;
-  right: 50px;
+  right: 25px;
+}
+
+.edit-text {
+  font-size: 14px;
 }
 </style>

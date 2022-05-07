@@ -1,7 +1,7 @@
 <template class="">
   <v-container >
-    <v-row class='d-flex justify-center grid-row my-4'>
-      <ElementButton v-for="element in elements" :key="element" :element="element" :setter='setter' :selected='selected' :routerName='routerName'/>
+    <v-row class='d-flex justify-center grid-row my-6'>
+      <ElementButton :editPressed='editPressed' v-for="element in elements" :key="element" :element="element" :prop="prop" />
     </v-row>
   </v-container>
 </template>
@@ -17,7 +17,7 @@ export default {
   data() {
     return {}
   },
-  props: ['elements', 'setter', 'selected', 'routerName']
+  props: ['elements', 'prop', 'editPressed']
 }
 </script>
 
