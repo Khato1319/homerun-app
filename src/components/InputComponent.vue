@@ -1,8 +1,25 @@
 <template>
 
-    <v-btn color="primary" :elevation="8" depressed x-large class="ma-6" ><input
-            @click.stop class="primary white--text px-2" type="text" v-model="input"
-            @keydown.enter="submitValue" :placeholder="placeholder" ref='inputElem' /></v-btn>
+  <v-btn
+      width="200"
+      height="50"
+      color="blue lighten-4"  :elevation="8" depressed x-large class="ma-6" >
+
+    <input
+        style="width: 200px; height: 50px ; font-size: 18px"
+        :style = "{textAlign: input === '' ? 'left': 'center'}"
+        @click.stop class="blue lighten-4 text-uppercase px-2"
+        type="text" v-model="input"
+        @keydown.enter="submitValue"
+        :placeholder="placeholder"
+        ref='inputElem'
+    />
+  </v-btn>
+
+
+
+
+
 </template>
 
 <script>
@@ -12,17 +29,14 @@ export default {
     props: ['placeholder', 'setter', 'inputValue'],
     data() {
         return {
-          addingBoolean: false,
           input: this.inputValue
         }
     },
     methods: {
     restorePage() {
       this.$store.commit(this.setter, '');
-      this.addingBoolean = false;
     },
     submitValue() {
-      this.addingBoolean = false;
       this.$emit('valueSubmitted',this.input);
     },
     },
@@ -32,4 +46,8 @@ export default {
 </script>
 
 <style scoped>
+::placeholder {
+  color: #000000;
+  opacity: 20%
+}
 </style>
