@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-
-
     <v-app>
       <TheHeader/>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
@@ -20,16 +18,19 @@
                     <ElementButtons :editPressed='editRoomPressed' :key="rooms.length" cols="6"
                                     :elements="rooms" :prop="roomButtonsProp"/>
                   </v-slide-x-transition>
-                  <AddButton key='roomAdd' v-show="selectedRoom() === ''" @onClick="addRoom"/>
+                  <AddButton key='roomAdd'  @onClick="addRoom"/>
                   <InputComponent  v-if='addingRoom' ref='roomInput' placeholder='Nueva habitación' setter="selectRoom" @valueSubmitted="addToRooms"/>
-                  <EditButton @onClick="() => this.editRoomPressed = !this.editRoomPressed" key='roomEdit' v-show="selectedRoom() === ''"/>
+                  <EditButton @onClick="editingRoom" key='roomEdit' :editing="editRoomPressed"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
-                  <AddButton key="routineAdd" v-show="selectedRoutine() === ''" @onClick="addRoutine"/>
+                  <AddButton key="routineAdd"  @onClick="addRoutine"/>
                   <InputComponent  v-if='addingRoutine' ref='routineInput' placeholder='Nueva rutina' setter="selectRoutine" @valueSubmitted="addToRoutines"/>
-                  <EditButton key='routineEdit' v-show="selectedRoutine() === ''" @onClick="() => this.editRoutinePressed = !this.editRoutinePressed"/>
-                  <ElementButtons :editPressed='editRoutinePressed' :key="routines.length" cols="6"
+                  <EditButton key='routineEdit'  @onClick="editingRoutine" :editing="editRoutinePressed"/>
+                  <v-slide-x-transition mode="out-in">
+                    <ElementButtons :editPressed='editRoutinePressed' :key="routines.length" cols="6"
                                   :elements="routines" :prop="routineButtonsProp"/>
+                  </v-slide-x-transition>
+
                 </v-tab-item>
               </v-tabs>
 
@@ -128,12 +129,22 @@ export default {
       this.routines.push(value);
     },
     addRoom() {
-      this.addingRoom = true;
+      this.addingRoom = !this.addingRoom;
     },
     addRoutine() {
-      this.addingRoutine = true;
+      this.addingRoutine = !this.addingRoutine;
+    },
+    editingRoom() {
+      this.editRoomPressed = !this.editRoomPressed;
+    },
+    editingRoutine() {
+      this.editRoutinePressed = !this.editRoutinePressed;
     },
     restorePage() {
+      this.addingRoom = false;
+      this.addingRoutine = false;
+      this.editRoomPressed = false;
+      this.editRoutinePressed = false;
       this.$refs.routineInput.restorePage();
       this.$refs.roomInput.restorePage();
       this.$router.push("/");
