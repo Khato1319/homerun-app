@@ -1,6 +1,6 @@
 <template class="">
   <v-container >
-    <v-row class='d-flex justify-center grid-row my-6'>
+    <v-row class='d-flex justify-center grid-row my-6' >
       <ElementButton :editPressed='editPressed' v-for="element in elements" :key="element" :element="element" :prop="prop" />
     </v-row>
   </v-container>
@@ -15,9 +15,16 @@ export default {
     ElementButton
 },
   data() {
-    return {}
+    return {
+      id: 0
+    }
   },
-  props: ['elements', 'prop', 'editPressed']
+  computed: {
+    elements() {
+      return this.$store.getters[this.prop.elements]
+    }
+  },
+  props: ['prop', 'editPressed']
 }
 </script>
 

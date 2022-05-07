@@ -1,27 +1,36 @@
 <template>
-  <div style="position: relative">
+  <div style="position: relative" >
 
-    <v-btn
-        width="180"
-        height="50"
-        :color="selectedValue === element ? 'primary' : 'blue lighten-4'"
-        :elevation="selectedValue === element ? 4 : 8"
-        depressed
-        class="ma-6 px-1 element-button"
-        @click="toggle"
-    ><span class="text-truncate" style="max-width:150px">{{ converter(element) }}</span>
 
-    </v-btn>
+      <v-btn
+          width="180"
+          height="50"
+          :color="selectedValue === element ? 'primary' : 'blue lighten-4'"
+          :elevation="selectedValue === element ? 4 : 8"
+          depressed
+          class="ma-6 px-1 element-button"
+          @click="toggle"
+          v-if="!editPressed || !editing"
+      ><span class="text-truncate" style="max-width:150px">{{ converter(element) }}</span>
+
+      </v-btn>
+
+      <v-slide-x-transition>
+      <InputComponent v-if="editPressed && editing" ref="inputElem" @valueSubmitted="changeName" :inputValue="this.element"></InputComponent>
+      </v-slide-x-transition>
+
+
     <v-fab-transition>
-      <v-btn v-if="editPressed" mode="out-in" fab x-small id="delete-button" @click.stop="deleteElementDialog">
+      <v-btn v-if="editPressed && !editing" mode="out-in" fab x-small id="delete-button" @click.stop="deleteElementDialog">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </v-fab-transition>
     <v-fab-transition>
-      <v-btn v-if="editPressed" fab x-small id="edit-button" @click.stop="editElement">
+      <v-btn v-if="editPressed && !editing" fab x-small id="edit-button" @click.stop="editElement">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
     </v-fab-transition>
+
     <v-dialog
         v-model="dialog"
         width="500"
@@ -62,15 +71,24 @@
 
 <script>
 import slugConverter from "../../utils/Utils";
-
+import InputComponent from "@/components/InputComponent";
 
 export default {
   name: "ElementButton",
+  components: {InputComponent},
+
   props: ['element', 'prop', 'editPressed'],
+  watch: {
+    editPressed(prev) {
+      if (prev === true)
+        this.editing = false;
+    }
+  },
   data() {
     return {
       isActive: false,
-      dialog: false
+      dialog: false,
+      editing: false
     }
   },
   computed: {
@@ -80,6 +98,10 @@ export default {
 
   },
   methods: {
+    changeName(name) {
+      this.editing = false;
+      this.$store.commit(this.prop.editor, { name: this.element, newName: name})
+    },
     deleteElementDialog() {
       document.activeElement.blur();
       this.dialog = true;
@@ -88,7 +110,9 @@ export default {
       this.$store.commit(this.prop.deleter, this.element);
     },
     editElement() {
-      document.activeElement.blur()
+      document.activeElement.blur();
+      this.editing = true;
+      this.$refs.inputElem.adding(this.element);
     },
     converter(string) {
       return slugConverter(string);

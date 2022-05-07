@@ -30,6 +30,12 @@ export default new Vuex.Store({
             }]
     },
     getters: {
+        getRooms: (state) => {
+          return state.rooms
+        },
+        getRoutines: (state) => {
+            return state.routines
+        },
         groupsNoSlug: (state) => (room) => {
             return state.devices.filter(d=>d.room === room).map(d => slugConverter(d.group));
         },
@@ -60,6 +66,14 @@ export default new Vuex.Store({
         },
         deleteRoutine(state, routine) {
             state.routines = state.routines.filter(el => el !== routine)
+        },
+        editRoomName(state, payLoad) {
+            const idx = state.rooms.findIndex(e => e === payLoad.name);
+            Vue.set(state.rooms, idx, payLoad.newName)
+        },
+        editRoutineName(state, payLoad) {
+            const idx = state.routines.findIndex(e => e === payLoad.name);
+            Vue.set(state.routines, idx, payLoad.newName)
         }
     },
     actions: {

@@ -27,6 +27,8 @@ export default {
     clickHandler() {
       this.editing = !this.editing;
       this.$emit('onClick')
+      if (this.editing)
+        this.$emit('editFinished')
     },
   },
   props: ['onClick']

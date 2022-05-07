@@ -8,7 +8,7 @@
         <v-layout>
           <v-row no-gutters>
             <v-col>
-              <v-tabs grow background-color="white" color="primary" v-model="tab">
+              <v-tabs grow background-color="white" color="primary">
                 <v-tab @click="restorePage">
                   Habitaciones
                 </v-tab>
@@ -21,12 +21,12 @@
                                     :elements="rooms" :prop="roomButtonsProp"/>
                   </v-slide-x-transition>
                   <AddButton key='roomAdd' v-show="selectedRoom() === ''" @onClick="addRoom"/>
-                  <InputComponent  ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"/>
+                  <InputComponent  v-if='addingRoom' ref='roomInput' placeholder='Nueva habitación' setter="selectRoom" @valueSubmitted="addToRooms"/>
                   <EditButton @onClick="() => this.editRoomPressed = !this.editRoomPressed" key='roomEdit' v-show="selectedRoom() === ''"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
                   <AddButton key="routineAdd" v-show="selectedRoutine() === ''" @onClick="addRoutine"/>
-                  <InputComponent  ref='routineInput' placeholder='Nueva rutina' setter="selectRoutine"/>
+                  <InputComponent  v-if='addingRoutine' ref='routineInput' placeholder='Nueva rutina' setter="selectRoutine" @valueSubmitted="addToRoutines"/>
                   <EditButton key='routineEdit' v-show="selectedRoutine() === ''" @onClick="() => this.editRoutinePressed = !this.editRoutinePressed"/>
                   <ElementButtons :editPressed='editRoutinePressed' :key="routines.length" cols="6"
                                   :elements="routines" :prop="routineButtonsProp"/>
@@ -78,6 +78,8 @@ export default {
   },
   data() {
     return {
+      addingRoom: false,
+      addingRoutine: false,
       editRoutinePressed: false,
       editRoomPressed: false,
       routineButtonsProp: {
@@ -85,14 +87,18 @@ export default {
         selected: "selectedRoutine",
         routerName:"routine",
         deleter: "deleteRoutine",
-        name: 'rutina'
+        editor: 'editRoutineName',
+        name: 'rutina',
+        elements: 'getRoutines'
       },
       roomButtonsProp: {
         setter: 'selectRoom',
         selected: "selectedRoom",
         routerName:"room",
         deleter: "deleteRoom",
-        name: 'habitación'
+        editor: 'editRoomName',
+        name: 'habitación',
+        elements: 'getRooms'
       },
       supportedDevices: new Map([
         ['Lámpara', 'light'],
@@ -113,11 +119,19 @@ export default {
   },
   methods: {
     ...mapGetters(['selectedRoom', 'selectedRoutine']),
+    addToRooms(value){
+      this.addingRoom = false;
+      this.rooms.push(value);
+    },
+    addToRoutines(value){
+      this.addingRoutine = false;
+      this.routines.push(value);
+    },
     addRoom() {
-      this.$refs.roomInput.adding();
+      this.addingRoom = true;
     },
     addRoutine() {
-      this.$refs.routineInput.adding();
+      this.addingRoutine = true;
     },
     restorePage() {
       this.$refs.routineInput.restorePage();

@@ -1,7 +1,7 @@
 <template>
 
-    <v-btn color="primary" :elevation="8" depressed x-large class="ma-6" :style="{ opacity: addingBoolean ? 100 : 0 }"><input
-            @click.stop class="primary white--text px-2" type="text" v-model="inputValue"
+    <v-btn color="primary" :elevation="8" depressed x-large class="ma-6" ><input
+            @click.stop class="primary white--text px-2" type="text" v-model="input"
             @keydown.enter="submitValue" :placeholder="placeholder" ref='inputElem' /></v-btn>
 </template>
 
@@ -9,27 +9,21 @@
 import { mapState } from "vuex";
 export default {
 
-    props: ['placeholder', 'setter'],
+    props: ['placeholder', 'setter', 'inputValue'],
     data() {
         return {
-            addingBoolean: false,
-          inputValue: ''
+          addingBoolean: false,
+          input: this.inputValue
         }
     },
     methods: {
-    adding() {
-        this.addingBoolean = !this.addingBoolean;
-        this.$refs.inputElem.focus();
-    },
     restorePage() {
       this.$store.commit(this.setter, '');
       this.addingBoolean = false;
     },
     submitValue() {
-    console.log('submitted');
       this.addingBoolean = false;
-      this.rooms.push(this.inputValue);
-      this.inputValue = ""
+      this.$emit('valueSubmitted',this.input);
     },
     },
     computed:  mapState(['devices', 'rooms'])
