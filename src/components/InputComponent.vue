@@ -43,9 +43,6 @@ export default {
       inputSubmit() {
         return this.inputVal
       },
-    restorePage() {
-      this.$store.commit(this.setter, '');
-    },
     submitValue() {
       this.$emit('valueSubmitted',this.inputVal);
     },

@@ -87,6 +87,7 @@ export default {
       let value;
       if (this.editing && val === false && prev === true && this.element !== (value = this.$refs.inputElem.inputSubmit())){
         this.$store.commit(this.prop.editor,{name: this.element, newName: value});
+        this.editing = false
       }
     },
   },

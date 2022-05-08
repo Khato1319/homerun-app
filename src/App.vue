@@ -18,23 +18,29 @@
                 <v-tab-item style="overflow-y: scroll; height: 80vh ">
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons :key="rooms.length" cols="6"
-                                    :elements="rooms" :prop="roomButtonsProp"/>
+                                    :elements="rooms" :prop="roomButtonsProp">
+                      <InputComponent v-show="addingRoom" ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"
+                                      @valueSubmitted="addToRooms"/>
+
+                    </ElementButtons>
                   </v-slide-x-transition>
                   <AddButton key='roomAdd' v-show="!editRoomPressed && selectedRoom === ''" @onClick="addRoom"/>
-                  <InputComponent v-show="addingRoom" ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"
-                                  @valueSubmitted="addToRooms"/>
+
                   <EditButton toggler="toggleEditRoomPressed" key='roomEdit'
-                              v-show="selectedRoom === ''" edit-button-getter="editRoomPressed"/>
+                              v-show="!addingRoom && selectedRoom === ''" edit-button-getter="editRoomPressed"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
                   <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
                              @onClick="addRoutine"/>
-                  <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
-                                  setter="selectRoutine" @valueSubmitted="addToRoutines"/>
-                  <EditButton key='routineEdit' v-show="selectedRoutine === ''"
+
+                  <EditButton key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
                               toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                   <ElementButtons :key="routines.length" cols="6"
-                                  :elements="routines" :prop="routineButtonsProp"/>
+                                  :elements="routines" :prop="routineButtonsProp">
+                    <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
+                                    setter="selectRoutine" @valueSubmitted="addToRoutines"/>
+
+                  </ElementButtons>
                 </v-tab-item>
               </v-tabs>
 
@@ -163,8 +169,8 @@ export default {
     restorePage() {
       this.addingRoom = false;
       this.addingRoutine = false;
-      this.$refs.routineInput.restorePage();
-      this.$refs.roomInput.restorePage();
+      // this.$refs.routineInput.restorePage();
+      // this.$refs.roomInput.restorePage();
       this.$store.commit('setEditRoomPressed', false);
       this.$store.commit('setEditRoutinePressed', false);
       this.$router.push("/");
