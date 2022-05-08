@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import slugConverter from "../../utils/Utils";
+import {textToSlug}  from "../../utils/Utils";
 
 Vue.use(Vuex);
 
@@ -11,6 +11,8 @@ export default new Vuex.Store({
         routines: ['buen-dia', 'a-dormir'],
         selectedRoom: "",
         selectedRoutine: "",
+        editRoomPressed: false,
+        editRoutinePressed: false,
         devices: [{
             name: "luz-1",
             room: "bedroom",
@@ -37,7 +39,7 @@ export default new Vuex.Store({
             return state.routines
         },
         groupsNoSlug: (state) => (room) => {
-            return state.devices.filter(d=>d.room === room).map(d => slugConverter(d.group));
+            return state.devices.filter(d=>d.room === room).map(d => textToSlug(d.group));
         },
         deviceExists: (state) => (type, name) => {
             console.log(type);
@@ -49,11 +51,23 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        toggleEditRoomPressed(state) {
+            state.editRoomPressed = !state.editRoomPressed
+        },
+        setEditRoomPressed(state, value) {
+            state.editRoomPressed = value
+        },
+        toggleEditRoutinePressed(state) {
+            state.editRoutinePressed = !state.editRoutinePressed
+        },
+        setEditRoutinePressed(state, value) {
+            state.editRoutinePressed = value
+        },
         addRoom (state, room) {
-            state.rooms.push(room);
+            state.rooms.push(textToSlug(room));
         },
         addDevice (state, device) {
-            state.devices.push(device);
+            state.devices.push(textToSlug(device));
         },
         selectRoom(state, room) {
             state.selectedRoom = room;
@@ -68,12 +82,12 @@ export default new Vuex.Store({
             state.routines = state.routines.filter(el => el !== routine)
         },
         editRoomName(state, payLoad) {
-            const idx = state.rooms.findIndex(e => e === payLoad.name);
-            Vue.set(state.rooms, idx, payLoad.newName)
+            const idx = state.rooms.findIndex(e => e === textToSlug(payLoad.name));
+            Vue.set(state.rooms, idx, textToSlug(payLoad.newName))
         },
         editRoutineName(state, payLoad) {
-            const idx = state.routines.findIndex(e => e === payLoad.name);
-            Vue.set(state.routines, idx, payLoad.newName)
+            const idx = state.routines.findIndex(e => e === textToSlug(payLoad.name));
+            Vue.set(state.routines, idx, textToSlug(payLoad.newName))
         }
     },
     actions: {

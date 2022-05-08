@@ -34,13 +34,13 @@
 </template>
 
 <script>
-import slugConverter from "../../utils/Utils";
+import {slugToText} from "../../utils/Utils";
 export default {
   name: "DeviceCard",
   data() {
     return {
       clicked: false,
-      converter: slugConverter
+      converter: slugToText
     }
   },
   props: ['room', 'device', 'type'],

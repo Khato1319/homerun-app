@@ -16,7 +16,7 @@
 import AddButton from "@/components/AddButton";
 import CloseButton from "@/components/CloseButton";
 import EditButton from "@/components/EditButton";
-import slugConverter from "../../utils/Utils";
+import {textToSlug} from "../../utils/Utils";
 import {mapGetters, mapState} from "vuex";
 export default {
   name: "RoutineView",
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     converter(string) {
-      return slugConverter(string)
+      return textToSlug(string)
     },
     ...mapGetters(['selectedRoutine']),
     addDevice() {
