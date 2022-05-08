@@ -169,8 +169,8 @@ export default {
     restorePage() {
       this.addingRoom = false;
       this.addingRoutine = false;
-      // this.$refs.routineInput.restorePage();
-      // this.$refs.roomInput.restorePage();
+      this.$store.commit('selectRoutine', '')
+      this.$store.commit('selectRoom', '')
       this.$store.commit('setEditRoomPressed', false);
       this.$store.commit('setEditRoutinePressed', false);
       this.$router.push("/");

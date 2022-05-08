@@ -56,7 +56,7 @@
 
 <script>
 import CloseButton from "@/components/CloseButton";
-import textToSlug from "../../utils/Utils";
+import {textToSlug} from "../../utils/Utils";
 import {mapState} from "vuex";
 export default {
   name: "AddDeviceView",

@@ -17,7 +17,7 @@ import AddButton from "@/components/AddButton";
 import CloseButton from "@/components/CloseButton";
 import DevicesView from "@/components/DevicesView";
 import EditButton from "@/components/EditButton";
-import {textToSlug} from "../../utils/Utils";
+import {slugToText} from "../../utils/Utils";
 import {mapGetters, mapState} from "vuex";
 export default {
   name: "RoomView",
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       roomName: this.$route.params.room,
-      converter: textToSlug
+      converter: slugToText
     }
   },
   methods: {
