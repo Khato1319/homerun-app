@@ -8,7 +8,7 @@
                               rounded
                               @click="clickHandler"
     ><v-icon v-if="!editing">mdi-pencil</v-icon>
-      <div class="edit-text">{{editing ? 'LISTO' : ''}}</div>
+      <div v-else class="edit-text">LISTO</div>
     </v-btn>
 
   </v-slide-x-transition>
@@ -19,19 +19,20 @@ export default {
   name: "EditButton",
   data() {
     return {
-      color: 'primary',
-      editing: false
+      color: 'primary'
     }
   },
   methods: {
     clickHandler() {
-      this.editing = !this.editing;
-      this.$emit('onClick')
-      if (this.editing)
-        this.$emit('editFinished')
+      this.$store.commit(this.toggler)
     },
   },
-  props: ['onClick']
+  computed: {
+    editing() {
+      return this.$store.state[this.editButtonGetter]
+    }
+  },
+  props: ['editButtonGetter', 'toggler']
 }
 </script>
 

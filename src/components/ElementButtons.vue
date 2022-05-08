@@ -1,7 +1,7 @@
 <template class="">
   <v-container >
     <v-row class='d-flex justify-center grid-row my-6' >
-      <ElementButton :editPressed='editPressed' v-for="element in elements" :key="element" :element="element" :prop="prop" />
+      <ElementButton v-for="element in elements" :key="element" :element="element" :prop="prop" />
     </v-row>
   </v-container>
 </template>

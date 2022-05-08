@@ -16,7 +16,7 @@
       </v-btn>
 
       <v-slide-x-transition>
-      <InputComponent v-if="editPressed && editing" ref="inputElem" @valueSubmitted="changeName" :inputValue="this.element"></InputComponent>
+      <InputComponent ref='inputElem' placeholder='Habitación' v-show="editPressed && editing" @valueSubmitted="changeName" :inputValue="this.element"></InputComponent>
       </v-slide-x-transition>
 
 
@@ -70,19 +70,25 @@
 </template>
 
 <script>
-import slugConverter from "../../utils/Utils";
+import {slugToText} from "../../utils/Utils";
 import InputComponent from "@/components/InputComponent";
 
 export default {
   name: "ElementButton",
   components: {InputComponent},
 
-  props: ['element', 'prop', 'editPressed'],
+  props: ['element', 'prop'],
   watch: {
-    editPressed(prev) {
-      if (prev === true)
-        this.editing = false;
-    }
+    editing(newVal) {
+      if (newVal)
+        setTimeout(() => this.$refs.inputElem.focus(), 200)
+    },
+    editPressed(val, prev) {
+      let value;
+      if (this.editing && val === false && prev === true && this.element !== (value = this.$refs.inputElem.inputSubmit())){
+        this.$store.commit(this.prop.editor,{name: this.element, newName: value});
+      }
+    },
   },
   data() {
     return {
@@ -94,6 +100,9 @@ export default {
   computed: {
     selectedValue() {
       return this.$store.getters[this.prop.selected];
+    },
+    editPressed() {
+      return this.$store.state[this.prop.editPressed]
     }
 
   },
@@ -112,10 +121,10 @@ export default {
     editElement() {
       document.activeElement.blur();
       this.editing = true;
-      this.$refs.inputElem.adding(this.element);
+      // this.$refs.inputElem.adding(this.element);
     },
     converter(string) {
-      return slugConverter(string);
+      return slugToText(string);
     },
     toggle() {
       if (this.selectedValue !== this.element) {

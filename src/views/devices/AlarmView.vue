@@ -7,7 +7,7 @@
 
 <script>
 import CloseButton from "@/components/CloseButton";
-import slugConverter from "../../../utils/Utils";
+import {slugToText} from "../../../utils/Utils";
 export default {
   name: "LightView",
   components: {
@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       deviceName: this.$route.params.deviceName,
-      converter: slugConverter
+      converter: slugToText
     }
   }
 }
