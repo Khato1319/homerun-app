@@ -3,8 +3,12 @@
       elevation="4"
       color="primary"
   >
-    <v-toolbar-title class="white--text mr-auto" >HomeRun</v-toolbar-title>
-    <v-btn>
+    <v-btn width="50" height="50">
+<!--      <v-img height="50" width="50" src="@/assets/favicon.ico"/>-->
+    </v-btn>
+<!--    Podría ponerse un espacio porque por ahora queda muy pegado-->
+    <v-toolbar-title class="white--text mr-auto" style="font-family:Shrikhand">HomeRun</v-toolbar-title>
+    <v-btn rounded>
       <v-icon>mdi-help</v-icon>
     </v-btn>
   </v-app-bar>
@@ -16,6 +20,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
 </style>
