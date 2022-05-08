@@ -1,5 +1,5 @@
-function makeTitle(slug) {
-    var words = slug.split('-');
+const slugToText = (slug) => {
+    let words = slug.split('-');
 
     for (var i = 0; i < words.length; i++) {
         var word = words[i];
@@ -9,11 +9,8 @@ function makeTitle(slug) {
     return words.join(' ');
 }
 
-export default function slugConverter(string) {
-    const slug = string.trim().replace(/\s+/g, '-').toLowerCase();
-    const displayName = makeTitle(slug);
-    if (string.toLowerCase() === string) {
-        return displayName
-    }
-    return slug;
+const textToSlug = (string) => {
+    return string.trim().replace(/\s+/g, '-').toLowerCase();
 }
+
+export {textToSlug, slugToText}

@@ -7,9 +7,9 @@
 
     <input
         style="width: 200px; height: 50px ; font-size: 18px"
-        :style = "{textAlign: input === '' ? 'left': 'center'}"
+        :style = "{textAlign: inputVal === '' ? 'left': 'center'}"
         @click.stop class="blue lighten-4 text-uppercase px-2"
-        type="text" v-model="input"
+        type="text" v-model="inputVal"
         @keydown.enter="submitValue"
         :placeholder="placeholder"
         ref='inputElem'
@@ -24,23 +24,38 @@
 
 <script>
 import { mapState } from "vuex";
+import {slugToText, textToSlug} from "../../utils/Utils";
 export default {
 
-    props: ['placeholder', 'setter', 'inputValue'],
+    props: ['placeholder', 'setter', 'inputValue', 'reference'],
     data() {
         return {
-          input: this.inputValue
+          inputVal: slugToText(this.inputValue)
         }
     },
+  watch: {
+
+  },
     methods: {
+      converter(string) {
+        return textToSlug(string)
+      },
+      inputSubmit() {
+        return this.inputVal
+      },
     restorePage() {
       this.$store.commit(this.setter, '');
     },
     submitValue() {
-      this.$emit('valueSubmitted',this.input);
+      this.$emit('valueSubmitted',this.inputVal);
     },
+      focus() {
+        this.$refs.inputElem.focus();
+      },
     },
-    computed:  mapState(['devices', 'rooms'])
+    computed: {
+      ...mapState(['devices', 'rooms']),
+    }
 }
 
 </script>

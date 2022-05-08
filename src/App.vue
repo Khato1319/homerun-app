@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+
+
     <v-app>
       <TheHeader/>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
@@ -15,22 +17,24 @@
                 </v-tab>
                 <v-tab-item style="overflow-y: scroll; height: 80vh ">
                   <v-slide-x-transition mode="out-in">
-                    <ElementButtons :editPressed='editRoomPressed' :key="rooms.length" cols="6"
+                    <ElementButtons :key="rooms.length" cols="6"
                                     :elements="rooms" :prop="roomButtonsProp"/>
                   </v-slide-x-transition>
-                  <AddButton key='roomAdd'  @onClick="addRoom"/>
-                  <InputComponent  v-if='addingRoom' ref='roomInput' placeholder='Nueva habitación' setter="selectRoom" @valueSubmitted="addToRooms"/>
-                  <EditButton @onClick="editingRoom" key='roomEdit' :editing="editRoomPressed"/>
+                  <AddButton key='roomAdd' v-show="!editRoomPressed && selectedRoom === ''" @onClick="addRoom"/>
+                  <InputComponent v-show="addingRoom" ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"
+                                  @valueSubmitted="addToRooms"/>
+                  <EditButton toggler="toggleEditRoomPressed" key='roomEdit'
+                              v-show="selectedRoom === ''" edit-button-getter="editRoomPressed"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
-                  <AddButton key="routineAdd"  @onClick="addRoutine"/>
-                  <InputComponent  v-if='addingRoutine' ref='routineInput' placeholder='Nueva rutina' setter="selectRoutine" @valueSubmitted="addToRoutines"/>
-                  <EditButton key='routineEdit'  @onClick="editingRoutine" :editing="editRoutinePressed"/>
-                  <v-slide-x-transition mode="out-in">
-                    <ElementButtons :editPressed='editRoutinePressed' :key="routines.length" cols="6"
+                  <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
+                             @onClick="addRoutine"/>
+                  <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
+                                  setter="selectRoutine" @valueSubmitted="addToRoutines"/>
+                  <EditButton key='routineEdit' v-show="selectedRoutine === ''"
+                              toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
+                  <ElementButtons :key="routines.length" cols="6"
                                   :elements="routines" :prop="routineButtonsProp"/>
-                  </v-slide-x-transition>
-
                 </v-tab-item>
               </v-tabs>
 
@@ -59,7 +63,7 @@ import AddButton from "@/components/AddButton";
 import TheHeader from "@/components/TheHeader";
 import ElementButtons from "@/components/ElementButtons"
 import EditButton from "@/components/EditButton";
-import {mapGetters, mapState} from "vuex";
+import {mapState} from "vuex";
 import InputComponent from "./components/InputComponent.vue";
 
 export default {
@@ -70,36 +74,59 @@ export default {
     AddButton,
     InputComponent
   },
+  watch: {
+    selectedRoom(val) {
+
+      if(val !== '') {
+        this.$store.commit('setEditRoomPressed', false);
+        this.addingRoom = false;
+      }
+
+    },
+    selectedRoutine(val) {
+      if (val !== '') {
+        this.$store.commit('setEditRoutinePressed', false);
+        this.addingRoutine = false;
+      }
+    },
+    addingRoom() {
+      setTimeout(() => this.$refs.roomInput.focus(), 300)
+    },
+    addingRoutine() {
+      setTimeout(() => this.$refs.routineInput.focus(), 300)
+    },
+  },
   provide() {
     return {
       supportedDevices: this.supportedDevices,
       recent: this.recent,
-      addToRecent: this.addToRecent
+      addToRecent: this.addToRecent,
     }
   },
   data() {
     return {
       addingRoom: false,
       addingRoutine: false,
-      editRoutinePressed: false,
-      editRoomPressed: false,
       routineButtonsProp: {
         setter: 'selectRoutine',
         selected: "selectedRoutine",
-        routerName:"routine",
+        routerName: "routine",
         deleter: "deleteRoutine",
         editor: 'editRoutineName',
         name: 'rutina',
-        elements: 'getRoutines'
+        elements: 'getRoutines',
+        editPressed: 'editRoutinePressed'
       },
       roomButtonsProp: {
         setter: 'selectRoom',
         selected: "selectedRoom",
-        routerName:"room",
+        routerName: "room",
         deleter: "deleteRoom",
         editor: 'editRoomName',
         name: 'habitación',
-        elements: 'getRooms'
+        elements: 'getRooms',
+        editPressed: 'editRoomPressed'
+
       },
       supportedDevices: new Map([
         ['Lámpara', 'light'],
@@ -119,12 +146,11 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(['selectedRoom', 'selectedRoutine']),
-    addToRooms(value){
+    addToRooms(value) {
       this.addingRoom = false;
       this.rooms.push(value);
     },
-    addToRoutines(value){
+    addToRoutines(value) {
       this.addingRoutine = false;
       this.routines.push(value);
     },
@@ -134,24 +160,32 @@ export default {
     addRoutine() {
       this.addingRoutine = !this.addingRoutine;
     },
-    editingRoom() {
-      this.editRoomPressed = !this.editRoomPressed;
-    },
-    editingRoutine() {
-      this.editRoutinePressed = !this.editRoutinePressed;
-    },
     restorePage() {
       this.addingRoom = false;
       this.addingRoutine = false;
-      this.editRoomPressed = false;
-      this.editRoutinePressed = false;
       this.$refs.routineInput.restorePage();
       this.$refs.roomInput.restorePage();
+      this.$store.commit('setEditRoomPressed', false);
+      this.$store.commit('setEditRoutinePressed', false);
       this.$router.push("/");
     }
 
   },
-  computed: mapState(['devices', 'rooms', 'routines'])
+  computed: {
+    ...mapState(['devices', 'rooms', 'routines']),
+    selectedRoom() {
+      return this.$store.getters.selectedRoom;
+    },
+    selectedRoutine() {
+      return this.$store.getters.selectedRoutine;
+    },
+    editRoomPressed() {
+      return this.$store.state.editRoomPressed
+    },
+    editRoutinePressed() {
+      return this.$store.state.editRoutinePressed
+    },
+  }
 }
 </script>
 
