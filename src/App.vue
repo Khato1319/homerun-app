@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-
-
     <v-app>
-      <TheHeader/>
+      <TheHeader @onClick="restorePage"/>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
         <v-layout>
           <v-row no-gutters>
@@ -35,12 +33,14 @@
 
                   <EditButton key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
                               toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
-                  <ElementButtons :key="routines.length" cols="6"
-                                  :elements="routines" :prop="routineButtonsProp">
-                    <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
-                                    setter="selectRoutine" @valueSubmitted="addToRoutines"/>
+                  <v-slide-x-transition mode="out-in">
+                    <ElementButtons :key="routines.length" cols="6"
+                                    :elements="routines" :prop="routineButtonsProp">
+                      <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
+                                      setter="selectRoutine" @valueSubmitted="addToRoutines"/>
 
-                  </ElementButtons>
+                    </ElementButtons>
+                  </v-slide-x-transition>
                 </v-tab-item>
               </v-tabs>
 
@@ -65,12 +65,12 @@
 </template>
 
 <script>
-import AddButton from "@/components/AddButton";
+import AddButton from "@/components/ViewButtons/AddButton";
 import TheHeader from "@/components/TheHeader";
-import ElementButtons from "@/components/ElementButtons"
-import EditButton from "@/components/EditButton";
+import ElementButtons from "@/components/Elements/ElementButtons"
+import EditButton from "@/components/ViewButtons/EditButton";
 import {mapState} from "vuex";
-import InputComponent from "./components/InputComponent.vue";
+import InputComponent from "./components/Elements/InputComponent.vue";
 
 export default {
   components: {

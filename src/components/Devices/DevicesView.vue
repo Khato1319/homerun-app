@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import DeviceCard from "@/components/DeviceCard";
+import DeviceCard from "@/components/Devices/DeviceCard";
 export default {
   name: "DevicesView",
   props: ['devices'],

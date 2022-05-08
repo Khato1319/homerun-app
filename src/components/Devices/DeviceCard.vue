@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import {slugToText} from "../../utils/Utils";
+import {slugToText} from "../../../utils/Utils";
 export default {
   name: "DeviceCard",
   data() {

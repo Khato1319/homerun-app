@@ -1,6 +1,7 @@
 <template>
 <div>
-  Adding device to {{roomName}} <v-spacer></v-spacer> <CloseButton @onClick="close"></CloseButton>
+  Adding device to {{roomName}} <v-spacer></v-spacer>
+  <CloseButton @onClick="close"></CloseButton>
   <v-form
       ref="form"
       v-model="valid"
@@ -55,7 +56,7 @@
 </template>
 
 <script>
-import CloseButton from "@/components/CloseButton";
+import CloseButton from "@/components/ViewButtons/CloseButton";
 import {textToSlug} from "../../utils/Utils";
 import {mapState} from "vuex";
 export default {

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import CloseButton from "@/components/CloseButton";
+import CloseButton from "@/components/ViewButtons/CloseButton";
 import {slugToText} from "../../../utils/Utils";
 export default {
   name: "VacuumView",

@@ -24,7 +24,7 @@
 
 <script>
 import { mapState } from "vuex";
-import {slugToText, textToSlug} from "../../utils/Utils";
+import {slugToText, textToSlug} from "../../../utils/Utils";
 export default {
 
     props: ['placeholder', 'setter', 'inputValue', 'reference'],

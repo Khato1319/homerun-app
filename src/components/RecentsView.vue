@@ -1,12 +1,12 @@
 <template>
   <div>
   <v-card-title class="text-uppercase justify-space-between text-caption">Dispositivos recientes</v-card-title>
-<DevicesView :devices="recentDevices"></DevicesView>
+  <DevicesView :devices="recentDevices"></DevicesView>
   </div>
 </template>
 
 <script>
-import DevicesView from "@/components/DevicesView";
+import DevicesView from "@/components/Devices/DevicesView";
 import {mapState} from "vuex";
 export default {
   name: "RecentsView",

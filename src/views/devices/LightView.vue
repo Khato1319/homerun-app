@@ -1,16 +1,26 @@
 <template>
 <div>
   {{converter(deviceName)}} Light
-  <CloseButton @onClick="close"></CloseButton>
+  <CloseButton @onClick="close"/>
+  <OnOff/>
+  <PlayPause/>
+  <ColorPicker/>
 </div>
 </template>
 
 <script>
-import CloseButton from "@/components/CloseButton";
+import CloseButton from "@/components/ViewButtons/CloseButton";
 import {slugToText} from "../../../utils/Utils";
+import OnOff from "@/components/Devices/Buttons/OnOff";
+import PlayPause from "@/components/Devices/Buttons/PlayPlause";
+import ColorPicker from "@/components/Devices/Buttons/ColorPicker";
+
 export default {
   name: "LightView",
   components: {
+    ColorPicker,
+    PlayPause,
+    OnOff,
     CloseButton
   },
   methods: {

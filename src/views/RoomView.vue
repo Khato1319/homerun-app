@@ -1,8 +1,9 @@
 <template>
   <div>
-    Habitación {{
-      this.converter(roomName)
-    }}
+    <v-card-title  class="justify-space-between text-caption">Habitación {{
+        this.converter(roomName)
+      }}</v-card-title>
+
     <AddButton @onClick="addDevice"></AddButton>
     <EditButton @onClick="editDevice"></EditButton>
     <CloseButton @onClick="close"/>
@@ -13,10 +14,10 @@
 </template>
 
 <script>
-import AddButton from "@/components/AddButton";
-import CloseButton from "@/components/CloseButton";
-import DevicesView from "@/components/DevicesView";
-import EditButton from "@/components/EditButton";
+import AddButton from "@/components/ViewButtons/AddButton";
+import CloseButton from "@/components/ViewButtons/CloseButton";
+import DevicesView from "@/components/Devices/DevicesView";
+import EditButton from "@/components/ViewButtons/EditButton";
 import {slugToText} from "../../utils/Utils";
 import {mapGetters, mapState} from "vuex";
 export default {

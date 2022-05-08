@@ -70,8 +70,8 @@
 </template>
 
 <script>
-import {slugToText} from "../../utils/Utils";
-import InputComponent from "@/components/InputComponent";
+import {slugToText} from "../../../utils/Utils";
+import InputComponent from "@/components/Elements/InputComponent";
 
 export default {
   name: "ElementButton",

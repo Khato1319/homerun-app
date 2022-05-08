@@ -1,8 +1,8 @@
 <template>
   <div>
-    La Rutina es {{
-      converter(routine)
-    }}
+    <v-card-title  class="justify-space-between text-caption">Rutina {{
+        this.converter(routine)
+      }}</v-card-title>
     <AddButton @onClick="addDevice"></AddButton>
     <EditButton @onClick="editDevice"></EditButton>
     <CloseButton @onClick="close"/>
@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import AddButton from "@/components/AddButton";
-import CloseButton from "@/components/CloseButton";
-import EditButton from "@/components/EditButton";
+import AddButton from "@/components/ViewButtons/AddButton";
+import CloseButton from "@/components/ViewButtons/CloseButton";
+import EditButton from "@/components/ViewButtons/EditButton";
 import {slugToText} from "../../utils/Utils";
 import {mapGetters, mapState} from "vuex";
 export default {
