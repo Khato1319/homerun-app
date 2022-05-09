@@ -31,10 +31,11 @@
           <v-btn class="mx-2"
                  fab
                  dark
+                 v-if="!submittingPwd"
                  small
                  color="blue-grey lighten-4"
                  @click="()=> {addToRecents(); goToDeviceView()}">
-            <v-icon dark>
+            <v-icon dark >
               mdi-cog
             </v-icon>
           </v-btn>
@@ -52,18 +53,35 @@
           large
           :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>{clicked = !clicked; addToRecents()}"
           elevation="8"
+          v-if="!hasPassword"
 
       >
-        <v-icon   :color="clicked ? 'blue-grey lighten-4' : 'white'">
+        <v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'">
           mdi-android
         </v-icon>
+
       </v-btn>
     </div>
+    <v-text-field v-if="submittingPwd"
+                  v-model="password"
+                  label="Ingrese la contraseña"
+                  class="white--text mx-3 my-2"
+                  :color="color"
+                  :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="() => (value = !value)"
+                  :type="value ? 'password' : 'text'"
+                  :hint="incorrectMsg"
+                  required
+                  ref="pwdInput"
+                  @blur="() => {this.incorrectMsg = ''; this.color = 'white'; this.value = true}"
+    ></v-text-field>
+    <v-btn         color="success" v-if="submittingPwd" @click="checkPwd" class="text-sm-button" :disabled="password === ''">Ingresar</v-btn>
+
   </v-card>
 </template>
 
 <script>
-import {slugToText} from "../../../utils/Utils";
+import {hashCode, slugToText} from "../../../utils/Utils";
 import DialogModal from "@/components/Elements/DialogModal";
 
 export default {
@@ -73,14 +91,19 @@ export default {
       dialog: false,
       clicked: false,
       input: this.converter(this.device),
-      editingName: false
+      editingName: false,
+      password: '',
+      submittingPwd: false,
+      incorrectMsg: '',
+      color: 'white',
+      value: true,
     }
   },
   components: {
     DialogModal
   },
   props: ['room', 'device', 'type'],
-  inject: ['supportedDevices', 'addToRecent'],
+  inject: ['addToRecent'],
   watch: {
     editPressed(val) {
       if (!val)
@@ -88,6 +111,20 @@ export default {
     }
   },
   methods: {
+    checkPwd() {
+      const hash = this.$store.getters.getDevice(this.device, this.room).hash
+      console.log(hash)
+      console.log(hashCode(this.password))
+      if (hashCode(this.password) === hash) {
+        this.goToDevice()
+      }
+      else {
+        this.color = 'red darken-4'
+        this.incorrectMsg = 'La contraseña es incorrecta'
+        this.$refs.pwdInput.focus();
+      }
+
+    },
     editElement() {
       document.activeElement.blur();
       this.editingName = true;
@@ -113,6 +150,14 @@ export default {
       return slugToText(string)
     },
     goToDeviceView() {
+      if (this.hasPassword) {
+        this.submittingPwd = true;
+      }
+     else {
+        this.goToDevice()
+      }
+    },
+    goToDevice() {
       this.$store.commit('selectRoom', this.room);
       this.$router.push({name: this.type, params: {deviceName: this.device, room: this.room}})
     },
@@ -123,12 +168,19 @@ export default {
   computed: {
     editPressed() {
       return this.$store.state.editTheRoomPressed
+    },
+    hasPassword() {
+      return this.$store.getters.getDevice(this.device, this.room).hash
     }
   }
 }
 </script>
 
 <style scoped>
+/*.v-input--is-focused .v-input__slot {*/
+/*  border: 2px solid #005fcc !important;*/
+/*  border-bottom-color: rgba(0, 0, 0, 0.38) !important;*/
+/*}*/
 #delete-button {
   line-height: 12px;
   width: 25px;

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <v-card-title class="text-uppercase justify-space-between text-caption">Dispositivos recientes</v-card-title>
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Dispositivos recientes</div>
   <DevicesView :devices="recentDevices"></DevicesView>
   </div>
 </template>

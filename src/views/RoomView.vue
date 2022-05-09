@@ -1,8 +1,7 @@
 <template>
   <div>
     <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Habitación {{
-        this.converter(roomName)
-      }}</div>
+        this.converter(roomName) }}</div>
 
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
     <EditButton setter='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>

@@ -14,10 +14,42 @@ export default new Vuex.Store({
         editRoomPressed: false,
         editTheRoomPressed: false,
         editRoutinePressed: false,
+        supportedDevices: [{
+            type: 'light',
+            name: 'Lámpara',
+            actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+        },
+            {
+                type: 'vacuum',
+                name: 'Lámpara',
+                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+            },
+            {
+                type: 'light',
+                name: 'Aspiradora',
+                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+            },
+            {
+                type: 'alarm',
+                name: 'Alarma',
+                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+            },
+            {
+                type: 'oven',
+                name: 'Horno',
+                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+            },
+            {
+                type: 'a/c',
+                name: 'Aire acondicionado',
+                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+            }
+        ],
         devices: [{
             name: "luz-1",
             room: "bedroom",
             type: "light",
+            hash: 3208380,
             group: "grupo-1"
         }, {
             name: "luz-2",
@@ -43,9 +75,10 @@ export default new Vuex.Store({
             return state.devices.filter(d=>d.room === room).map(d => textToSlug(d.group));
         },
         deviceExists: (state) => (type, name) => {
-            console.log(type);
-            console.log(name);
             return state.devices.find(d => d.type === type && d.name === name);
+        },
+        getDevice: (state) => (name, room) => {
+            return state.devices.find(d => d.room === room && d.name === name);
         },
         selectedRoom: (state) => state.selectedRoom,
         selectedRoutine: (state) => state.selectedRoutine
@@ -74,7 +107,9 @@ export default new Vuex.Store({
             state.rooms.push(textToSlug(room));
         },
         addDevice (state, device) {
-            state.devices.push(textToSlug(device));
+            device.name = textToSlug(device.name)
+            device.group = textToSlug(device.group)
+            state.devices.push(device);
         },
         selectRoom(state, room) {
             state.selectedRoom = room;

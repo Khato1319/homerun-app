@@ -104,7 +104,6 @@ export default {
   },
   provide() {
     return {
-      supportedDevices: this.supportedDevices,
       recent: this.recent,
       addToRecent: this.addToRecent,
     }
@@ -134,13 +133,6 @@ export default {
         editPressed: 'editRoomPressed'
 
       },
-      supportedDevices: new Map([
-        ['Lámpara', 'light'],
-        ['Aspiradora', 'vacuum'],
-        ['Alarma', 'alarm'],
-        ['Horno', 'oven'],
-        ['Aire Acondicionado', 'a/c']
-      ]),
       recent: [],
       addToRecent: (string) => {
         if (this.recent.includes(string))

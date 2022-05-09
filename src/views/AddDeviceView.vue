@@ -41,6 +41,10 @@
     <v-text-field v-if="checkbox"
         v-model="password"
         label="Contraseña"
+                  :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="() => (value = !value)"
+                  :type="value ? 'password' : 'text'"
+                  @blur="() => this.value = false"
         required
     ></v-text-field>
     <v-btn
@@ -57,11 +61,10 @@
 
 <script>
 import CloseButton from "@/components/ViewButtons/CloseButton";
-import {slugToText} from "../../utils/Utils";
+import {hashCode, slugToText} from "../../utils/Utils";
 import {mapState} from "vuex";
 export default {
   name: "AddDeviceView",
-  inject: ['supportedDevices'],
   components: {
     CloseButton
   },
@@ -72,7 +75,9 @@ export default {
       group: "",
       type: "",
       deviceName: "",
-      converter: slugToText
+      converter: slugToText,
+      value: true
+
     }
   },
   methods: {
@@ -87,8 +92,10 @@ export default {
       this.$router.go(-1);
     },
     validate() {
-      this.type = this.supportedDevices.get(this.type);
-      this.devices.push({name: this.deviceName, room: this.room, type: this.type, group: this.group});
+      this.type = this.$store.state.supportedDevices.find(d => d.name === this.type).type;
+      const payload = {name: this.deviceName, room: this.room, type: this.type, group: this.group, hash: this.password === '' ? null : hashCode(this.password)}
+      console.log(payload)
+      this.$store.commit('addDevice',payload);
       this.resetValues();
       this.$router.go(-1);
     }
@@ -100,7 +107,7 @@ export default {
           (!this.checkbox || this.password !== "")
     },
     possibleDevices() {
-      return Array.from(this.supportedDevices.keys());
+      return this.$store.state.supportedDevices.map(dev => dev.name)
     },
     room() {
       return this.$route.params.room;
@@ -109,7 +116,7 @@ export default {
       return this.converter(this.room);
     },
     groupsForRoom() {
-      return this.devices.filter(d=>d.room === this.room).map(d => this.converter(d.group));
+      return this.$store.state.devices.filter(d=>d.room === this.room).map(d => this.converter(d.group));
     }
   }
 }
