@@ -25,14 +25,14 @@
                   <AddButton key='roomAdd' v-show="!editRoomPressed && selectedRoom === ''" @onClick="addRoom"/>
 
                   <EditButton class='edit-button' toggler="toggleEditRoomPressed" key='roomEdit'
-                              v-show="!addingRoom && selectedRoom === ''" edit-button-getter="editRoomPressed"/>
+                              setter="toggleEditRoomPressed" v-show="!addingRoom && selectedRoom === ''" edit-button-getter="editRoomPressed"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
                   <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
                              @onClick="addRoutine"/>
 
                   <EditButton class='edit-button' key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
-                              toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
+                              setter="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons :key="routines.length" cols="6"
                                     :elements="routines" :prop="routineButtonsProp">

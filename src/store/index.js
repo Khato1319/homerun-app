@@ -12,6 +12,7 @@ export default new Vuex.Store({
         selectedRoom: "",
         selectedRoutine: "",
         editRoomPressed: false,
+        editTheRoomPressed: false,
         editRoutinePressed: false,
         devices: [{
             name: "luz-1",
@@ -62,6 +63,12 @@ export default new Vuex.Store({
         },
         setEditRoutinePressed(state, value) {
             state.editRoutinePressed = value
+        },
+        toggleEditTheRoomPressed(state) {
+            state.editTheRoomPressed = !state.editTheRoomPressed
+        },
+        setEditTheRoomPressed(state, value) {
+            state.editTheRoomPressed = value
         },
         addRoom (state, room) {
             state.rooms.push(textToSlug(room));

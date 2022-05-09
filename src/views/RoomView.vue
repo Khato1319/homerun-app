@@ -5,7 +5,7 @@
       }}</v-card-title>
 
     <AddButton @onClick="addDevice"></AddButton>
-    <EditButton class='edit-button' @onClick="editDevice"></EditButton>
+    <EditButton setter='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
     <CloseButton @onClick="close"/>
     <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>
   <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       roomName: this.$route.params.room,
-      converter: slugToText
+      converter: slugToText,
     }
   },
   methods: {
@@ -44,10 +44,15 @@ export default {
       this.$router.push({ path: '/'})
     },
     editDevice(){
-
+      this.editing = !this.editing
     }
   },
-  computed: mapState(['devices'])
+  computed: {
+    ...mapState(['devices']),
+    editing() {
+      return this.$store.state.editTheRoomPressed
+    }
+  }
 }
 </script>
 

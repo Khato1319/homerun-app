@@ -21,7 +21,7 @@
 
 
     <v-fab-transition>
-      <v-btn v-if="editPressed && !editing" mode="out-in" fab x-small id="delete-button" @click.stop="deleteElementDialog">
+      <v-btn v-if="editPressed && !editing" fab x-small id="delete-button" @click.stop="deleteElementDialog">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </v-fab-transition>
@@ -31,51 +31,23 @@
       </v-btn>
     </v-fab-transition>
 
-    <v-dialog
-        v-model="dialog"
-        width="500"
-    >
-
-      <v-card>
-        <v-card-title class="text-h5 grey lighten-2 text-center">
-          Borrado de {{ this.prop.name }}
-        </v-card-title>
-
-        <v-card-text>
-          ¿Está seguro de que quiere borrar la {{ this.prop.name }} {{ converter(this.element) }}?
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-              color="red"
-              text
-              @click="deleteElement"
-          >
-            Borrar
-          </v-btn>
-          <v-btn
-              color="primary"
-              text
-              @click="dialog = false"
-          >
-            Cancelar
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <DialogModal @setDialog='(val) => this.dialog = val' :dialog="dialog"  @acceptEvent="deleteElement" @cancelEvent="() => this.dialog = false">
+      <template v-slot:title>
+        Borrado de {{prop.name}}
+      </template>
+      ¿Está seguro de que quiere borrar la {{ prop.name }} {{ converter(element) }}?
+    </DialogModal>
   </div>
 </template>
 
 <script>
 import {slugToText} from "../../../utils/Utils";
 import InputComponent from "@/components/Elements/InputComponent";
+import DialogModal from "@/components/Elements/DialogModal";
 
 export default {
   name: "ElementButton",
-  components: {InputComponent},
+  components: {InputComponent, DialogModal},
 
   props: ['element', 'prop'],
   watch: {
@@ -95,7 +67,8 @@ export default {
     return {
       isActive: false,
       dialog: false,
-      editing: false
+      editing: false,
+      dialogSetter: (val) => this.dialog = val
     }
   },
   computed: {

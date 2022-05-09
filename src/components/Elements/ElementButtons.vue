@@ -25,7 +25,7 @@ export default {
       return this.$store.getters[this.prop.elements]
     }
   },
-  props: ['prop', 'editPressed']
+  props: ['prop']
 }
 </script>
 
