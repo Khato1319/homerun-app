@@ -3,13 +3,13 @@
       elevation="4"
       color="primary"
   >
-    <v-btn text width="50" height="50" @click="$emit('onClick')">
+    <v-btn text width="40" height="50" @click="$emit('onClick')" class="mr-2">
       <v-img height="50" width="50" src="@/assets/HR-Logo-Nameless-Shape.png"/>
     </v-btn>
 <!--    Podría ponerse un espacio porque por ahora queda muy pegado-->
     <v-toolbar-title class="white--text mr-auto" style="font-family:Shrikhand,serif">HomeRun</v-toolbar-title>
-    <v-btn rounded>
-      <v-icon>mdi-help</v-icon>
+    <v-btn color="blue lighten-4" rounded>
+      <v-icon >mdi-help</v-icon>
     </v-btn>
   </v-app-bar>
 </template>

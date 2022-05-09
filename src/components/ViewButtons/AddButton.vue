@@ -21,6 +21,6 @@ export default {
 <style scoped>
 .add-button {
   bottom: 10px;
-  right: 25px;
+  right: 30px;
 }
 </style>

@@ -4,6 +4,7 @@
          color="primary"
          fab
          plain
+         absolute
          small
       @click="close"
   ><v-icon>mdi-window-close</v-icon>
@@ -22,5 +23,8 @@ export default {
 </script>
 
 <style scoped>
-
+.close-button {
+  top: 23px;
+  right: 10px;
+}
 </style>

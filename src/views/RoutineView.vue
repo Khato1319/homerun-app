@@ -4,7 +4,7 @@
         this.converter(routine)
       }}</v-card-title>
     <AddButton @onClick="addDevice"></AddButton>
-    <EditButton @onClick="editDevice"></EditButton>
+    <EditButton class='edit-button' @onClick="editDevice"></EditButton>
     <CloseButton @onClick="close"/>
 <!--    <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>-->
     <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
@@ -51,5 +51,8 @@ export default {
 </script>
 
 <style scoped>
-
+.edit-button {
+  top: 25px;
+  right: 60px;
+}
 </style>

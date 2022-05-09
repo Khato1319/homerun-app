@@ -24,14 +24,14 @@
                   </v-slide-x-transition>
                   <AddButton key='roomAdd' v-show="!editRoomPressed && selectedRoom === ''" @onClick="addRoom"/>
 
-                  <EditButton toggler="toggleEditRoomPressed" key='roomEdit'
+                  <EditButton class='edit-button' toggler="toggleEditRoomPressed" key='roomEdit'
                               v-show="!addingRoom && selectedRoom === ''" edit-button-getter="editRoomPressed"/>
                 </v-tab-item>
                 <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
                   <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
                              @onClick="addRoutine"/>
 
-                  <EditButton key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
+                  <EditButton class='edit-button' key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
                               toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons :key="routines.length" cols="6"
@@ -196,6 +196,10 @@ export default {
 </script>
 
 <style lang="scss">
+.edit-button {
+  top: 10px;
+  right: 25px;
+}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
