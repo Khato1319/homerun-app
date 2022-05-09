@@ -1,6 +1,6 @@
 <template>
 <div>
-  Adding device to {{roomName}} <v-spacer></v-spacer>
+  Agregando dispositivo a {{roomName}} <v-spacer></v-spacer>
   <CloseButton @onClick="close"></CloseButton>
   <v-form
       ref="form"

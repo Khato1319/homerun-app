@@ -11,7 +11,7 @@
           class="ma-6 px-1 element-button"
           @click="toggle"
           v-if="!editPressed || !editing"
-      ><span class="text-truncate" style="max-width:150px">{{ converter(element) }}</span>
+      ><span class="text-truncate" style="max-width:150px">{{converter(element)}}</span>
 
       </v-btn>
 
@@ -103,7 +103,9 @@ export default {
     toggle() {
       if (this.selectedValue !== this.element) {
         this.$store.commit(this.prop.setter, this.element);
-        this.$router.push({name: this.prop.routerName, params: {[this.prop.routerName]: this.element}})
+        const toPush = {name: this.prop.routerName, params: {[this.prop.routerName]: this.element}}
+        console.log(toPush)
+        this.$router.push(toPush)
       } else {
         this.$store.commit(this.prop.setter, '');
         this.$router.push({path: '/'});

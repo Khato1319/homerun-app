@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {textToSlug}  from "../../utils/Utils";
+import {textToSlug} from "../../utils/Utils";
 
 Vue.use(Vuex);
 
@@ -8,7 +8,21 @@ export default new Vuex.Store({
 
     state: {
         rooms: ['bedroom', 'living', 'uno', 'bathroom', 'gameroom', 'office', 'kitchen'],
-        routines: ['buen-dia', 'a-dormir'],
+        routines: [{
+            routine: 'buen-dia',
+            actions: [{device: 'luz-1', room: 'bedroom', action: 'apagar'}, {
+                device: 'luz-1',
+                room: 'bedroom',
+                action: 'apagar'
+            }]
+        }, {
+            routine: 'a-dormir',
+            actions: [{device: 'luz-1', room: 'bedroom', action: 'apagar'}, {
+                device: 'luz-1',
+                room: 'bedroom',
+                action: 'apagar'
+            }]
+        }],
         selectedRoom: "",
         selectedRoutine: "",
         editRoomPressed: false,
@@ -66,13 +80,16 @@ export default new Vuex.Store({
     },
     getters: {
         getRooms: (state) => {
-          return state.rooms
+            return state.rooms
         },
         getRoutines: (state) => {
-            return state.routines
+            return state.routines.map(e => e.routine)
+        },
+        getRoutine: (state) => (name) => {
+            return state.routines.find(e => e.routine === name)
         },
         groupsNoSlug: (state) => (room) => {
-            return state.devices.filter(d=>d.room === room).map(d => textToSlug(d.group));
+            return state.devices.filter(d => d.room === room).map(d => textToSlug(d.group));
         },
         deviceExists: (state) => (type, name) => {
             return state.devices.find(d => d.type === type && d.name === name);
@@ -103,13 +120,17 @@ export default new Vuex.Store({
         setEditTheRoomPressed(state, value) {
             state.editTheRoomPressed = value
         },
-        addRoom (state, room) {
+        addRoom(state, room) {
             state.rooms.push(textToSlug(room));
         },
-        addDevice (state, device) {
+        addDevice(state, device) {
             device.name = textToSlug(device.name)
             device.group = textToSlug(device.group)
             state.devices.push(device);
+        },
+        addActionToRoutine(state, payLoad) {
+          const routine = state.routines.find(r => r.routine === payLoad.routine)
+            routine.actions.push(payLoad.action)
         },
         selectRoom(state, room) {
             state.selectedRoom = room;
@@ -121,7 +142,7 @@ export default new Vuex.Store({
             state.rooms = state.rooms.filter(el => el !== room)
         },
         deleteRoutine(state, routine) {
-            state.routines = state.routines.filter(el => el !== routine)
+            state.routines = state.routines.filter(el => el.name !== routine)
         },
         deleteDevice(state, payLoad) {
             state.devices = state.devices.filter(el => !(el.name === textToSlug(payLoad.name) && el.room === textToSlug(payLoad.room)))
@@ -137,12 +158,11 @@ export default new Vuex.Store({
             Vue.set(state.rooms, idx, textToSlug(payLoad.newName))
         },
         editRoutineName(state, payLoad) {
-            const idx = state.routines.findIndex(e => e === textToSlug(payLoad.name));
-            Vue.set(state.routines, idx, textToSlug(payLoad.newName))
+            const idx = state.routines.findIndex(e => e.name === textToSlug(payLoad.name));
+            const routine = state.routines[idx]
+            routine.name = textToSlug(routine.name)
+            Vue.set(state.routines, idx, routine)
         }
     },
-    actions: {
-
-    }
 
 });

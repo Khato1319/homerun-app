@@ -9,6 +9,7 @@ import OvenView from "@/views/devices/OvenView";
 import VacuumView from "@/views/devices/VacuumView";
 import store from '../store'
 import RoutineView from "@/views/RoutineView";
+import AddRoutineActionView from "@/views/AddRoutineActionView";
 
 Vue.use(VueRouter)
 
@@ -30,7 +31,7 @@ const roomExistsFunc = (to, from, next) => {
 
 const routineExistsFunc = (to, from, next) => {
   // reject the navigation
-  if (!store.state.routines.includes(to.params.routine))
+  if (!store.state.routines.find(e => e.routine === to.params.routine) < 0)
     next({name: 'notFound'})
 
   next();
@@ -58,6 +59,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: RoutineView,
+    beforeEnter: routineExistsFunc
+  },
+  {
+    path: '/routines/:routine/add-action',
+    name: 'addRoutine',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: AddRoutineActionView,
     beforeEnter: routineExistsFunc
   },
   {

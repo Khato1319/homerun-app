@@ -16,7 +16,7 @@
                 <v-tab-item style="overflow-y: scroll; height: 80vh ">
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons :key="rooms.length" cols="6"
-                                    :elements="rooms" :prop="roomButtonsProp">
+                                     :prop="roomButtonsProp">
                       <InputComponent v-show="addingRoom" ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"
                                       @valueSubmitted="addToRooms"/>
 
@@ -35,7 +35,7 @@
                               setter="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons :key="routines.length" cols="6"
-                                    :elements="routines" :prop="routineButtonsProp">
+                                     :prop="routineButtonsProp">
                       <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
                                       setter="selectRoutine" @valueSubmitted="addToRoutines"/>
 
@@ -150,7 +150,7 @@ export default {
     },
     addToRoutines(value) {
       this.addingRoutine = false;
-      this.routines.push(value);
+      this.routines.push({name: value});
     },
     addRoom() {
       this.addingRoom = !this.addingRoom;

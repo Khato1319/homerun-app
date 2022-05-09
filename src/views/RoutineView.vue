@@ -1,18 +1,22 @@
 <template>
   <div>
-    <v-card-title  class="justify-space-between text-caption">Rutina {{
-        this.converter(routine)
-      }}</v-card-title>
     <AddButton @onClick="addDevice"></AddButton>
     <EditButton class='edit-button' @onClick="editDevice"></EditButton>
     <CloseButton @onClick="close"/>
-<!--    <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>-->
-    <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
-    <!--  :device="device.name" :room="device.room"></DeviceCard>-->
+
+      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Rutina {{
+          this.converter(routine)}}</div>
+
+      <v-card v-for="action in actions" :key="action.name">
+        <v-card-text>{{converter(action.device)}} de {{converter(action.room)}}: {{converter(action.action)}} </v-card-text>
+      </v-card>
+
   </div>
+
 </template>
 
 <script>
+// todo: agregar la posibiidad de editar rutinas
 import AddButton from "@/components/ViewButtons/AddButton";
 import CloseButton from "@/components/ViewButtons/CloseButton";
 import EditButton from "@/components/ViewButtons/EditButton";
@@ -36,7 +40,7 @@ export default {
     },
     ...mapGetters(['selectedRoutine']),
     addDevice() {
-      // this.$router.push({ name: 'addRoutineDevice', params: { theRoom:  this.selectedRoom()} })
+      this.$router.push({ name: 'addRoutine', params: { routine:  this.routine} })
     },
     close() {
       this.$store.commit('selectRoom',"");
@@ -46,7 +50,12 @@ export default {
 
     }
   },
-  computed: mapState(['devices'])
+  computed: {
+    ...mapState(['devices']),
+    actions() {
+      return this.$store.getters.getRoutine(this.routine).actions
+    }
+  }
 }
 </script>
 
