@@ -101,10 +101,11 @@ export default {
       return slugToText(string);
     },
     toggle() {
-      if (this.selectedValue !== this.element) {
+      if (!this.editPressed && this.selectedValue !== this.element) {
         this.$store.commit(this.prop.setter, this.element);
         const toPush = {name: this.prop.routerName, params: {[this.prop.routerName]: this.element}}
         console.log(toPush)
+        this.editing = false
         this.$router.push(toPush)
       } else {
         this.$store.commit(this.prop.setter, '');
