@@ -88,6 +88,15 @@ export default new Vuex.Store({
         deleteRoutine(state, routine) {
             state.routines = state.routines.filter(el => el !== routine)
         },
+        deleteDevice(state, payLoad) {
+            state.devices = state.devices.filter(el => !(el.name === textToSlug(payLoad.name) && el.room === textToSlug(payLoad.room)))
+        },
+        editDeviceName(state, payLoad) {
+            const idx = state.devices.findIndex(el => el.name === textToSlug(payLoad.name) && el.room === textToSlug(payLoad.room))
+            const device = state.devices[idx]
+            device.name = textToSlug(payLoad.newName)
+            Vue.set(state.devices, idx, device)
+        },
         editRoomName(state, payLoad) {
             const idx = state.rooms.findIndex(e => e === textToSlug(payLoad.name));
             Vue.set(state.rooms, idx, textToSlug(payLoad.newName))

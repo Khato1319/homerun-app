@@ -57,7 +57,7 @@
 
 <script>
 import CloseButton from "@/components/ViewButtons/CloseButton";
-import {textToSlug} from "../../utils/Utils";
+import {slugToText} from "../../utils/Utils";
 import {mapState} from "vuex";
 export default {
   name: "AddDeviceView",
@@ -72,7 +72,7 @@ export default {
       group: "",
       type: "",
       deviceName: "",
-      converter: textToSlug
+      converter: slugToText
     }
   },
   methods: {

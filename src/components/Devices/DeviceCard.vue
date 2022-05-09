@@ -4,16 +4,18 @@
       rounded
       class="pa-2 ma-4 white--text"
       color="primary"
-      style="position: relative"
+      style="position: relative ; max-width: 300px"
   >
-    <DialogModal @setDialog='(val) => this.dialog = val' :dialog="dialog"  @acceptEvent="deleteElement" @cancelEvent="() => this.dialog = false">
+    <DialogModal @setDialog='(val) => this.dialog = val' :dialog="dialog" @acceptEvent="deleteDevice"
+                 @cancelEvent="() => this.dialog = false">
       <template v-slot:title>
         Borrado de dispositivo
       </template>
       ¿Está seguro de que quiere borrar el dispositivo {{ converter(device) }}?
     </DialogModal>
     <v-fab-transition>
-      <v-btn v-if="editPressed && !editingName" mode="out-in" fab x-small id="delete-button" @click.stop="deleteDeviceDialog">
+      <v-btn v-if="editPressed && !editingName" mode="out-in" fab x-small id="delete-button"
+             @click.stop="deleteDeviceDialog">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </v-fab-transition>
@@ -22,37 +24,48 @@
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
     </v-fab-transition>
-    <div class="d-flex justify-space-between align-content-center">
-      <div class="d-flex flex-column">
-        <v-card-title><input ref='inputElem' style="color: white" :disabled="!editPressed || !editingName" type="text" v-model="input"><v-btn class="mx-2"
-                                         fab
-                                         dark
-                                         small
-                                         color="blue-grey lighten-4"
-        @click="()=> {addToRecents(); goToDeviceView()}"><v-icon dark>
-          mdi-cog
-        </v-icon></v-btn></v-card-title>
-        <v-card-subtitle>{{converter(room)}}</v-card-subtitle>
+    <div class="d-flex justify-space-between align-content-center" style="max-width: 100%">
+      <div class="d-flex flex-column" style="max-width: 100%">
+        <div class="d-flex align-center justify-space-between" style="max-width: 100%">
+          <input style="color: white ; max-width: 70%" class='ma-1 title-input text-md-left font-weight-bold' @keypress.enter='submitValue' ref='inputElem'                                :disabled="!editPressed || !editingName" type="text" v-model="input">
+          <v-btn class="mx-2"
+                 fab
+                 dark
+                 small
+                 color="blue-grey lighten-4"
+                 @click="()=> {addToRecents(); goToDeviceView()}">
+            <v-icon dark>
+              mdi-cog
+            </v-icon>
+          </v-btn>
+        </div>
+
+        <v-card-subtitle class="text-sm-left ma-1 pa-0">{{ converter(room) }}</v-card-subtitle>
+
       </div>
 
     </div>
-    <v-btn
-        class="mx-2"
-        fab
-        dark
-        large
-        :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>{clicked = !clicked; addToRecents()}"
-        elevation="8"
+    <div class="d-flex justify-center align-content-center">
+      <v-btn
+          fab
+          dark
+          large
+          :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>{clicked = !clicked; addToRecents()}"
+          elevation="8"
 
-    ><v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'">
-      mdi-android
-    </v-icon></v-btn>
+      >
+        <v-icon   :color="clicked ? 'blue-grey lighten-4' : 'white'">
+          mdi-android
+        </v-icon>
+      </v-btn>
+    </div>
   </v-card>
 </template>
 
 <script>
 import {slugToText} from "../../../utils/Utils";
 import DialogModal from "@/components/Elements/DialogModal";
+
 export default {
   name: "DeviceCard",
   data() {
@@ -68,6 +81,12 @@ export default {
   },
   props: ['room', 'device', 'type'],
   inject: ['supportedDevices', 'addToRecent'],
+  watch: {
+    editPressed(val) {
+      if (!val)
+        this.submitValue()
+    }
+  },
   methods: {
     editElement() {
       document.activeElement.blur();
@@ -79,15 +98,23 @@ export default {
       document.activeElement.blur();
       this.dialog = true;
     },
-    deleteElement() {
+    submitValue() {
+      this.$store.commit('editDeviceName', {name: this.device, room: this.room, newName: this.input})
+      this.dialog = false;
+      this.editingName = false
+    },
+    deleteDevice() {
       // todo: borrado de dispositivo
+      console.log('borrando')
+      this.$store.commit('deleteDevice', {name: this.device, room: this.room})
+      this.dialog = false;
     },
     converter(string) {
       return slugToText(string)
     },
     goToDeviceView() {
       this.$store.commit('selectRoom', this.room);
-      this.$router.push({ name: this.type, params: { deviceName: this.device, room: this.room } })
+      this.$router.push({name: this.type, params: {deviceName: this.device, room: this.room}})
     },
     addToRecents() {
       this.addToRecent(this.device)
@@ -119,10 +146,11 @@ export default {
   width: 25px;
   height: 25px;
   font-size: 8pt;
-  margin-top: 180px;
+  margin-top: 150px;
   margin-right: -10px;
   position: absolute;
   top: 0;
   right: 0;
 }
+
 </style>

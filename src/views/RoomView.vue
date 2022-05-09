@@ -1,15 +1,22 @@
 <template>
   <div>
-    <v-card-title  class="justify-space-between text-caption">Habitación {{
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Habitación {{
         this.converter(roomName)
-      }}</v-card-title>
+      }}</div>
 
-    <AddButton @onClick="addDevice"></AddButton>
+    <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
     <EditButton setter='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
     <CloseButton @onClick="close"/>
-    <DevicesView :devices = "devices.filter(e => e.room === $route.params.room)"></DevicesView>
-  <!--  <DeviceCard :key="device.name" v-for="device in devices.filter(e => e.room === $route.params.room)"-->
-  <!--  :device="device.name" :room="device.room"></DeviceCard>-->
+    <div v-for="group in groups" :key="group">
+      <v-slide-x-transition mode="out-in">
+        <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium">
+          <div>
+            {{converter(group)}}
+          </div>
+          <DevicesView :devices = "selectDevices(group)" :key="filteredDevices.length"></DevicesView>
+        </div>
+      </v-slide-x-transition>
+    </div>
   </div>
 </template>
 
@@ -45,12 +52,21 @@ export default {
     },
     editDevice(){
       this.editing = !this.editing
+    },
+    selectDevices(group) {
+      return this.filteredDevices.filter(e => e.group === group)
     }
   },
   computed: {
     ...mapState(['devices']),
     editing() {
       return this.$store.state.editTheRoomPressed
+    },
+    filteredDevices() {
+      return this.devices.filter(e => e.room === this.$route.params.room)
+    },
+    groups() {
+      return new Set(this.filteredDevices.map(e => e.group))
     }
   }
 }
