@@ -68,7 +68,6 @@ export default {
       isActive: false,
       dialog: false,
       editing: false,
-      dialogSetter: (val) => this.dialog = val
     }
   },
   computed: {

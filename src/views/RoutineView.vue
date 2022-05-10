@@ -43,7 +43,7 @@ export default {
       this.$router.push({ name: 'addRoutine', params: { routine:  this.routine} })
     },
     close() {
-      this.$store.commit('selectRoom',"");
+      this.$store.commit('selectRoutine',"");
       this.$router.push({ path: '/'})
     },
     editDevice(){
