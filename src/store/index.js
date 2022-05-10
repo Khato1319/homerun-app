@@ -28,35 +28,60 @@ export default new Vuex.Store({
         editRoomPressed: false,
         editTheRoomPressed: false,
         editRoutinePressed: false,
-        supportedDevices: [{
+        supportedDevices: [
+            {
             type: 'light',
             name: 'Lámpara',
-            actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
-        },
-            {
-                type: 'vacuum',
-                name: 'Lámpara',
-                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+            actions: [
+                {slug: 'turn-on', name: 'encender'},
+                {slug: 'turn-off', name: 'apagar'},
+                {slug: 'change-color', name: 'cambiar color'},
+                {slug: 'change-intensity', name: 'cambiar intensidad'}]
             },
             {
-                type: 'light',
+                type: 'vacuum',
                 name: 'Aspiradora',
-                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+                actions: [
+                    {slug: 'turn-on', name: 'encender'},
+                    {slug: 'turn-off', name: 'apagar'},
+                    {slug: 'resume', name: 'reanudar'},
+                    {slug: 'pause', name: 'pausar'},
+                    {slug: 'change-location', name: 'cambiar ubicación'},
+                    {slug: 'return-to-base', name: 'volver a estación de carga'},
+                    {slug: 'set-mode', name: 'establecer modo'},
+                    {slug: 'change-charge-location', name: 'cambiar ubicación de base de carga'}]
             },
             {
                 type: 'alarm',
                 name: 'Alarma',
-                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+                actions: [
+                    {slug: 'activate-house', name: 'activar modo casa'},
+                    {slug: 'activate-regular', name: 'activar modo normal'},
+                    {slug: 'change-code', name: 'cambiar código'},
+                    {slug: 'deactivate', name: 'desactivar'}]
             },
             {
                 type: 'oven',
                 name: 'Horno',
-                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+                actions: [
+                    {slug: 'turn-on', name: 'encender'},
+                    {slug: 'turn-off', name: 'apagar'},
+                    {slug: 'set-temperature', name: 'establecer temperatura'},
+                    {slug: 'set-source', name: 'establecer fuente de calor'},
+                    {slug: 'set-grill', name: 'establecer modo grill'},
+                    {slug: 'set-convection', name: 'establecer modo conveccion'}]
             },
             {
                 type: 'a/c',
                 name: 'Aire acondicionado',
-                actions: [{slug: 'turn-on', name: 'encender'}, {slug: 'turn-off', name: 'apagar'}]
+                actions: [
+                    {slug: 'turn-on', name: 'encender'},
+                    {slug: 'turn-off', name: 'apagar'},
+                    {slug: 'set-temperature', name: 'establecer temperatura'},
+                    {slug: 'set-mode', name: 'establecer modo'},
+                    {slug: 'set-horizontal', name: 'establecer posicion de aspas horizontales'},
+                    {slug: 'set-vertical', name: 'establecer posicion de aspas verticales'},
+                    {slug: 'set-fan-speed', name: 'establecer velocidad de ventilador'}]
             }
         ],
         devices: [{

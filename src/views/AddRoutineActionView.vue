@@ -24,10 +24,10 @@
 
       <v-select
           v-model="action"
-          v-if="deviceType !== ''"
+          :disabled="deviceType === ''"
           :items="actions"
           :rules="[v => !!v || 'El item es obligatorio']"
-          label="Acción"
+          :label="deviceType === ''? 'Seleccione un dispositivo primero' : 'Acción'"
           required
       ></v-select>
 
