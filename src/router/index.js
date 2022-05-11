@@ -10,6 +10,7 @@ import VacuumView from "@/views/devices/VacuumView";
 import store from '../store'
 import RoutineView from "@/views/RoutineView";
 import AddRoutineActionView from "@/views/AddRoutineActionView";
+import HelpView from "@/components/ViewButtons/HelpView";
 
 Vue.use(VueRouter)
 
@@ -119,6 +120,12 @@ const routes = [
     alias: '*',
     name: 'notFound',
     component: () => import(/* webpackChunkName: "about" */ '../views/NotFound.vue')
+  },
+  {
+    path: '/help',
+    name: 'help',
+
+    component: HelpView
   }
 ]
 
