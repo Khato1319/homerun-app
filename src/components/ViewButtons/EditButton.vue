@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     clickHandler() {
-      this.$store.commit(this.setter)
+      this.$store.commit(this.toggler)
     },
   },
   computed: {
@@ -32,7 +32,7 @@ export default {
       return this.$store.state[this.editButtonGetter]
     }
   },
-  props: ['editButtonGetter', 'toggler', 'setter']
+  props: ['editButtonGetter', 'toggler']
 }
 </script>
 

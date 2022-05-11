@@ -4,7 +4,7 @@
         this.converter(roomName) }}</div>
 
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
-    <EditButton setter='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
+    <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
     <CloseButton @onClick="close"/>
     <div v-for="group in groups" :key="group">
       <v-slide-x-transition mode="out-in">

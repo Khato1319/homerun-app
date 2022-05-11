@@ -33,9 +33,6 @@ export default {
           inputVal: this.converter(this.inputValue)
         }
     },
-  watch: {
-
-  },
     methods: {
       converter(string) {
         return slugToText(string)

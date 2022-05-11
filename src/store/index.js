@@ -10,17 +10,21 @@ export default new Vuex.Store({
         rooms: ['bedroom', 'living', 'uno', 'bathroom', 'gameroom', 'office', 'kitchen'],
         routines: [{
             routine: 'buen-dia',
-            actions: [{device: 'luz-1', room: 'bedroom', action: 'apagar'}, {
+            actions: [{device: 'luz-1', room: 'bedroom', action: 'cambiar-estado',
+                value: [true, 'encendido']}, {
                 device: 'luz-1',
                 room: 'bedroom',
-                action: 'apagar'
+                action: 'cambiar-estado',
+                value: [true, 'encendido']
             }]
         }, {
             routine: 'a-dormir',
-            actions: [{device: 'luz-1', room: 'bedroom', action: 'apagar'}, {
+            actions: [{device: 'luz-1', room: 'bedroom', action: 'cambiar-estado',
+                value: [true, 'encendido']}, {
                 device: 'luz-1',
                 room: 'bedroom',
-                action: 'apagar'
+                action: 'cambiar-estado',
+                value: [true, 'encendido']
             }]
         }],
         selectedRoom: "",
@@ -28,13 +32,15 @@ export default new Vuex.Store({
         editRoomPressed: false,
         editTheRoomPressed: false,
         editRoutinePressed: false,
+        editActionsPressed: false,
         supportedDevices: [
             {
             type: 'light',
             name: 'Lámpara',
             actions: [
-                {slug: 'turn-on', name: 'encender'},
-                {slug: 'turn-off', name: 'apagar'},
+                // {slug: 'turn-on', name: 'encender'},
+                // {slug: 'turn-off', name: 'apagar'},
+                {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
                 {slug: 'change-color', name: 'cambiar color'},
                 {slug: 'change-intensity', name: 'cambiar intensidad'}]
             },
@@ -42,8 +48,7 @@ export default new Vuex.Store({
                 type: 'vacuum',
                 name: 'Aspiradora',
                 actions: [
-                    {slug: 'turn-on', name: 'encender'},
-                    {slug: 'turn-off', name: 'apagar'},
+                    {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
                     {slug: 'resume', name: 'reanudar'},
                     {slug: 'pause', name: 'pausar'},
                     {slug: 'change-location', name: 'cambiar ubicación'},
@@ -64,8 +69,7 @@ export default new Vuex.Store({
                 type: 'oven',
                 name: 'Horno',
                 actions: [
-                    {slug: 'turn-on', name: 'encender'},
-                    {slug: 'turn-off', name: 'apagar'},
+                    {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
                     {slug: 'set-temperature', name: 'establecer temperatura'},
                     {slug: 'set-source', name: 'establecer fuente de calor'},
                     {slug: 'set-grill', name: 'establecer modo grill'},
@@ -75,8 +79,7 @@ export default new Vuex.Store({
                 type: 'a/c',
                 name: 'Aire acondicionado',
                 actions: [
-                    {slug: 'turn-on', name: 'encender'},
-                    {slug: 'turn-off', name: 'apagar'},
+                    {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
                     {slug: 'set-temperature', name: 'establecer temperatura'},
                     {slug: 'set-mode', name: 'establecer modo'},
                     {slug: 'set-horizontal', name: 'establecer posicion de aspas horizontales'},
@@ -145,6 +148,12 @@ export default new Vuex.Store({
         setEditTheRoomPressed(state, value) {
             state.editTheRoomPressed = value
         },
+        toggleEditActionsPressed(state) {
+            state.editActionsPressed = !state.editActionsPressed
+        },
+        setEditActionsPressed(state, value) {
+            state.editActionsPressed = value
+        },
         addRoom(state, room) {
             state.rooms.push(textToSlug(room));
         },
@@ -156,6 +165,9 @@ export default new Vuex.Store({
         addActionToRoutine(state, payLoad) {
           const routine = state.routines.find(r => r.routine === payLoad.routine)
             routine.actions.push(payLoad.action)
+        },
+        deleteActionFromRoutine(state, payLoad) {
+          state.routines.find(r => r.routine === payLoad.routine).actions.splice(payLoad.idx, 1)
         },
         selectRoom(state, room) {
             state.selectedRoom = room;

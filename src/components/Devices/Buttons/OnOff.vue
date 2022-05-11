@@ -23,6 +23,12 @@
         clicked: false,
       }
     },
+
+    methods: {
+      getActionValue() {
+        return [this.clicked, this.clicked ? 'encendido' : 'apagado']
+      }
+    }
   }
 </script>
 

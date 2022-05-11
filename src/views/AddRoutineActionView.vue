@@ -25,16 +25,17 @@
       <v-select
           v-model="action"
           :disabled="deviceType === ''"
-          :items="actions"
+          :items="actions.map(a => converter(a.name))"
           :rules="[v => !!v || 'El item es obligatorio']"
           :label="deviceType === ''? 'Seleccione un dispositivo primero' : 'Acción'"
           required
       ></v-select>
-
+      <div v-if="actionObjName" class="mt-2 mb-5 d-flex justify-center align-content-center">
+        <component :is="actionObjName" ref="actionComp"></component>
+      </div>
       <v-btn
           :disabled="!valid"
           color="success"
-          class="mr-4"
           @click="validate"
       >
         Agregar
@@ -46,8 +47,15 @@
 <script>
 import {slugToText, textToSlug} from "../../utils/Utils";
 
+import CloseButton from "@/components/ViewButtons/CloseButton";
+import OnOff from "@/components/Devices/Buttons/OnOff";
+
 export default {
   name: "AddRoutineActionView",
+  components: {
+    OnOff,
+    CloseButton
+  },
   data() {
     return {
       routine: this.$route.params.routine,
@@ -64,22 +72,29 @@ export default {
       [this.deviceName, this.deviceRoom] = val.split(' - ').map(x => textToSlug(x))
       const device = this.$store.state.devices.find(d => d.name === this.deviceName && d.room === this.deviceRoom)
       this.deviceType = device.type
+      this.action = ''
     }
   },
   computed: {
     valid() {
-      return this.action !== '' && this.deviceName !== '' && this.deviceRoom !== ''
+      return this.deviceType !== '' && this.deviceName !== '' && this.deviceRoom !== '' && this.action !== ''
     },
     actions() {
       if (this.deviceType === '')
         return []
-      else return this.$store.state.supportedDevices.find(d => d.type === this.deviceType).actions.map(a => slugToText(a.name))
+      else {
+        return this.$store.state.supportedDevices.find(d => d.type === this.deviceType).actions
+      }
+    },
+    actionObjName() {
+      return this.actions.find(a => a.name === textToSlug(this.action))?.component
     }
   },
   methods: {
     validate() {
       this.action = textToSlug(this.action)
-      this.$store.commit('addActionToRoutine', {routine: this.routine, action: {device: this.deviceName, room: this.deviceRoom, action: this.action}})
+      const actionValue = this.$refs.actionComp.getActionValue();
+      this.$store.commit('addActionToRoutine', {routine: this.routine, action: {device: this.deviceName, room: this.deviceRoom, action: this.action, value: actionValue}})
       this.close()
     },
     converter(s) {

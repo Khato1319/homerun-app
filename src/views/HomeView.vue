@@ -24,6 +24,12 @@ export default {
 
     }
   },
+  mounted() {
+    this.$store.commit('setEditActionsPressed', false)
+    this.$store.commit('setEditRoutinePressed', false)
+    this.$store.commit('setEditRoomPressed', false)
+    this.$store.commit('setEditTheRoomPressed', false)
+  },
   methods: {
 
   }
