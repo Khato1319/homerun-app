@@ -30,9 +30,10 @@
           :label="deviceType === ''? 'Seleccione un dispositivo primero' : 'Acción'"
           required
       ></v-select>
-      <div v-if="actionObjName" class="mt-2 mb-5 d-flex justify-center align-content-center">
-        <component :is="actionObjName" ref="actionComp"></component>
+      <div v-if="actionObj" class="mt-2 mb-5 d-flex justify-center align-content-center">
+        <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
       </div>
+
       <v-btn
           :disabled="!valid"
           color="success"
@@ -49,12 +50,14 @@ import {slugToText, textToSlug} from "../../utils/Utils";
 
 import CloseButton from "@/components/ViewButtons/CloseButton";
 import OnOff from "@/components/Devices/Buttons/OnOff";
+import NumberPicker from "@/components/Devices/Buttons/NumberPicker";
 
 export default {
   name: "AddRoutineActionView",
   components: {
     OnOff,
-    CloseButton
+    CloseButton,
+    NumberPicker
   },
   data() {
     return {
@@ -86,8 +89,8 @@ export default {
         return this.$store.state.supportedDevices.find(d => d.type === this.deviceType).actions
       }
     },
-    actionObjName() {
-      return this.actions.find(a => a.name === textToSlug(this.action))?.component
+    actionObj() {
+      return this.actions.find(a => a.name === textToSlug(this.action))
     }
   },
   methods: {

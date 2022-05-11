@@ -57,7 +57,7 @@
 
       >
         <v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'">
-          mdi-android
+          {{icon}}
         </v-icon>
 
       </v-btn>
@@ -171,6 +171,9 @@ export default {
     },
     hasPassword() {
       return this.$store.getters.getDevice(this.device, this.room).hash
+    },
+    icon() {
+      return this.$store.getters.getIcon(this.type)
     }
   }
 }

@@ -37,28 +37,30 @@ export default new Vuex.Store({
             {
             type: 'light',
             name: 'Lámpara',
+                icon: 'mdi-lightbulb',
             actions: [
                 // {slug: 'turn-on', name: 'encender'},
                 // {slug: 'turn-off', name: 'apagar'},
-                {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
-                {slug: 'change-color', name: 'cambiar color'},
-                {slug: 'change-intensity', name: 'cambiar intensidad'}]
+                {slug: 'state', name: 'cambiar-estado', component: "OnOff", props: {}},
+                {slug: 'change-color', name: 'cambiar-color'},
+                {slug: 'change-intensity', name: 'cambiar-intensidad', component: "NumberPicker", props: {min: 0, max: 100, label: "Intensidad"}}]
             },
             {
                 type: 'vacuum',
                 name: 'Aspiradora',
+                icon: 'mdi-robot-vacuum',
                 actions: [
-                    {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
-                    {slug: 'resume', name: 'reanudar'},
-                    {slug: 'pause', name: 'pausar'},
-                    {slug: 'change-location', name: 'cambiar ubicación'},
-                    {slug: 'return-to-base', name: 'volver a estación de carga'},
-                    {slug: 'set-mode', name: 'establecer modo'},
-                    {slug: 'change-charge-location', name: 'cambiar ubicación de base de carga'}]
+                    {slug: 'state', name: 'cambiar-estado', component: "OnOff", props: {}},
+                    {slug: 'resume', name: 'estado-de-reproducción', component: "PlayPause", props: {}},
+                    {slug: 'change-location', name: 'cambiar-ubicación', component: "SelectFromArray", props:{}},
+                    {slug: 'return-to-base', name: 'volver-a-estación-de-carga'},
+                    {slug: 'set-mode', name: 'establecer-modo'},
+                    {slug: 'change-charge-location', name: 'cambiar-ubicación-de-base-de-carga'}]
             },
             {
                 type: 'alarm',
                 name: 'Alarma',
+                icon: 'mdi-shield-home',
                 actions: [
                     {slug: 'activate-house', name: 'activar modo casa'},
                     {slug: 'activate-regular', name: 'activar modo normal'},
@@ -68,23 +70,25 @@ export default new Vuex.Store({
             {
                 type: 'oven',
                 name: 'Horno',
+                icon: 'mdi-stove',
                 actions: [
                     {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
-                    {slug: 'set-temperature', name: 'establecer temperatura'},
-                    {slug: 'set-source', name: 'establecer fuente de calor'},
-                    {slug: 'set-grill', name: 'establecer modo grill'},
-                    {slug: 'set-convection', name: 'establecer modo conveccion'}]
+                    {slug: 'set-temperature', name: 'establecer-temperatura', component: "NumberPicker", props: {min: 90, max: 230, label: "Temperatura"}},
+                    {slug: 'set-source', name: 'establecer-fuente-de-calor'},
+                    {slug: 'set-grill', name: 'establecer-modo-grill'},
+                    {slug: 'set-convection', name: 'establecer-modo-conveccion'}]
             },
             {
                 type: 'a/c',
                 name: 'Aire acondicionado',
+                icon: 'mdi-fan',
                 actions: [
                     {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
-                    {slug: 'set-temperature', name: 'establecer temperatura'},
-                    {slug: 'set-mode', name: 'establecer modo'},
-                    {slug: 'set-horizontal', name: 'establecer posicion de aspas horizontales'},
-                    {slug: 'set-vertical', name: 'establecer posicion de aspas verticales'},
-                    {slug: 'set-fan-speed', name: 'establecer velocidad de ventilador'}]
+                    {slug: 'set-temperature', name: 'establecer-temperatura', component: "NumberPicker", props: {min: 18, max: 38, label: "Temperatura"}},
+                    {slug: 'set-mode', name: 'establecer-modo'},
+                    {slug: 'set-horizontal', name: 'establecer-posicion-de-aspas-horizontales'},
+                    {slug: 'set-vertical', name: 'establecer-posicion-de-aspas-verticales'},
+                    {slug: 'set-fan-speed', name: 'establecer-velocidad-de-ventilador'}]
             }
         ],
         devices: [{
@@ -124,6 +128,9 @@ export default new Vuex.Store({
         },
         getDevice: (state) => (name, room) => {
             return state.devices.find(d => d.room === room && d.name === name);
+        },
+        getIcon: (state) => (type) => {
+          return state.supportedDevices.find(d => d.type === type).icon
         },
         selectedRoom: (state) => state.selectedRoom,
         selectedRoutine: (state) => state.selectedRoutine

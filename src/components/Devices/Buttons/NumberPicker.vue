@@ -5,7 +5,8 @@
         <v-slider class="picker"
                   :label="this.label"
                   thumb-color="primary"
-                  thumb-label="always"
+                  thumb-label
+                  v-model="value"
                   :min = "this.min"
                   :max = "this.max"
         ></v-slider>
@@ -18,6 +19,16 @@
 export default {
   name: "NumberPicker",
   props: ["label", "min", "max"],
+  methods: {
+    getActionValue() {
+      return [this.value, this.value.toString()]
+    }
+  },
+  data() {
+    return {
+      value: this.min
+    }
+  }
 }
 </script>
 

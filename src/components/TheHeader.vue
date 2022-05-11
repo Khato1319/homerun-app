@@ -7,7 +7,7 @@
       <v-img height="50" width="50" src="@/assets/HR-Logo-Nameless-Shape.png"/>
     </v-btn>
 <!--    Podría ponerse un espacio porque por ahora queda muy pegado-->
-    <v-toolbar-title class="white--text mr-auto" style="font-family:Shrikhand,serif">HomeRun</v-toolbar-title>
+    <v-toolbar-title class="white--text mr-auto" style="font-family:Shrikhand,Nunito">HomeRun</v-toolbar-title>
     <v-btn color="blue lighten-4" rounded>
       <v-icon >mdi-help</v-icon>
     </v-btn>

@@ -116,7 +116,7 @@ export default {
       return this.converter(this.room);
     },
     groupsForRoom() {
-      return this.$store.state.devices.filter(d=>d.room === this.room).map(d => this.converter(d.group));
+      return new Set(this.$store.state.devices.filter(d=>d.room === this.room).map(d => this.converter(d.group)))
     }
   }
 }

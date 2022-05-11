@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="d-flex justify-center">
-      <DeviceCard  class="pa-2" v-for="device in devices" :key="device.name" :device="device.name" :room="device.room" :type="device.type"></DeviceCard>
+      <DeviceCard  class="pa-2" v-for="device in devices" :key="device.name" :device="device.name" :room="device.room" :type="device.type" ></DeviceCard>
 
     </v-row>
   </v-container>
