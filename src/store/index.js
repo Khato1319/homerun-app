@@ -4,6 +4,7 @@ import {textToSlug} from "../../utils/Utils";
 
 Vue.use(Vuex);
 
+
 export default new Vuex.Store({
 
     state: {
@@ -42,7 +43,7 @@ export default new Vuex.Store({
                 // {slug: 'turn-on', name: 'encender'},
                 // {slug: 'turn-off', name: 'apagar'},
                 {slug: 'state', name: 'cambiar-estado', component: "OnOff", props: {}},
-                {slug: 'change-color', name: 'cambiar-color'},
+                {slug: 'change-color', name: 'cambiar-color', component: "ColorPicker", props: {}},
                 {slug: 'change-intensity', name: 'cambiar-intensidad', component: "NumberPicker", props: {min: 0, max: 100, label: "Intensidad"}}]
             },
             {
@@ -52,10 +53,10 @@ export default new Vuex.Store({
                 actions: [
                     {slug: 'state', name: 'cambiar-estado', component: "OnOff", props: {}},
                     {slug: 'resume', name: 'estado-de-reproducción', component: "PlayPause", props: {}},
-                    {slug: 'change-location', name: 'cambiar-ubicación', component: "SelectFromArray", props:{}},
+                    {slug: 'change-location', name: 'cambiar-ubicación', component: "SelectFromArray", props:{getter: "getRooms", label: "Habitaciones"}},
                     {slug: 'return-to-base', name: 'volver-a-estación-de-carga'},
-                    {slug: 'set-mode', name: 'establecer-modo'},
-                    {slug: 'change-charge-location', name: 'cambiar-ubicación-de-base-de-carga'}]
+                    {slug: 'set-mode', name: 'establecer-modo', component: "SelectFromArray", props:{getter: "getVacuumModes", label: "Modos"}},
+                    {slug: 'change-charge-location', name: 'cambiar-ubicación-de-base-de-carga', component: "SelectFromArray", props:{getter: "getRooms", label: "Habitaciones"}} ]
             },
             {
                 type: 'alarm',
@@ -97,7 +98,32 @@ export default new Vuex.Store({
             type: "light",
             hash: 3208380,
             group: "grupo-1"
-        }, {
+        },
+            {
+                name: "aspiradora-1",
+                room: "bedroom",
+                type: "vacuum",
+                group: "grupo-1"
+            },
+            {
+                name: "hotno-1",
+                room: "bedroom",
+                type: "oven",
+                group: "grupo-1"
+            },
+            {
+                name: "aire-1",
+                room: "bedroom",
+                type: "a/c",
+                group: "grupo-1"
+            },
+            {
+                name: "alarma-1",
+                room: "bedroom",
+                type: "alarm",
+                group: "grupo-1"
+            },
+            {
             name: "luz-2",
             room: "bedroom",
             type: "light",
@@ -113,6 +139,9 @@ export default new Vuex.Store({
     getters: {
         getRooms: (state) => {
             return state.rooms
+        },
+        getVacuumModes: () => {
+          return ["Aspirar", "Trapear"]
         },
         getRoutines: (state) => {
             return state.routines.map(e => e.routine)

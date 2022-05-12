@@ -47,9 +47,9 @@
 
             </v-col>
 
-            <v-col>
+            <v-col >
               <v-slide-x-reverse-transition mode="out-in">
-                <v-card height="100%" class="py-3 px-2" :key="$route.fullPath">
+                <v-card height="100%" class="py-3 px-2"  :key="$route.fullPath">
                   <router-view :key="$route.fullPath" cols="6"/>
                 </v-card>
               </v-slide-x-reverse-transition>

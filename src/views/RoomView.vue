@@ -6,16 +6,19 @@
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
     <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
     <CloseButton @onClick="close"/>
-    <div v-for="group in groups" :key="group">
-      <v-slide-x-transition mode="out-in">
-        <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium">
-          <div>
-            {{converter(group)}}
+    <div style="overflow-y: scroll; height: 74vh">
+      <div v-for="group in groups" :key="group" >
+        <v-slide-x-transition mode="out-in">
+          <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium">
+            <div>
+              {{converter(group)}}
+            </div>
+            <DevicesView :devices = "selectDevices(group)" :key="filteredDevices.length"></DevicesView>
           </div>
-          <DevicesView :devices = "selectDevices(group)" :key="filteredDevices.length"></DevicesView>
-        </div>
-      </v-slide-x-transition>
-    </div>
+        </v-slide-x-transition>
+      </div>
+  </div>
+
   </div>
 </template>
 

@@ -77,6 +77,19 @@ export default {
       blue: 0,
     }
   },
+  methods: {
+    getActionValue() {
+      const rgb = `${this.numberToHexa(this.red)}${this.numberToHexa(this.green)}${this.numberToHexa(this.blue)}`
+      return [rgb, [this.red, this.green, this.blue]]
+    },
+    numberToHexa (rgb) {
+      let hex = Number(rgb).toString(16);
+      if (hex.length < 2) {
+        hex = "0" + hex;
+      }
+      return hex;
+    }
+  }
 }
 </script>
 

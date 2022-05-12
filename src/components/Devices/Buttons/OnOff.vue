@@ -4,11 +4,11 @@
            fab
            dark
            large
-           :color="clicked ? 'white' : 'blue-grey lighten-4'"
+           :color="clicked ? 'white' : 'primary'"
            @click="()=>{clicked = !clicked; $emit('onClick')}"
            elevation="8"
     >
-      <v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'"
+      <v-icon :color="clicked ? 'primary' : 'white'"
       >mdi-power</v-icon>
     </v-btn>
   </v-slide-x-transition>

@@ -9,7 +9,7 @@
     <CloseButton @onClick="close"></CloseButton>
     <v-form
         ref="form"
-        v-model="valid"
+
         lazy-validation
     >
 
@@ -51,13 +51,18 @@ import {slugToText, textToSlug} from "../../utils/Utils";
 import CloseButton from "@/components/ViewButtons/CloseButton";
 import OnOff from "@/components/Devices/Buttons/OnOff";
 import NumberPicker from "@/components/Devices/Buttons/NumberPicker";
-
+import SelectFromArray from "@/components/Devices/Buttons/SelectFromArray";
+import PlayPause from "@/components/Devices/Buttons/PlayPause";
+import ColorPicker from "@/components/Devices/Buttons/ColorPicker";
 export default {
   name: "AddRoutineActionView",
   components: {
     OnOff,
     CloseButton,
-    NumberPicker
+    NumberPicker,
+    SelectFromArray,
+    PlayPause,
+    ColorPicker
   },
   data() {
     return {
@@ -96,7 +101,10 @@ export default {
   methods: {
     validate() {
       this.action = textToSlug(this.action)
-      const actionValue = this.$refs.actionComp.getActionValue();
+      let actionValue = undefined;
+      if(this.actionObj.component)
+        actionValue = this.$refs.actionComp.getActionValue()
+
       this.$store.commit('addActionToRoutine', {routine: this.routine, action: {device: this.deviceName, room: this.deviceRoom, action: this.action, value: actionValue}})
       this.close()
     },

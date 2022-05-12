@@ -10,7 +10,16 @@
           this.converter(routine)}}</div>
 
       <v-card v-for="(action, idx) in actions" :key="action.name">
-        <v-card-text>{{converter(action.device)}} de {{converter(action.room)}} - {{converter(action.action)}}: {{converter(action.value[1])}} </v-card-text>
+        <v-card-text >
+          <div class="d-flex justify-center align-center">
+            {{converter(action.device)}} de {{converter(action.room)}} - {{converter(action.action)}}: &#8205;
+            <div class="color-circle" v-if="action.value[1] instanceof Array" :style="{ background: `rgb(${action.value[1][0]}, ${action.value[1][1]}, ${action.value[1][2]})` }">
+            </div>
+            <span v-else>{{converter(action.value[1])}}</span>
+          </div>
+
+
+        </v-card-text>
         <v-fab-transition>
           <v-btn v-if="editing" mode="out-in" fab x-small id="delete-button"
                 @click="()=>deleteActionModal(idx)" >
@@ -116,5 +125,12 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.color-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
 }
 </style>
