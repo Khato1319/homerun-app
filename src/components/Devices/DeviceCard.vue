@@ -13,6 +13,7 @@
       </template>
       ¿Está seguro de que quiere borrar el dispositivo {{ converter(device) }}?
     </DialogModal>
+
     <v-fab-transition>
       <v-btn v-if="editPressed && !editingName" mode="out-in" fab x-small id="delete-button"
              @click.stop="deleteDeviceDialog">
@@ -24,19 +25,22 @@
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
     </v-fab-transition>
-    <div class="d-flex justify-space-between align-content-center" style="max-width: 100%">
+
+
+    <div class="d-flex" style="max-width: 100%">
       <div class="d-flex flex-column" style="max-width: 100%">
-        <div class="d-flex align-center justify-space-between" style="max-width: 100%">
-          <input style="color: white ; max-width: 70%" class='ma-1 title-input text-md-left font-weight-bold' @keypress.enter='submitValue' ref='inputElem'                                :disabled="!editPressed || !editingName" type="text" v-model="input">
-          <v-btn class="mx-2"
+        <div class="d-flex align-center" style="max-width: 100%">
+          <input style="color: white ; max-width: 70%" class='ma-1 title-input text-md-left font-weight-bold' @keypress.enter='submitValue' ref='inputElem' :disabled="!editPressed || !editingName" type="text" v-model="input"/>
+
+          <v-btn class="mx-2 d-flex "
                  fab
                  dark
                  v-if="!submittingPwd"
-                 small
-                 color="blue-grey lighten-4"
+                 large
+                 color="blue lighten-4"
                  @click="()=> {addToRecents(); goToDeviceView()}">
-            <v-icon dark >
-              mdi-cog
+            <v-icon color="black" >
+              {{icon}}
             </v-icon>
           </v-btn>
         </div>
@@ -44,24 +48,8 @@
         <v-card-subtitle class="text-sm-left ma-1 pa-0">{{ converter(room) }}</v-card-subtitle>
 
       </div>
-
     </div>
-    <div class="d-flex justify-center align-content-center">
-      <v-btn
-          fab
-          dark
-          large
-          :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>{clicked = !clicked; addToRecents()}"
-          elevation="8"
-          v-if="!hasPassword"
 
-      >
-        <v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'">
-          {{icon}}
-        </v-icon>
-
-      </v-btn>
-    </div>
     <v-text-field v-if="submittingPwd"
                   v-model="password"
                   label="Ingrese la contraseña"
@@ -75,7 +63,7 @@
                   ref="pwdInput"
                   @blur="() => {this.incorrectMsg = ''; this.color = 'white'; this.value = true}"
     ></v-text-field>
-    <v-btn         color="success" v-if="submittingPwd" @click="checkPwd" class="text-sm-button" :disabled="password === ''">Ingresar</v-btn>
+    <v-btn color="success" v-if="submittingPwd" @click="checkPwd" class="text-sm-button" :disabled="password === ''">Ingresar</v-btn>
 
   </v-card>
 </template>
@@ -201,11 +189,17 @@ export default {
   width: 25px;
   height: 25px;
   font-size: 8pt;
-  margin-top: 150px;
+  margin-top: 105px;
   margin-right: -10px;
   position: absolute;
   top: 0;
   right: 0;
+}
+
+#icon-button {
+  margin-top: 15px;
+  margin-right: 15px;
+  position: absolute;
 }
 
 </style>
