@@ -38,16 +38,16 @@ export default new Vuex.Store({
             {
             type: 'light',
             name: 'Lámpara',
+                id: "go46xmbqeomjrsjr",
                 icon: 'mdi-lightbulb',
             actions: [
-                // {slug: 'turn-on', name: 'encender'},
-                // {slug: 'turn-off', name: 'apagar'},
-                {slug: 'state', name: 'cambiar-estado', component: "OnOff", props: {}},
-                {slug: 'change-color', name: 'cambiar-color', component: "ColorPicker", props: {}},
-                {slug: 'change-intensity', name: 'cambiar-intensidad', component: "NumberPicker", props: {min: 0, max: 100, label: "Intensidad"}}]
+                { name: 'estado', component: "OnOff", props: {apiId: ['turnOn', 'turnOff']}},
+                { name: 'cambiar-color', component: "ColorPicker", props: {apiId: 'setColor'}},
+                { name: 'cambiar-intensidad', component: "NumberPicker", props: {apiId: 'setBrightness', min: 0, max: 100, label: "Intensidad"}}]
             },
             {
                 type: 'vacuum',
+                id: "ofglvd9gqx8yfl3l",
                 name: 'Aspiradora',
                 icon: 'mdi-robot-vacuum',
                 actions: [
@@ -60,27 +60,30 @@ export default new Vuex.Store({
             },
             {
                 type: 'alarm',
+                id: "mxztsyjzsrq7iaqc",
                 name: 'Alarma',
                 icon: 'mdi-shield-home',
                 actions: [
                     {slug: 'activate-house', name: 'activar modo casa'},
                     {slug: 'activate-regular', name: 'activar modo normal'},
-                    {slug: 'change-code', name: 'cambiar código'},
+                    {slug: 'change-code', name: 'cambiar código', component: "SecurityCode", props: {}},
                     {slug: 'deactivate', name: 'desactivar'}]
             },
             {
                 type: 'oven',
+                id: "im77xxyulpegfmv8",
                 name: 'Horno',
                 icon: 'mdi-stove',
                 actions: [
                     {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
                     {slug: 'set-temperature', name: 'establecer-temperatura', component: "NumberPicker", props: {min: 90, max: 230, label: "Temperatura"}},
-                    {slug: 'set-source', name: 'establecer-fuente-de-calor'},
+                    {slug: 'set-source', name: 'establecer-fuente-de-calor', component: "SelectFromArray", props: {getter: "getHeatSources"}},
                     {slug: 'set-grill', name: 'establecer-modo-grill'},
                     {slug: 'set-convection', name: 'establecer-modo-conveccion'}]
             },
             {
                 type: 'a/c',
+                id: "li6cbv5sdlatti0j",
                 name: 'Aire acondicionado',
                 icon: 'mdi-fan',
                 actions: [
@@ -94,6 +97,7 @@ export default new Vuex.Store({
         ],
         devices: [{
             name: "luz-1",
+            id: "fffdac4e75b47e97",
             room: "bedroom",
             type: "light",
             hash: 3208380,
@@ -101,12 +105,13 @@ export default new Vuex.Store({
         },
             {
                 name: "aspiradora-1",
+                id: "d14cc2eaa9795ae2",
                 room: "bedroom",
                 type: "vacuum",
                 group: "grupo-1"
             },
             {
-                name: "hotno-1",
+                name: "horno-1",
                 room: "bedroom",
                 type: "oven",
                 group: "grupo-1"
@@ -124,12 +129,6 @@ export default new Vuex.Store({
                 group: "grupo-1"
             },
             {
-            name: "luz-2",
-            room: "bedroom",
-            type: "light",
-            group: "grupo-2"
-        },
-            {
                 name: "aspiradora",
                 room: "living",
                 type: "vacuum",
@@ -141,7 +140,12 @@ export default new Vuex.Store({
             return state.rooms
         },
         getVacuumModes: () => {
-          return ["Aspirar", "Trapear"]
+          return [{apiValue: "vacuum", value: "aspirar"}, {apiValue: "mop", value: "trapear"}]
+        },
+        getHeatSources: () => {
+            return [{apiValue: "top", value: "superior"},
+                {apiValue: "bottom", value: "inferior"},
+                {apiValue: "conventional", value: "convencional"}]
         },
         getRoutines: (state) => {
             return state.routines.map(e => e.routine)

@@ -1,18 +1,21 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="4">
-        <v-slider class="picker"
-                  :label="this.label"
-                  thumb-color="primary"
-                  thumb-label
-                  v-model="value"
-                  :min = "this.min"
-                  :max = "this.max"
-        ></v-slider>
-      </v-col>
-    </v-row>
-  </v-container>
+
+
+<div  class="slider">
+  <v-slider
+      :label="this.label"
+      thumb-color="primary"
+      thumb-label
+      v-model="value"
+      :min = "this.min"
+      :max = "this.max"
+
+  ></v-slider>
+</div>
+
+
+
+
 </template>
 
 <script>
@@ -33,6 +36,8 @@ export default {
 </script>
 
 <style>
-
+.slider {
+  width: 300px;
+}
 
 </style>

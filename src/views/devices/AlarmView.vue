@@ -1,17 +1,15 @@
 <template>
-<div>
-  {{converter(deviceName)}} Alarm
-  <CloseButton @onClick="close"></CloseButton>
-</div>
+  <GenericView :device-name="$route.params.deviceName" device-type="alarm"
+               device-id="" dispositivo="alarma"></GenericView>
 </template>
 
 <script>
-import CloseButton from "@/components/ViewButtons/CloseButton";
+import GenericView from "@/views/devices/GenericView";
 import {slugToText} from "../../../utils/Utils";
 export default {
   name: "LightView",
   components: {
-    CloseButton
+    GenericView
   },
   methods: {
     close() {

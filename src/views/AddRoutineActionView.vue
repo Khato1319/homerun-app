@@ -30,9 +30,9 @@
           :label="deviceType === ''? 'Seleccione un dispositivo primero' : 'Acción'"
           required
       ></v-select>
-      <div v-if="actionObj" class="mt-2 mb-5 d-flex justify-center align-content-center">
-        <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
-      </div>
+      <v-card v-if="actionObj && actionObj.component" color="white" class="elevation-4 pa-2 mt-2 mb-5 d-flex justify-center align-content-center">
+          <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
+      </v-card>
 
       <v-btn
           :disabled="!valid"
