@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     elements() {
-      return this.$store.getters[this.prop.elements]
+      return this.$store.getters[this.prop.elements].map(e => e.name)
     }
   },
   props: ['prop']

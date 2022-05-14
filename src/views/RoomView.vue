@@ -13,7 +13,7 @@
             <div>
               {{converter(group)}}
             </div>
-            <DevicesView :devices = "selectDevices(group)" :key="filteredDevices.length"></DevicesView>
+            <DevicesView :devices = "selectDevices(group)" :key="selectDevices(group).length"></DevicesView>
           </div>
         </v-slide-x-transition>
       </div>
@@ -28,7 +28,7 @@ import CloseButton from "@/components/ViewButtons/CloseButton";
 import DevicesView from "@/components/Devices/DevicesView";
 import EditButton from "@/components/ViewButtons/EditButton";
 import {slugToText} from "../../utils/Utils";
-import {mapGetters, mapState} from "vuex";
+import {mapGetters} from "vuex";
 export default {
   name: "RoomView",
   components: {
@@ -43,6 +43,9 @@ export default {
       converter: slugToText,
     }
   },
+  beforeMount() {
+    this.$store.dispatch('device/getAll')
+  },
   methods: {
     ...mapGetters(['selectedRoom']),
     addDevice() {
@@ -56,19 +59,18 @@ export default {
       this.editing = !this.editing
     },
     selectDevices(group) {
-      return this.filteredDevices.filter(e => e.group === group)
+      return this.roomDevices.filter(e => e.meta.group === group)
     }
   },
   computed: {
-    ...mapState(['devices']),
     editing() {
       return this.$store.state.editTheRoomPressed
     },
-    filteredDevices() {
-      return this.devices.filter(e => e.room === this.$route.params.room)
+    roomDevices() {
+      return this.$store.getters['device/getDevices'].filter(e => e.meta.room === this.$route.params.room)
     },
     groups() {
-      return new Set(this.filteredDevices.map(e => e.group))
+      return new Set(this.roomDevices.map(e => e.meta.group))
     }
   }
 }

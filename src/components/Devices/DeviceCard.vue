@@ -24,19 +24,20 @@
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
     </v-fab-transition>
-    <div class="d-flex justify-space-between align-content-center" style="max-width: 100%">
+    <div class="d-flex" style="max-width: 100%">
       <div class="d-flex flex-column" style="max-width: 100%">
-        <div class="d-flex align-center justify-space-between" style="max-width: 100%">
-          <input style="color: white ; max-width: 70%" class='ma-1 title-input text-md-left font-weight-bold' @keypress.enter='submitValue' ref='inputElem'                                :disabled="!editPressed || !editingName" type="text" v-model="input">
-          <v-btn class="mx-2"
+        <div class="d-flex align-center" style="max-width: 100%">
+          <input style="color: white ; max-width: 70%" class='ma-1 title-input text-md-left font-weight-bold' @keypress.enter='submitValue' ref='inputElem' :disabled="!editPressed || !editingName" type="text" v-model="input"/>
+
+          <v-btn class="mx-2 d-flex "
                  fab
                  dark
                  v-if="!submittingPwd"
-                 small
-                 color="blue-grey lighten-4"
+                 large
+                 color="blue lighten-4"
                  @click="()=> {addToRecents(); goToDeviceView()}">
-            <v-icon dark >
-              mdi-cog
+            <v-icon color="black" >
+              {{icon}}
             </v-icon>
           </v-btn>
         </div>
@@ -44,23 +45,6 @@
         <v-card-subtitle class="text-sm-left ma-1 pa-0">{{ converter(room) }}</v-card-subtitle>
 
       </div>
-
-    </div>
-    <div class="d-flex justify-center align-content-center">
-      <v-btn
-          fab
-          dark
-          large
-          :color="clicked ? 'white' : 'blue-grey lighten-4'" @click="()=>{clicked = !clicked; addToRecents()}"
-          elevation="8"
-          v-if="!hasPassword"
-
-      >
-        <v-icon :color="clicked ? 'blue-grey lighten-4' : 'white'">
-          {{icon}}
-        </v-icon>
-
-      </v-btn>
     </div>
     <v-text-field v-if="submittingPwd"
                   v-model="password"
@@ -102,7 +86,7 @@ export default {
   components: {
     DialogModal
   },
-  props: ['room', 'device', 'type'],
+  props: ['room', 'device', 'type', 'hash'],
   inject: ['addToRecent'],
   watch: {
     editPressed(val) {
@@ -112,10 +96,10 @@ export default {
   },
   methods: {
     checkPwd() {
-      const hash = this.$store.getters.getDevice(this.device, this.room).hash
-      console.log(hash)
+      // const hash = this.$store.getters.getDevice(this.device, this.room).hash
+      // console.log(hash)
       console.log(hashCode(this.password))
-      if (hashCode(this.password) === hash) {
+      if (hashCode(this.password) === this.hash) {
         this.goToDevice()
       }
       else {
@@ -135,15 +119,15 @@ export default {
       document.activeElement.blur();
       this.dialog = true;
     },
-    submitValue() {
-      this.$store.commit('editDeviceName', {name: this.device, room: this.room, newName: this.input})
+    async submitValue() {
+      await this.$store.dispatch('device/modify', {name: this.device, newName: this.input})
       this.dialog = false;
       this.editingName = false
     },
-    deleteDevice() {
+    async deleteDevice() {
       // todo: borrado de dispositivo
       console.log('borrando')
-      this.$store.commit('deleteDevice', {name: this.device, room: this.room})
+      await this.$store.dispatch('device/delete', this.device)
       this.dialog = false;
     },
     converter(string) {
@@ -170,7 +154,7 @@ export default {
       return this.$store.state.editTheRoomPressed
     },
     hasPassword() {
-      return this.$store.getters.getDevice(this.device, this.room).hash
+      return this.hash
     },
     icon() {
       return this.$store.getters.getIcon(this.type)

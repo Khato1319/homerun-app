@@ -5,6 +5,7 @@
            dark
            large
            @click="()=>{clicked = !clicked; $emit('onClick')}"
+           color="primary"
            elevation="8"
     >
       <v-icon>
@@ -25,7 +26,10 @@
     },
     methods: {
       getActionValue() {
-        return [this.clicked, this.clicked ? 'reanudar' : 'pausar']
+        return {
+          displayValue: this.clicked ? 'reanudar' : 'pausar',
+          actionName: this.clicked ? this.apiId[0] : this.apiId[1]
+        }
       }
     }
   }

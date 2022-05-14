@@ -21,10 +21,14 @@
 <script>
 export default {
   name: "NumberPicker",
-  props: ["label", "min", "max"],
+  props: ["label", "min", "max", "apiId"],
   methods: {
     getActionValue() {
-      return [this.value, this.value.toString()]
+      return {
+        displayValue: this.value.toString(),
+        value: this.value,
+        actionName: this.apiId
+      }
     }
   },
   data() {

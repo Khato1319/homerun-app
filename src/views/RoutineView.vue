@@ -9,13 +9,13 @@
       <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Rutina {{
           this.converter(routine)}}</div>
 
-      <v-card v-for="(action, idx) in actions" :key="action.name">
+      <v-card v-for="(action, idx) in actions" :key="action.meta.name">
         <v-card-text >
           <div class="d-flex justify-center align-center">
-            {{converter(action.device)}} de {{converter(action.room)}} - {{converter(action.action)}}: &#8205;
-            <div class="color-circle" v-if="action.value[1] instanceof Array" :style="{ background: `rgb(${action.value[1][0]}, ${action.value[1][1]}, ${action.value[1][2]})` }">
+            {{converter(action.device.name)}} de {{converter(action.device.meta.room)}} - {{converter(action.meta.name)}}: &#8205;
+            <div class="color-circle" v-if="action.meta.value.match('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')" :style="{ backgroundColor: action.meta.display }">
             </div>
-            <span v-else>{{converter(action.value[1])}}</span>
+            <span v-else>{{converter(action.meta.value)}}</span>
           </div>
 
 
@@ -100,7 +100,7 @@ export default {
   computed: {
     ...mapState(['devices']),
     actions() {
-      return this.$store.getters.getRoutine(this.routine).actions
+      return this.$store.getters['routine/getRoutine'](this.routine).actions
     },
     editing() {
       return this.$store.state.editActionsPressed

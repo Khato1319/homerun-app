@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <v-app>
-      <TheHeader @onClick="restorePage"/>
+      <TheHeader @onClick="restorePage" @help-event="handleHelp"/>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
         <v-layout>
           <v-row no-gutters>
             <v-col>
-              <v-tabs grow background-color="white" color="primary">
+              <v-tabs grow background-color="white" color="primary" v-model="tab">
                 <v-tab @click="restorePage">
                   Habitaciones
                 </v-tab>
                 <v-tab @click="restorePage">
                   Rutinas
                 </v-tab>
-                <v-tab-item style="overflow-y: scroll; height: 80vh ">
+                <v-tab-item key="roomView" style="overflow-y: scroll; height: 80vh ">
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons :key="rooms.length" cols="6"
                                      :prop="roomButtonsProp">
@@ -27,7 +27,7 @@
                   <EditButton class='edit-button' toggler="toggleEditRoomPressed" key='roomEdit'
                               setter="toggleEditRoomPressed" v-show="!addingRoom && selectedRoom === ''" edit-button-getter="editRoomPressed"/>
                 </v-tab-item>
-                <v-tab-item class="scrollbar" style="overflow-y: scroll; height: 80vh ">
+                <v-tab-item key="routineView" class="scrollbar" style="overflow-y: scroll; height: 80vh ">
                   <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
                              @onClick="addRoutine"/>
 
@@ -71,6 +71,7 @@ import ElementButtons from "@/components/Elements/ElementButtons"
 import EditButton from "@/components/ViewButtons/EditButton";
 import {mapState} from "vuex";
 import InputComponent from "./components/Elements/InputComponent.vue";
+import {mapActions} from "vuex"
 
 export default {
   components: {
@@ -110,26 +111,27 @@ export default {
   },
   data() {
     return {
+      tab: null,
       addingRoom: false,
       addingRoutine: false,
       routineButtonsProp: {
         setter: 'selectRoutine',
         selected: "selectedRoutine",
         routerName: "routine",
-        deleter: "deleteRoutine",
-        editor: 'editRoutineName',
+        deleter: "routine/delete",
+        editor: 'routine/modify',
         name: 'rutina',
-        elements: 'getRoutines',
+        elements: 'routine/getRoutines',
         editPressed: 'editRoutinePressed'
       },
       roomButtonsProp: {
         setter: 'selectRoom',
         selected: "selectedRoom",
         routerName: "room",
-        deleter: "deleteRoom",
-        editor: 'editRoomName',
+        deleter: "room/delete",
+        editor: 'room/modify',
         name: 'habitación',
-        elements: 'getRooms',
+        elements: 'room/getRooms',
         editPressed: 'editRoomPressed'
 
       },
@@ -143,14 +145,47 @@ export default {
       }
     }
   },
+  beforeMount() {
+    this.restorePage()
+    this.$getAllRooms();
+    this.$getAllRoutines()
+  },
   methods: {
-    addToRooms(value) {
+    handleHelp() {
+      switch(this.tab) {
+        case 0: // router push pagina de help de habitaciones
+              break;
+        case 1: // router push pagina de help de rutinas
+              break;
+      }
+    },
+    ...mapActions("room", {
+      $createRoom: "create",
+      $modifyRoom: "modify",
+      $deleteRoom: "delete",
+      $getAllRooms: "getAll"
+    }),
+
+    ...mapActions("routine", {
+      $createRoutine: "create",
+      $modifyRoutine: "modifyName",
+      $deleteRoutine: "delete",
+      $getAllRoutines: "getAll"
+    }),
+
+    async addToRooms(value) {
       this.addingRoom = false;
-      this.rooms.push(value);
+
+      try {
+        await this.$createRoom(value.toLowerCase())
+      } catch(e) {
+        console.log(e)
+      }
     },
     addToRoutines(value) {
       this.addingRoutine = false;
-      this.routines.push({routine: value, actions: undefined});
+      this.$router.push({ name: 'addRoutine', params: { routine:  value}})
+      // this.routines.push({routine: value, actions: undefined});
     },
     addRoom() {
       this.addingRoom = !this.addingRoom;

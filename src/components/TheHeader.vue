@@ -8,7 +8,7 @@
     </v-btn>
 <!--    Podría ponerse un espacio porque por ahora queda muy pegado-->
     <v-toolbar-title class="white--text mr-auto" style="font-family:Shrikhand,Nunito">HomeRun</v-toolbar-title>
-    <v-btn color="blue lighten-4" rounded @click="openHelp">
+    <v-btn color="blue lighten-4" rounded @click="()=>$emit('help-event')">
       <v-icon>mdi-help</v-icon>
     </v-btn>
   </v-app-bar>

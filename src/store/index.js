@@ -1,11 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {textToSlug} from "../../utils/Utils";
+import room from "./module/room"
+import routine from "./module/routine"
+import device from "@/store/module/device";
 
 Vue.use(Vuex);
 
 
 export default new Vuex.Store({
+    modules: {
+        room,
+        routine,
+        device
+    },
 
     state: {
         rooms: ['bedroom', 'living', 'uno', 'bathroom', 'gameroom', 'office', 'kitchen'],
@@ -36,14 +44,14 @@ export default new Vuex.Store({
         editActionsPressed: false,
         supportedDevices: [
             {
-            type: 'light',
+            type: 'lamp',
             name: 'Lámpara',
                 id: "go46xmbqeomjrsjr",
                 icon: 'mdi-lightbulb',
             actions: [
-                { name: 'estado', component: "OnOff", props: {apiId: ['turnOn', 'turnOff']}},
-                { name: 'cambiar-color', component: "ColorPicker", props: {apiId: 'setColor'}},
-                { name: 'cambiar-intensidad', component: "NumberPicker", props: {apiId: 'setBrightness', min: 0, max: 100, label: "Intensidad"}}]
+                { name: 'estado', component: "OnOff", props: {apiId: ['turnOn', 'turnOff'], statusParam: "status"}},
+                { name: 'cambiar-color', component: "ColorPicker", props: {apiId: 'setColor'}, statusParam: "color"},
+                { name: 'cambiar-intensidad', component: "NumberPicker", props: {apiId: 'setBrightness', min: 0, max: 100, label: "Brillo", statusParam: "brightness"}}]
             },
             {
                 type: 'vacuum',
@@ -53,10 +61,10 @@ export default new Vuex.Store({
                 actions: [
                     {slug: 'state', name: 'cambiar-estado', component: "OnOff", props: {}},
                     {slug: 'resume', name: 'estado-de-reproducción', component: "PlayPause", props: {}},
-                    {slug: 'change-location', name: 'cambiar-ubicación', component: "SelectFromArray", props:{getter: "getRooms", label: "Habitaciones"}},
+                    {slug: 'change-location', name: 'cambiar-ubicación', component: "SelectFromArray", props:{getter: "getRoomsForSelect", label: "Habitaciones"}},
                     {slug: 'return-to-base', name: 'volver-a-estación-de-carga'},
                     {slug: 'set-mode', name: 'establecer-modo', component: "SelectFromArray", props:{getter: "getVacuumModes", label: "Modos"}},
-                    {slug: 'change-charge-location', name: 'cambiar-ubicación-de-base-de-carga', component: "SelectFromArray", props:{getter: "getRooms", label: "Habitaciones"}} ]
+                    {slug: 'change-charge-location', name: 'cambiar-ubicación-de-base-de-carga', component: "SelectFromArray", props:{getter: "getRoomsForSelect", label: "Habitaciones"}} ]
             },
             {
                 type: 'alarm',
@@ -82,7 +90,7 @@ export default new Vuex.Store({
                     {slug: 'set-convection', name: 'establecer-modo-conveccion'}]
             },
             {
-                type: 'a/c',
+                type: 'ac',
                 id: "li6cbv5sdlatti0j",
                 name: 'Aire acondicionado',
                 icon: 'mdi-fan',
@@ -136,11 +144,17 @@ export default new Vuex.Store({
             }]
     },
     getters: {
+        getDeviceTypeObj: (state) => (name) => {
+            return state.supportedDevices.find(d => d.name === name)
+        },
         getRooms: (state) => {
             return state.rooms
         },
         getVacuumModes: () => {
           return [{apiValue: "vacuum", value: "aspirar"}, {apiValue: "mop", value: "trapear"}]
+        },
+        getRoomsForSelect: (state) => {
+            return state.rooms.map(r => ({apiValue: r.name, value: r.name}))
         },
         getHeatSources: () => {
             return [{apiValue: "top", value: "superior"},

@@ -33,7 +33,7 @@
       <v-card v-if="actionObj && actionObj.component" color="white" class="elevation-4 pa-2 mt-2 mb-5 d-flex justify-center align-content-center">
           <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
       </v-card>
-
+{{actionObj}}
       <v-btn
           :disabled="!valid"
           color="success"
@@ -105,7 +105,34 @@ export default {
       if(this.actionObj.component)
         actionValue = this.$refs.actionComp.getActionValue()
 
-      this.$store.commit('addActionToRoutine', {routine: this.routine, action: {device: this.deviceName, room: this.deviceRoom, action: this.action, value: actionValue}})
+
+      const deviceId = "fffdac4e75b47e97"
+      const payload = {
+        routineName: this.routine,
+        actionName: actionValue.actionName,
+        deviceId: deviceId,
+        param: actionValue.value,
+        meta: {
+          value: actionValue.displayValue,
+          name: this.action
+        }
+      }
+      if (this.$store.getters['routine/getRoutine'](this.routine)) {
+
+        this.$store.dispatch("routine/addAction", payload) // todo: pasarle rutina modificada
+      }
+      else {
+        // const deviceId = this.$store.getters.device.getDevice(this.deviceName).id
+        console.log(this.actionObj)
+
+
+
+        console.log(payload)
+
+        this.$store.dispatch("routine/create", payload)
+      }
+
+      // this.$store.commit('addActionToRoutine', {routine: this.routine, action: {device: this.deviceName, room: this.deviceRoom, action: this.action, value: actionValue}})
       this.close()
     },
     converter(s) {

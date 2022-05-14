@@ -92,10 +92,10 @@ export default {
       this.$router.go(-1);
     },
     validate() {
-      this.type = this.$store.state.supportedDevices.find(d => d.name === this.type).type;
-      const payload = {name: this.deviceName, room: this.room, type: this.type, group: this.group, hash: this.password === '' ? null : hashCode(this.password)}
+      const deviceTypeObj = this.$store.getters.getDeviceTypeObj(this.type)
+      const payload = {name: this.deviceName, room: this.room, group: this.group, hash: this.password === '' ? null : hashCode(this.password), id: deviceTypeObj.id}
       console.log(payload)
-      this.$store.commit('addDevice',payload);
+      this.$store.dispatch('device/create',payload);
       this.resetValues();
       this.$router.go(-1);
     }
@@ -107,7 +107,7 @@ export default {
           (!this.checkbox || this.password !== "")
     },
     possibleDevices() {
-      return this.$store.state.supportedDevices.map(dev => dev.name)
+      return this.$store.state.supportedDevices.map(device => device.name)
     },
     room() {
       return this.$route.params.room;

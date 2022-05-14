@@ -4,11 +4,11 @@
            fab
            dark
            large
-           :color="clicked ? 'white' : 'primary'"
-           @click="()=>{clicked = !clicked; $emit('onClick')}"
+           :color="componentState ? 'blue-grey lighten-4' : 'primary'"
+           @click="clickHandler"
            elevation="8"
     >
-      <v-icon :color="clicked ? 'primary' : 'white'"
+      <v-icon :color="componentState ? 'primary' : 'white'"
       >mdi-power</v-icon>
     </v-btn>
   </v-slide-x-transition>
@@ -17,16 +17,29 @@
 <script>
   export default {
     name: "OnOff",
-    props: ['onClick'],
+    props: ['onClick', 'apiId', 'name', 'state', 'deviceView', 'statusParam'],
     data() {
       return {
-        clicked: false,
       }
     },
 
     methods: {
       getActionValue() {
-        return [this.clicked, this.clicked ? 'encendido' : 'apagado']
+        return {
+          displayValue: this.componentState ? 'encender' : 'apagar',
+          actionName: this.componentState ? this.apiId[0] : this.apiId[1]
+        }
+      },
+      clickHandler() {
+        if (this.deviceView) {
+          this.$store.dispatch('device/applyAction', {name: this.name, action: this.componentState ? "turnOff" : "turnOn"})
+        }
+      }
+    },
+    computed: {
+      componentState() {
+        return this.state[this.statusParam] === "on"
+        // return this.$store.getters["device/getDevice"](this.name).state[this.statusParam] === "on"
       }
     }
   }

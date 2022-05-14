@@ -80,16 +80,16 @@ export default {
 
   },
   methods: {
-    changeName(name) {
+    async changeName(name) {
       this.editing = false;
-      this.$store.commit(this.prop.editor, { name: this.element, newName: name})
+      await this.$store.dispatch(this.prop.editor, { name: this.element, newName: name})
     },
     deleteElementDialog() {
       document.activeElement.blur();
       this.dialog = true;
     },
-    deleteElement() {
-      this.$store.commit(this.prop.deleter, this.element);
+    async deleteElement() {
+      await this.$store.dispatch(this.prop.deleter, this.element);
     },
     editElement() {
       document.activeElement.blur();

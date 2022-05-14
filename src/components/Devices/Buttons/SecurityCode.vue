@@ -32,6 +32,14 @@ props: ['deviceView'],
       ]
     }
   },
+  methods: {
+    getActionValue() {
+      return{
+        actionName: this.apiId,
+        value: this.code
+      }
+    }
+  }
 }
 
 </script>

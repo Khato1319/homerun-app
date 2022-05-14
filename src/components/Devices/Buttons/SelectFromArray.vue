@@ -25,12 +25,13 @@ export default {
   },
   methods: {
     getActionValue() {
-      let obj
-      if ((obj = this.$store.getters[this.getter].find(e => e.value === textToSlug(this.value)))) {
-        return [obj.apiValue,this.value]
+      const obj = this.$store.getters[this.getter].find(e => e.value === this.value)
 
-      }
-      return [this.textToSlug(this.value), this.textToSlug(this.value)]
+      return {
+          displayValue: this.value,
+          value: obj.apiValue,
+          actionName: this.apiId
+        }
     },
     converter(s) {
       return slugToText(s)
@@ -41,7 +42,7 @@ export default {
   },
   computed: {
     items(){
-      return this.$store.getters[this.getter].map(r => r.value ? this.converter(r.value) : this.converter(r))
+      return this.$store.getters[this.getter].map(r => r.value)
     }
   }
 }

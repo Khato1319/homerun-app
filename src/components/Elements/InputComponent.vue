@@ -42,6 +42,7 @@ export default {
       },
     submitValue() {
       this.$emit('valueSubmitted',this.inputVal);
+      this.inputVal = ""
     },
       focus() {
         this.$refs.inputElem.focus();

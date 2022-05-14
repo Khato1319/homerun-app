@@ -29,6 +29,8 @@ export default {
     this.$store.commit('setEditRoutinePressed', false)
     this.$store.commit('setEditRoomPressed', false)
     this.$store.commit('setEditTheRoomPressed', false)
+    this.$store.commit('selectRoutine', '')
+    this.$store.commit('selectRoom', '')
   },
   methods: {
 
