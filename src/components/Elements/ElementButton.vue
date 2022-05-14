@@ -127,7 +127,7 @@ export default {
   width: 25px;
   height: 25px;
   font-size: 8pt;
-  margin-top: 8px;
+  margin-top: 12px;
   margin-right: 8px;
   position: absolute;
   top: 0;
