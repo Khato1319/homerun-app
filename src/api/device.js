@@ -15,7 +15,8 @@ class DeviceApi {
         return await Api.put(DeviceApi.getUrl(device.id), picked)
     }
 
-    static async delete(id) {
+    static async delete( id) {
+
         return await Api.delete(DeviceApi.getUrl(id))
     }
 

@@ -70,7 +70,8 @@ export default new Vuex.Store({
                             min: 0,
                             max: 100,
                             label: "Porcentaje de cerrado",
-                            statusParam: "level"
+                            statusParam: "level",
+                            disable: true
                         }
                     }]
             },
@@ -263,7 +264,7 @@ export default new Vuex.Store({
         getHeatSources: () => {
             return [{apiValue: "top", value: "Superior"},
                 {apiValue: "bottom", value: "Inferior"},
-                {apiValue: "conventional", value: "convencional"}]
+                {apiValue: "conventional", value: "Convencional"}]
         },
         getGrillModes: () => {
             return [{apiValue: "large", value: "Grande"},

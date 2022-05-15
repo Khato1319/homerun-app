@@ -1,6 +1,6 @@
 <template>
   <GenericView :device-name="$route.params.deviceName" device-type="blinds"
-               device-id="" dispositivo="cortina">
+               device-id="" dispositivo="Cortina">
     <div class="text-sm-left ml-3 mt-6 primary--text">Estado: {{statusOutput}}</div>
     <v-progress-linear class="ma-3" style="max-width: 95%" :buffer-value="level" :value="currentLevel" color="primary"></v-progress-linear>
   </GenericView>
@@ -49,13 +49,13 @@ export default {
       return `Cerrado al ${this.currentLevel}%`
     }
   },
-  watch: {
-    async statusOutput() {
-      while (this.$route.name === "blinds" && this.$route.params.deviceName === this.deviceName && this.state.status === "opening" || this.state.status === "closing") {
-        await this.$store.dispatch('device/getAll')
-      }
-    }
-  }
+  // watch: {
+  //   async statusOutput() {
+  //     while (this.$route.name === "blinds" && this.$route.params.deviceName === this.deviceName && this.state.status === "opening" || this.state.status === "closing") {
+  //       await this.$store.dispatch('device/getAll')
+  //     }
+  //   }
+  // }
 }
 </script>
 

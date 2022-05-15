@@ -26,9 +26,7 @@
     <v-text-field
         v-model="group"
         :counter="60"
-        label="Grupo"
-        :rules="[v => v.length <= 60 && v.length >= 3 || 'El nombre debe tener entre 3 y 60 caracteres']"
-        required
+        label="Grupo (opcional)"
     ></v-text-field>
     <div class="text-sm-left" style="font-size: 12px">
       Si se ingresa un grupo nuevo, este será creado.
@@ -55,11 +53,8 @@
     <v-btn
         :disabled="!valid"
         color="success"
-        class="mr-4"
         @click="validate"
-    >
-      Agregar
-    </v-btn>
+    >Agregar</v-btn>
   </v-form>
 </div>
 </template>
@@ -85,6 +80,13 @@ export default {
     }
   },
   methods: {
+    toTitleCase(phrase) {
+      return phrase
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+    },
     resetValues() {
       this.password =  "";
       this.checkbox = false;
@@ -95,11 +97,11 @@ export default {
       this.resetValues();
       this.$router.go(-1);
     },
-    validate() {
+    async validate() {
       const deviceTypeObj = this.$store.getters.getDeviceTypeObj(this.type)
-      const payload = {name: this.deviceName, room: this.room, group: this.group, hash: this.password === '' ? null : hashCode(this.password), id: deviceTypeObj.id}
+      const payload = {name: this.toTitleCase(this.deviceName), room: this.room, group: this.group, hash: this.password === '' ? null : hashCode(this.password), id: deviceTypeObj.id}
       console.log(payload)
-      this.$store.dispatch('device/create',payload);
+      await this.$store.dispatch('device/create',payload);
       this.resetValues();
       this.$router.go(-1);
     }
@@ -108,7 +110,7 @@ export default {
     ...mapState(['devices', 'rooms']),
     valid() {
         return this.deviceName.length >= 3 && this.deviceName.length <= 60 &&
-            this.group.length >= 3 && this.group.length <= 60 &&
+            // this.group.length >= 3 && this.group.length <= 60 &&
           (!this.checkbox || this.password !== "")
     },
     possibleDevices() {
@@ -124,7 +126,10 @@ export default {
       let devices=this.$store.getters['device/getDevices']
       if (devices.length === 0)
         return []
-      return new Set(devices.filter(d=> d.room.name === this.roomName).map(d => d.meta.group))
+      const devicesArray = devices.filter(d => d.room)
+      const set = new Set(devicesArray.filter(d=> d.room.name === this.roomName).map(d => d.meta.group))
+      set.delete("")
+      return set
     }
   }
 }

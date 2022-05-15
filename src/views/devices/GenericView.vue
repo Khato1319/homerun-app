@@ -47,12 +47,25 @@ export default {
       console.log(value)
       console.log(actionName)
     },
+    pollData () {
+      this.polling = setInterval(() => {
+        console.log('polling')
+        this.$store.dispatch('device/getAll')
+      }, 3000)
+    }
   },
   props: ['deviceType','dispositivo','deviceName', 'deviceId'],
   data() {
     return {
       counter: 0,
+      polling: null
     }
+  },
+  beforeDestroy () {
+    clearInterval(this.polling)
+  },
+  created () {
+    this.pollData()
   },
   computed: {
     actions() {

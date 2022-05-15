@@ -1,8 +1,9 @@
 <template>
   <div style="position: relative" >
       <v-btn
-          width="180"
+          width="200"
           height="50"
+          style="font-size: 18px"
           :color="selectedValue === element ? 'primary' : 'blue lighten-4'"
           :elevation="selectedValue === element ? 4 : 8"
           depressed
@@ -33,6 +34,7 @@
         Borrado de {{prop.name}}
       </template>
       ¿Está seguro de que quiere borrar la {{ prop.name }} {{ element }}?
+      <span v-if="prop.name === 'habitación'">Se borrarán todos los dispositivos asociados.</span>
     </DialogModal>
   </div>
 </template>
@@ -51,11 +53,10 @@ export default {
       if (newVal)
         setTimeout(() => this.$refs.inputElem.focus(), 200)
     },
-    editPressed(val, prev) {
+    async editPressed(val, prev) {
       let value;
       if (this.editing && val === false && prev === true && this.element !== (value = this.$refs.inputElem.inputSubmit())){
-        this.$store.commit(this.prop.editor,{name: this.element, newName: value});
-        this.editing = false
+        await this.changeName(value)
       }
     },
   },
@@ -90,7 +91,7 @@ export default {
     editElement() {
       document.activeElement.blur();
       this.editing = true;
-      // this.$refs.inputElem.adding(this.element);
+
     },
     toggle() {
       if (!this.editPressed && this.selectedValue !== this.element) {

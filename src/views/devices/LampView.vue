@@ -1,6 +1,6 @@
 <template>
 <GenericView :device-name="$route.params.deviceName" device-type="lamp"
-             dispositivo="lámpara"></GenericView>
+             dispositivo="Lámpara"></GenericView>
 </template>
 
 <script>

@@ -1,16 +1,20 @@
 <template>
   <v-slide-x-transition>
-    <v-btn class="mx-2"
-           fab
-           large
-           :color="componentState ?  'primary' : 'blue-grey lighten-5'"
-           @click="clickHandler"
-           elevation="8"
-           :disabled="checkDisabled()"
-    >
-      <v-icon :color="componentState ? 'white' : 'black'"
-      >mdi-power</v-icon>
-    </v-btn>
+    <div>
+      <div class="text-sm-left ml-3 mt-6 mb-3 primary--text">Estado: {{componentState ? 'Encendido' : 'Apagado'}}</div>
+
+      <v-btn class="mx-2"
+             fab
+             large
+             :color="componentState ?  'primary' : 'blue-grey lighten-5'"
+             @click="clickHandler"
+             elevation="8"
+             :disabled="checkDisabled()"
+      >
+        <v-icon :color="componentState ? 'white' : 'black'"
+        >mdi-power</v-icon>
+      </v-btn>
+    </div>
   </v-slide-x-transition>
 </template>
 

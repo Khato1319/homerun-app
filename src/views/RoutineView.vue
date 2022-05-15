@@ -6,8 +6,8 @@
     <EditButton class='edit-button' toggler="toggleEditActionsPressed" edit-button-getter="editActionsPressed"></EditButton>
     <CloseButton @onClick="close"/>
 
-      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Rutina </span> {{
-          routine}}</div>
+      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Rutina </span> "{{
+          routine}}"</div>
 
     <v-card v-for="(action, idx) in actions" :key="action.meta.name + action.device.id">
       <v-card-text >
@@ -36,13 +36,25 @@
       Ejecutar
     </v-btn>
 
+    <v-snackbar
+        :timeout="3000"
+        :value="showSnackBar"
+        absolute
+        left
+        bottom
+        color="primary"
+    >
+      Se ha ejecutado la rutina correctamente.
+    </v-snackbar>
+
     <DialogModal @setDialog='(val) => this.dialog = val' :dialog="dialog" @acceptEvent="deleteAction"
                  @cancelEvent="() => this.dialog = false">
 
       <template v-slot:title>
         Borrado de acción
       </template>
-      ¿Está seguro de que quiere borrar la acción de {{ selectedAction && selectedAction.meta.name }} sobre {{selectedAction && this.$store.getters['device/getDeviceById'](selectedAction.device.id).name}}?
+      ¿Está seguro de que quiere borrar la acción de "{{ selectedAction && selectedAction.meta.name }}" sobre "{{selectedAction && this.$store.getters['device/getDeviceById'](selectedAction.device.id).name}}"?
+      <div v-if="actions.length === 1">La rutina terminará borrándose</div>
     </DialogModal>
 
   </div>
@@ -69,7 +81,8 @@ export default {
       routine: this.$route.params.routine,
       dialog: false,
       actionIdx: undefined,
-      selectedAction: undefined
+      selectedAction: undefined,
+      showSnackBar: false
     }
   },
   async beforeMount() {
@@ -84,8 +97,11 @@ export default {
     this.$store.commit('setEditTheRoomPressed', false)
   },
   methods: {
-    execute() {
-        this.$store.dispatch('routine/executeRoutine', this.routine)
+    async execute() {
+        await this.$store.dispatch('routine/executeRoutine', this.routine)
+        this.showSnackBar = true;
+        setTimeout(() => this.showSnackBar = false, 5000)
+        // this.showSnackBar = false;
     },
     actionDeviceString(id) {
       const device = this.$store.getters['device/getDeviceById'](id)
@@ -99,7 +115,11 @@ export default {
       this.dialog = true
     },
     deleteAction() {
+      const lastAction = this.actions.length === 1
       this.$store.dispatch('routine/removeAction', {routineName: this.routine, index: this.actionIdx})
+      if (lastAction)
+        this.$router.go(-1)
+
       this.dialog = false
     },
     ...mapGetters(['selectedRoutine']),

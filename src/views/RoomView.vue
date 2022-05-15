@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Habitación </span>{{
-        roomName }}</div>
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Habitación </span>"{{
+        roomName }}"</div>
 
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
     <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
@@ -11,11 +11,17 @@
         <v-slide-x-transition mode="out-in">
           <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium">
             <div>
-              {{group}}
+              Grupo: {{group}}
             </div>
             <DevicesView :devices = "selectDevices(group)" :key="selectDevices(group).length"></DevicesView>
           </div>
         </v-slide-x-transition>
+      </div>
+      <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium" v-if="selectDevices('').length > 0">
+        <div>
+          Sin grupo
+        </div>
+        <DevicesView :devices = "selectDevices('')" :key="selectDevices('').length"></DevicesView>
       </div>
   </div>
 
@@ -71,7 +77,9 @@ export default {
       return this.$store.getters['device/getDevices'].filter(e => e.room.name === this.$route.params.room)
     },
     groups() {
-      return new Set(this.roomDevices.map(e => e.meta.group))
+      const set = new Set(this.roomDevices.map(e => e.meta.group))
+      set.delete('')
+      return set
     }
   }
 }

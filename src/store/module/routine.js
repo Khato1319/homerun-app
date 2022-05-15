@@ -16,6 +16,14 @@ export default{
     actions: {
         async create({dispatch, rootGetters}, payload) {
 
+            const toTitleCase = (phrase)=> {
+                return phrase
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+
             const firstAction = {
                 device: {
                     id: rootGetters['device/getDevice'](payload.deviceName).id
@@ -24,7 +32,7 @@ export default{
                 params: payload.param ? [payload.param] : [],
                 meta: payload.meta
             }
-            const routineObj = {name: payload.routineName, actions: [firstAction], meta: {}}
+            const routineObj = {name: toTitleCase(payload.routineName), actions: [firstAction], meta: {}}
             const result =  await RoutineApi.add(routineObj)
             console.log('result: ' + result)
             await dispatch("getAll")
@@ -37,8 +45,15 @@ export default{
             await dispatch("getAll");
         },
         async modifyName({dispatch, getters}, payLoad) {
+            const toTitleCase = (phrase)=> {
+                return phrase
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
             const routineObj = getters.getRoutine(payLoad.name)
-            routineObj.name = payLoad.newName
+            routineObj.name = toTitleCase(payLoad.newName)
             const result =  await RoutineApi.modify(routineObj)
             await dispatch("getAll")
             return result
@@ -86,10 +101,42 @@ export default{
                         meta: a.meta
                     })),
             }
-            // const routineObj = {name: payload.routineName, actions: [firstAction], meta: {}}
-            const result =  await RoutineApi.modify(putObject, routineObj.id)
+            if (routineObj.actions.length > 0) {
+                const result =  await RoutineApi.modify(putObject, routineObj.id)
+                await dispatch("getAll")
+                return result
+            }
+
+            else {
+                return await dispatch("delete", routineObj.name)
+            }
+
+        },
+        async deleteDevice({dispatch, getters }, payload) {
+
+            for (const routine of getters.getRoutines) {
+                routine.actions = routine.actions.filter(a => a.device.id !== payload.deviceId)
+
+                if (routine.actions.length > 0) {
+                    let putObject = {
+                        name: routine.name,
+                        actions: routine.actions.map(a => (
+                            {
+                                device: { id: a.device.id},
+                                actionName: a.actionName,
+                                params: a.params,
+                                meta: a.meta
+                            })),
+                    }
+                    await RoutineApi.modify(putObject, routine.id)
+                }
+
+                else {
+                    await dispatch("delete", routine.name)
+                }
+            }
+
             await dispatch("getAll")
-            return result
         },
         async executeRoutine({getters}, routineName) {
             const routineId = getters.getRoutine(routineName).id

@@ -11,7 +11,7 @@
       <template v-slot:title>
         Borrado de dispositivo
       </template>
-      ¿Está seguro de que quiere borrar el dispositivo {{ device }}?
+      ¿Está seguro de que quiere borrar el dispositivo {{ device }}? Se borrarán las acciones de rutinas asociadas.
     </DialogModal>
     <v-fab-transition>
       <v-btn v-if="editPressed && !editingName" mode="out-in" fab x-small id="delete-button"

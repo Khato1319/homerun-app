@@ -148,6 +148,13 @@ export default {
     this.$store.dispatch('routine/getAll')
   },
   methods: {
+    toTitleCase(phrase) {
+      return phrase
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+    },
     handleHelp() {
       switch(this.tab) {
         case 0: // router push pagina de help de habitaciones
@@ -174,7 +181,7 @@ export default {
       this.addingRoom = false;
 
       try {
-        await this.$createRoom(value.toLowerCase())
+        await this.$createRoom(this.toTitleCase(value))
       } catch(e) {
         console.log(e)
       }

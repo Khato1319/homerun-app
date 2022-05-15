@@ -19,11 +19,19 @@ export default{
     },
     actions: {
         async create({dispatch, rootGetters}, payload) {
+
+            const toTitleCase = (phrase)=> {
+                return phrase
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
             const deviceObj = {
                 type: {
                     id: payload.id
                 },
-                name: payload.name,
+                name: toTitleCase(payload.name),
                 meta: {
                     group: payload.group,
                     hash: payload.hash
@@ -33,12 +41,15 @@ export default{
 
             await dispatch("getAll")
 
+            await dispatch('bindToRoom', {deviceName: payload.name, deviceRoom: payload.room})
+
+
+
             if (rootGetters['device/getDevice'](payload.name).type.name === 'vacuum') {
                 const roomId = rootGetters['room/getRoom'](payload.room).id
                 await dispatch('applyAction', {name: payload.name, action: 'setLocation', param: roomId})
             }
 
-            await dispatch('bindToRoom', {deviceName: payload.name, deviceRoom: payload.room})
             // setTimeout(async ()=> await dispatch("getAll"), 300)
             await dispatch("getAll")
 
@@ -50,15 +61,26 @@ export default{
             await RoomApi.bindDeviceToRoom(deviceId, roomId)
         },
         async modify({dispatch, getters}, payload) {
+
+            const toTitleCase = (phrase)=> {
+                return phrase
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
             const deviceObj = getters.getDevice(payload.name)
-            deviceObj.name = payload.newName
+            deviceObj.name = toTitleCase(payload.newName)
 
             const result =  await DeviceApi.modify(deviceObj)
             await dispatch("getAll")
             return result
         },
-        async delete({ dispatch, getters }, roomName) {
-            const id = getters.getDevice(roomName).id
+        async delete({ dispatch, getters }, deviceName) {
+            const id = getters.getDevice(deviceName).id
+
+            await dispatch('routine/deleteDevice',{deviceId: id}, { root: true })
+
             await DeviceApi.delete(id);
             await dispatch("getAll");
         },

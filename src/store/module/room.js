@@ -15,22 +15,44 @@ export default{
     },
     actions: {
         async create({dispatch}, roomName) {
-            const result =  await RoomApi.add(roomName)
+
+            const toTitleCase = (phrase)=> {
+                return phrase
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+
+            const result =  await RoomApi.add(toTitleCase(roomName))
             console.log('result: ' + result)
             await dispatch("getAll")
             // setTimeout(async ()=> await dispatch("getAll"), 300)
             return result
         },
         async modify({dispatch, getters}, payLoad) {
+            const toTitleCase = (phrase)=> {
+                return phrase
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
             const roomObj = getters.getRoom(payLoad.name)
-            roomObj.name = payLoad.newName
+            roomObj.name = toTitleCase(payLoad.newName)
             const result =  await RoomApi.modify(roomObj)
             await dispatch("getAll")
             return result
         },
-        async delete({ dispatch, getters }, roomName) {
+        async delete({ dispatch, getters, rootGetters }, roomName) {
             const id = getters.getRoom(roomName).id
-            console.log(id)
+
+            for (const device of rootGetters['device/getDevices']) {
+                if (device.room.id === id) {
+                    await dispatch('device/delete', device.name, {root: true})
+                }
+            }
+
             await RoomApi.delete(id);
             await dispatch("getAll");
         },
