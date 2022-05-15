@@ -1,5 +1,4 @@
 <template>
-
   <v-btn
       width="200"
       height="50"
@@ -15,17 +14,12 @@
         ref='inputElem'
     />
   </v-btn>
-
-
-
-
-
 </template>
 
 <script>
 import { mapState } from "vuex";
-export default {
 
+export default {
     props: ['placeholder', 'setter', 'inputValue', 'reference'],
     data() {
         return {

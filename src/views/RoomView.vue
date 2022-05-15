@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Habitación {{
-        roomName }}</div>
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >
+      Habitación {{roomName }}
+    </div>
 
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
     <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
@@ -66,9 +67,10 @@ export default {
       return this.$store.state.editTheRoomPressed
     },
     roomDevices() {
-      if (this.$store.getters['device/getDevices'].length === 0)
+      let devices=this.$store.getters['device/getDevices']
+      if (devices.length === 0)
         return []
-      return this.$store.getters['device/getDevices'].filter(e => e.room.name === this.$route.params.room)
+      return devices.filter(e => e.room.name === this.$route.params.room)
     },
     groups() {
       return new Set(this.roomDevices.map(e => e.meta.group))

@@ -43,8 +43,6 @@
                   </v-slide-x-transition>
                 </v-tab-item>
               </v-tabs>
-
-
             </v-col>
 
             <v-col >
@@ -53,9 +51,7 @@
                   <router-view :key="$route.fullPath" cols="6"/>
                 </v-card>
               </v-slide-x-reverse-transition>
-
             </v-col>
-
           </v-row>
         </v-layout>
       </v-container>
@@ -132,7 +128,6 @@ export default {
         name: 'habitación',
         elements: 'room/getRooms',
         editPressed: 'editRoomPressed'
-
       },
       recent: [],
       addToRecent: (string) => {

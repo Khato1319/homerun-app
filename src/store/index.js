@@ -213,7 +213,7 @@ export default new Vuex.Store({
                         }
                     },
                     {
-                        name: 'Establecer posición de aspas horizontales',
+                        name: 'Establecer posición de aspas verticales',
                         component: "SelectFromArray",
                         props: {
                             statusParam: 'verticalSwing',
@@ -224,11 +224,11 @@ export default new Vuex.Store({
                         }
                     },
                     {
-                        name: 'Establecer posición de aspas verticales',
+                        name: 'Establecer posición de aspas horizontales',
                         component: "SelectFromArray",
                         props: {
                             statusParam: 'horizontalSwing',
-                            getter: "getVerticalSwings",
+                            getter: "getHorizontalSwings",
                             label: "Modos de swing horizontal",
                             title: "Cambiar swing horizontal",
                             apiId: "setHorizontalSwing"

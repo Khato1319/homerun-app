@@ -1,26 +1,19 @@
 <template>
   <div>
-    Agregando acción a rutina {{
-
-
-      converter(routine)
-    }}
-    <v-spacer></v-spacer>
-    <CloseButton @onClick="close"></CloseButton>
+    Agregando acción a rutina {{routine}}
+    <v-spacer/>
+    <CloseButton @onClick="close"/>
     <v-form
         ref="form"
-
         lazy-validation
     >
-
-
       <v-select
           v-model="device"
           :items="devices"
           :rules="[v => !!v || 'El item es obligatorio']"
           label="Dispositivo"
           required
-      ></v-select>
+      />
       <v-select
           v-model="action"
           :disabled="deviceType === ''"
@@ -28,7 +21,7 @@
           :rules="[v => !!v || 'El item es obligatorio']"
           :label="deviceType === ''? 'Seleccione un dispositivo primero' : 'Acción'"
           required
-      ></v-select>
+      />
       <v-card v-if="actionObj && actionObj.component !== 'Button'" color="white" class="elevation-4 pa-2 mt-2 mb-5 d-flex justify-center align-content-center">
           <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
       </v-card>
@@ -104,7 +97,6 @@ export default {
       if(this.actionObj.component !== 'Button')
         actionValue = this.$refs.actionComp.getActionValue()
 
-
       const payload = {
         routineName: this.routine,
         actionName: actionValue ? actionValue.actionName : this.actionObj.props.apiId,
@@ -122,14 +114,9 @@ export default {
       else {
         // const deviceId = this.$store.getters.device.getDevice(this.deviceName).id
         console.log(this.actionObj)
-
-
-
         console.log(payload)
-
         this.$store.dispatch("routine/create", payload)
       }
-
       // this.$store.commit('addActionToRoutine', {routine: this.routine, action: {device: this.deviceName, room: this.deviceRoom, action: this.action, value: actionValue}})
       this.close()
     },

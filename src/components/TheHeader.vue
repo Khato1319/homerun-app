@@ -13,18 +13,16 @@
       <span>Página principal de HomeRun</span>
     </v-tooltip>
 
-
     <v-toolbar-title class="white--text mr-auto" style="font-family:Shrikhand,Nunito">HomeRun</v-toolbar-title>
 
     <v-tooltip bottom>
       <template v-slot:activator="{on, attrs}">
-        <v-btn color="white" class="mr-2" fab small outlined @click=openHelp v-bind="attrs" v-on="on" >
+        <v-btn color="white" class="mr-2" fab small outlined @click=openHelp v-bind="attrs" v-on="on">
           <v-icon>mdi-help</v-icon>
         </v-btn>
       </template>
       <span>Ayuda</span>
     </v-tooltip>
-
   </v-app-bar>
 </template>
 

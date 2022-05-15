@@ -1,7 +1,5 @@
 <template>
   <div style="position: relative" >
-
-
       <v-btn
           width="180"
           height="50"
@@ -11,14 +9,13 @@
           class="ma-6 px-1 element-button"
           @click="toggle"
           v-if="!editPressed || !editing"
-      ><span class="text-truncate" style="max-width:150px">{{element}}</span>
-
+      >
+        <span class="text-truncate" style="max-width:150px">{{element}}</span>
       </v-btn>
 
       <v-slide-x-transition>
-      <InputComponent ref='inputElem' placeholder='Habitación' v-show="editPressed && editing" @valueSubmitted="changeName" :inputValue="this.element"></InputComponent>
+        <InputComponent ref='inputElem' placeholder='Habitación' v-show="editPressed && editing" @valueSubmitted="changeName" :inputValue="this.element"/>
       </v-slide-x-transition>
-
 
     <v-fab-transition>
       <v-btn v-if="editPressed && !editing" fab x-small id="delete-button" @click.stop="deleteElementDialog">
@@ -105,7 +102,6 @@ export default {
       } else {
         this.$store.commit(this.prop.setter, '');
         this.$router.push({path: '/'});
-
       }
     }
   },

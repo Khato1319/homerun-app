@@ -1,13 +1,14 @@
 <template>
   <div>
     <v-scroll-x-transition>
-      <AddButton v-if=!editing @onClick="addDevice"></AddButton>
+      <AddButton v-if=!editing @onClick="addDevice"/>
     </v-scroll-x-transition>
-    <EditButton class='edit-button' toggler="toggleEditActionsPressed" edit-button-getter="editActionsPressed"></EditButton>
+    <EditButton class='edit-button' toggler="toggleEditActionsPressed" edit-button-getter="editActionsPressed"/>
     <CloseButton @onClick="close"/>
 
-      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Rutina {{
-          routine}}</div>
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >
+      Rutina {{routine}}
+    </div>
 
     <v-card v-for="(action, idx) in actions" :key="action.meta.name + action.device.id">
       <v-card-text >
@@ -18,7 +19,6 @@
           </div>
           <span v-else-if="action.meta.value">{{action.meta.value}}</span>
         </div>
-
 
       </v-card-text>
       <v-fab-transition>
@@ -44,9 +44,7 @@
       </template>
       ¿Está seguro de que quiere borrar la acción de {{ selectedAction && selectedAction.meta.name }} sobre {{selectedAction && this.$store.getters['device/getDeviceById'](selectedAction.device.id).name}}?
     </DialogModal>
-
   </div>
-
 </template>
 
 <script>

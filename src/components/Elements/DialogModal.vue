@@ -5,18 +5,13 @@
   >
     <v-card>
       <v-card-title class="text-h5 grey lighten-2 text-center">
-        <slot name="title">
-
-        </slot>
+        <slot name="title"/>
       </v-card-title>
-
       <v-card-text>
-        <slot>
-
-        </slot>
+        <slot/>
       </v-card-text>
 
-      <v-divider></v-divider>
+      <v-divider/>
 
       <v-card-actions>
         <v-spacer></v-spacer>
