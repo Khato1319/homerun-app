@@ -1,18 +1,13 @@
 <template>
-
   <div>
-
-    <RecentsView ></RecentsView>
-
+    <RecentsView/>
   </div>
-
 </template>
 
 
 <script>
 // @ is an alias to /src
 import RecentsView from "@/components/RecentsView";
-
 
 export default {
   name: 'HomeView',

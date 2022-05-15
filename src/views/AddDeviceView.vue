@@ -1,7 +1,8 @@
 <template>
 <div>
-  Agregando dispositivo a {{roomName}} <v-spacer></v-spacer>
-  <CloseButton @onClick="close"></CloseButton>
+  Agregando dispositivo a {{roomName}}
+  <v-spacer/>
+  <CloseButton @onClick="close"/>
   <v-form
       ref="form"
       lazy-validation
@@ -120,9 +121,10 @@ export default {
       return this.room;
     },
     groupsForRoom() {
-      if (this.$store.getters['device/getDevices'].length === 0)
+      let devices=this.$store.getters['device/getDevices']
+      if (devices.length === 0)
         return []
-      return new Set(this.$store.getters['device/getDevices'].filter(d=> d.room.name === this.roomName).map(d => d.meta.group))
+      return new Set(devices.filter(d=> d.room.name === this.roomName).map(d => d.meta.group))
     }
   }
 }
