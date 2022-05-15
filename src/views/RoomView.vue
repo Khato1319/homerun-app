@@ -1,7 +1,7 @@
 <template>
   <div>
     <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Habitación {{
-        this.converter(roomName) }}</div>
+        roomName }}</div>
 
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
     <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
@@ -11,7 +11,7 @@
         <v-slide-x-transition mode="out-in">
           <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium">
             <div>
-              {{converter(group)}}
+              {{group}}
             </div>
             <DevicesView :devices = "selectDevices(group)" :key="selectDevices(group).length"></DevicesView>
           </div>
@@ -27,7 +27,6 @@ import AddButton from "@/components/ViewButtons/AddButton";
 import CloseButton from "@/components/ViewButtons/CloseButton";
 import DevicesView from "@/components/Devices/DevicesView";
 import EditButton from "@/components/ViewButtons/EditButton";
-import {slugToText} from "../../utils/Utils";
 import {mapGetters} from "vuex";
 export default {
   name: "RoomView",
@@ -40,11 +39,11 @@ export default {
   data() {
     return {
       roomName: this.$route.params.room,
-      converter: slugToText,
     }
   },
-  beforeMount() {
-    this.$store.dispatch('device/getAll')
+  async beforeMount() {
+    await this.$store.dispatch('device/getAll')
+    await this.$store.dispatch('room/getAll')
   },
   methods: {
     ...mapGetters(['selectedRoom']),
@@ -67,7 +66,9 @@ export default {
       return this.$store.state.editTheRoomPressed
     },
     roomDevices() {
-      return this.$store.getters['device/getDevices'].filter(e => e.meta.room === this.$route.params.room)
+      if (this.$store.getters['device/getDevices'].length === 0)
+        return []
+      return this.$store.getters['device/getDevices'].filter(e => e.room.name === this.$route.params.room)
     },
     groups() {
       return new Set(this.roomDevices.map(e => e.meta.group))

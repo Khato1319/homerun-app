@@ -6,12 +6,13 @@ class RoutineApi {
     }
 
     static async add(routine) {
+        console.log(JSON.stringify(routine, null, "\t"))
         const aux =  await Api.post(RoutineApi.getUrl(),routine)
         return aux.id
     }
 
-    static async modify(routine) {
-        return await Api.put(RoutineApi.getUrl(routine.id), routine)
+    static async modify(routine, id) {
+        return await Api.put(RoutineApi.getUrl(id), routine)
     }
 
     static async delete(id) {
@@ -24,6 +25,10 @@ class RoutineApi {
 
     static async get(id) {
         return await Api.get(RoutineApi.getUrl(id))
+    }
+
+    static async execute(id) {
+        return await Api.put(RoutineApi.getUrl(id) + '/execute')
     }
 }
 

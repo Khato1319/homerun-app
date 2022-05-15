@@ -7,26 +7,34 @@
     <CloseButton @onClick="close"/>
 
       <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Rutina {{
-          this.converter(routine)}}</div>
+          routine}}</div>
 
-      <v-card v-for="(action, idx) in actions" :key="action.meta.name">
-        <v-card-text >
-          <div class="d-flex justify-center align-center">
-            {{converter(action.device.name)}} de {{converter(action.device.meta.room)}} - {{converter(action.meta.name)}}: &#8205;
-            <div class="color-circle" v-if="action.meta.value.match('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')" :style="{ backgroundColor: action.meta.display }">
-            </div>
-            <span v-else>{{converter(action.meta.value)}}</span>
+    <v-card v-for="(action, idx) in actions" :key="action.meta.name + action.device.id">
+      <v-card-text >
+        <div class="d-flex justify-center align-center">
+          {{actionDeviceString(action.device.id)}} - {{action.meta.name}}<span v-if="action.meta.value">: &#8205;</span>
+          <div class="color-circle" v-if="action.meta.value && action.meta.value.match('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')" :style="{ backgroundColor: action.meta.value }">
+            {{action.meta.display}}
           </div>
+          <span v-else-if="action.meta.value">{{action.meta.value}}</span>
+        </div>
 
 
-        </v-card-text>
-        <v-fab-transition>
-          <v-btn v-if="editing" mode="out-in" fab x-small id="delete-button"
-                @click="()=>deleteActionModal(idx)" >
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-fab-transition>
-      </v-card>
+      </v-card-text>
+      <v-fab-transition>
+        <v-btn v-if="editing" mode="out-in" fab x-small id="delete-button"
+               @click="()=>deleteActionModal(idx)" >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </v-card>
+    <v-btn
+        color="success"
+        class="ma-4"
+        @click="execute"
+    >
+      Ejecutar
+    </v-btn>
 
     <DialogModal @setDialog='(val) => this.dialog = val' :dialog="dialog" @acceptEvent="deleteAction"
                  @cancelEvent="() => this.dialog = false">
@@ -34,7 +42,7 @@
       <template v-slot:title>
         Borrado de acción
       </template>
-      ¿Está seguro de que quiere borrar la acción de {{ selectedAction && converter(selectedAction.action) }} sobre {{selectedAction && converter(selectedAction.device)}}?
+      ¿Está seguro de que quiere borrar la acción de {{ selectedAction && selectedAction.meta.name }} sobre {{selectedAction && this.$store.getters['device/getDeviceById'](selectedAction.device.id).name}}?
     </DialogModal>
 
   </div>
@@ -42,12 +50,10 @@
 </template>
 
 <script>
-// todo: agregar la posibiidad de editar rutinas
 import AddButton from "@/components/ViewButtons/AddButton";
 import CloseButton from "@/components/ViewButtons/CloseButton";
 import EditButton from "@/components/ViewButtons/EditButton";
-import {slugToText} from "../../utils/Utils";
-import {mapGetters, mapState} from "vuex";
+import {mapGetters} from "vuex";
 import DialogModal from "@/components/Elements/DialogModal";
 
 export default {
@@ -66,6 +72,11 @@ export default {
       selectedAction: undefined
     }
   },
+  async beforeMount() {
+    await this.$store.dispatch('device/getAll')
+    await this.$store.dispatch('routine/getAll')
+    await this.$store.dispatch('room/getAll')
+  },
   mounted() {
     this.$store.commit('setEditActionsPressed', false)
     this.$store.commit('setEditRoutinePressed', false)
@@ -73,6 +84,13 @@ export default {
     this.$store.commit('setEditTheRoomPressed', false)
   },
   methods: {
+    execute() {
+        this.$store.dispatch('routine/executeRoutine', this.routine)
+    },
+    actionDeviceString(id) {
+      const device = this.$store.getters['device/getDeviceById'](id)
+       return `${device.name} de ${device.room.name}`
+    },
     deleteActionModal(idx) {
       document.activeElement.blur();
       console.log(this.actions)
@@ -81,11 +99,8 @@ export default {
       this.dialog = true
     },
     deleteAction() {
-      this.$store.commit('deleteActionFromRoutine', {routine: this.routine, idx: this.actionIdx})
+      this.$store.dispatch('routine/removeAction', {routineName: this.routine, index: this.actionIdx})
       this.dialog = false
-    },
-    converter(string) {
-      return slugToText(string)
     },
     ...mapGetters(['selectedRoutine']),
     addDevice() {
@@ -98,7 +113,6 @@ export default {
     },
   },
   computed: {
-    ...mapState(['devices']),
     actions() {
       return this.$store.getters['routine/getRoutine'](this.routine).actions
     },

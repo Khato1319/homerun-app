@@ -4,9 +4,9 @@ import HomeView from '../views/HomeView.vue'
 import RoomView from "@/views/RoomView";
 import AddDeviceView from "@/views/AddDeviceView";
 import LightView from "@/views/devices/LampView";
-import AlarmView from "@/views/devices/AlarmView";
 import OvenView from "@/views/devices/OvenView";
 import VacuumView from "@/views/devices/VacuumView";
+import BlindsView from "@/views/devices/BlindsView";
 import store from '../store'
 import RoutineView from "@/views/RoutineView";
 import AddRoutineActionView from "@/views/AddRoutineActionView";
@@ -89,6 +89,15 @@ const routes = [
     beforeEnter: deviceExistsFunc,
   },
   {
+    path: '/rooms/:room/blinds/:deviceName',
+    name: 'blinds',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: BlindsView,
+    beforeEnter: deviceExistsFunc,
+  },
+  {
     path: '/rooms/:room/vacuum/:deviceName',
     name: 'vacuum',
     // route level code-splitting
@@ -104,15 +113,6 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: OvenView,
-    beforeEnter: deviceExistsFunc,
-  },
-  {
-    path: '/rooms/:room/alarm/:deviceName',
-    name: 'alarm',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: AlarmView,
     beforeEnter: deviceExistsFunc,
   },
   {

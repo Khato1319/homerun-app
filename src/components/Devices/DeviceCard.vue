@@ -11,7 +11,7 @@
       <template v-slot:title>
         Borrado de dispositivo
       </template>
-      ¿Está seguro de que quiere borrar el dispositivo {{ converter(device) }}?
+      ¿Está seguro de que quiere borrar el dispositivo {{ device }}?
     </DialogModal>
     <v-fab-transition>
       <v-btn v-if="editPressed && !editingName" mode="out-in" fab x-small id="delete-button"
@@ -42,7 +42,7 @@
           </v-btn>
         </div>
 
-        <v-card-subtitle class="text-sm-left ma-1 pa-0">{{ converter(room) }}</v-card-subtitle>
+        <v-card-subtitle class="text-sm-left ma-1 pa-0">{{ room }}</v-card-subtitle>
 
       </div>
     </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {hashCode, slugToText} from "../../../utils/Utils";
+import {hashCode} from "../../../utils/Utils";
 import DialogModal from "@/components/Elements/DialogModal";
 
 export default {
@@ -74,7 +74,7 @@ export default {
     return {
       dialog: false,
       clicked: false,
-      input: this.converter(this.device),
+      input: this.device,
       editingName: false,
       password: '',
       submittingPwd: false,
@@ -130,9 +130,6 @@ export default {
       await this.$store.dispatch('device/delete', this.device)
       this.dialog = false;
     },
-    converter(string) {
-      return slugToText(string)
-    },
     goToDeviceView() {
       if (this.hasPassword) {
         this.submittingPwd = true;
@@ -185,7 +182,7 @@ export default {
   width: 25px;
   height: 25px;
   font-size: 8pt;
-  margin-top: 150px;
+  margin-top: 105px;
   margin-right: -10px;
   position: absolute;
   top: 0;

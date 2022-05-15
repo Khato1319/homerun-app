@@ -1,4 +1,5 @@
 import {DeviceApi} from "@/api/device";
+import {RoomApi} from "@/api/room";
 
 export default{
     namespaced: true,
@@ -12,24 +13,41 @@ export default{
     getDevice: (state) => (name) => {
       return state.devices.find(r => r.name === name)
     },
+        getDeviceById: (state) => (id) => {
+            return state.devices.find(r => r.id === id)
+        }
     },
     actions: {
-        async create({dispatch}, payload) {
+        async create({dispatch, rootGetters}, payload) {
             const deviceObj = {
                 type: {
                     id: payload.id
                 },
                 name: payload.name,
                 meta: {
-                    room: payload.room,
                     group: payload.group,
                     hash: payload.hash
                 }
             }
             const result =  await DeviceApi.add(deviceObj)
+
             await dispatch("getAll")
+
+            if (rootGetters['device/getDevice'](payload.name).type.name === 'vacuum') {
+                const roomId = rootGetters['room/getRoom'](payload.room).id
+                await dispatch('applyAction', {name: payload.name, action: 'setLocation', param: roomId})
+            }
+
+            await dispatch('bindToRoom', {deviceName: payload.name, deviceRoom: payload.room})
             // setTimeout(async ()=> await dispatch("getAll"), 300)
+            await dispatch("getAll")
+
             return result
+        },
+        async bindToRoom({rootGetters}, payload) {
+            const deviceId = rootGetters['device/getDevice'](payload.deviceName).id
+            const roomId = rootGetters['room/getRoom'](payload.deviceRoom).id
+            await RoomApi.bindDeviceToRoom(deviceId, roomId)
         },
         async modify({dispatch, getters}, payload) {
             const deviceObj = getters.getDevice(payload.name)
@@ -46,18 +64,16 @@ export default{
         },
         async applyAction({ dispatch, getters}, payload) {
             const id = getters.getDevice(payload.name).id
-            await DeviceApi.action(id, payload.action, {param: payload.param});
+            await DeviceApi.action(id, payload.action, payload.param);
             await dispatch("getAll");
         },
         async getAll({commit}) {
             const result =  await DeviceApi.getAll()
-            console.log("dispositivos: " + result)
             commit("update", result)
         }
     },
     mutations: {
         update(state, devices) {
-            console.log('updating')
             state.devices = devices
         }
     }

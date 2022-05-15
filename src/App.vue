@@ -15,7 +15,7 @@
                 </v-tab>
                 <v-tab-item key="roomView" style="overflow-y: scroll; height: 80vh ">
                   <v-slide-x-transition mode="out-in">
-                    <ElementButtons :key="rooms.length" cols="6"
+                    <ElementButtons cols="6"
                                      :prop="roomButtonsProp">
                       <InputComponent v-show="addingRoom" ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"
                                       @valueSubmitted="addToRooms" input-value=""/>
@@ -34,7 +34,7 @@
                   <EditButton class='edit-button' key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
                               toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                   <v-slide-x-transition mode="out-in">
-                    <ElementButtons :key="routines.length" cols="6"
+                    <ElementButtons cols="6"
                                      :prop="routineButtonsProp">
                       <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
                                       setter="selectRoutine" @valueSubmitted="addToRoutines" input-value=""/>
@@ -69,7 +69,6 @@ import AddButton from "@/components/ViewButtons/AddButton";
 import TheHeader from "@/components/TheHeader";
 import ElementButtons from "@/components/Elements/ElementButtons"
 import EditButton from "@/components/ViewButtons/EditButton";
-import {mapState} from "vuex";
 import InputComponent from "./components/Elements/InputComponent.vue";
 import {mapActions} from "vuex"
 
@@ -147,8 +146,11 @@ export default {
   },
   beforeMount() {
     this.restorePage()
-    this.$getAllRooms();
-    this.$getAllRoutines()
+  },
+  mounted() {
+    this.$store.dispatch('device/getAll')
+    this.$store.dispatch('room/getAll')
+    this.$store.dispatch('routine/getAll')
   },
   methods: {
     handleHelp() {
@@ -206,7 +208,6 @@ export default {
 
   },
   computed: {
-    ...mapState(['devices', 'rooms', 'routines']),
     selectedRoom() {
       return this.$store.getters.selectedRoom;
     },

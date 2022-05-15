@@ -11,7 +11,7 @@
           class="ma-6 px-1 element-button"
           @click="toggle"
           v-if="!editPressed || !editing"
-      ><span class="text-truncate" style="max-width:150px">{{converter(element)}}</span>
+      ><span class="text-truncate" style="max-width:150px">{{element}}</span>
 
       </v-btn>
 
@@ -35,13 +35,12 @@
       <template v-slot:title>
         Borrado de {{prop.name}}
       </template>
-      ¿Está seguro de que quiere borrar la {{ prop.name }} {{ converter(element) }}?
+      ¿Está seguro de que quiere borrar la {{ prop.name }} {{ element }}?
     </DialogModal>
   </div>
 </template>
 
 <script>
-import {slugToText} from "../../../utils/Utils";
 import InputComponent from "@/components/Elements/InputComponent";
 import DialogModal from "@/components/Elements/DialogModal";
 
@@ -95,9 +94,6 @@ export default {
       document.activeElement.blur();
       this.editing = true;
       // this.$refs.inputElem.adding(this.element);
-    },
-    converter(string) {
-      return slugToText(string);
     },
     toggle() {
       if (!this.editPressed && this.selectedValue !== this.element) {

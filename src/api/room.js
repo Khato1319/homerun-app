@@ -25,6 +25,9 @@ class RoomApi {
     static async get(id) {
         return await Api.get(RoomApi.getUrl(id))
     }
+    static async bindDeviceToRoom(deviceId, roomId) {
+        return await Api.post(RoomApi.getUrl(roomId) + `/devices/${deviceId}`)
+    }
 }
 
 export {RoomApi}

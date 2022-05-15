@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {textToSlug} from "../../utils/Utils";
-import room from "./module/room"
-import routine from "./module/routine"
+import room from "./module/room";
+import routine from "./module/routine";
 import device from "@/store/module/device";
 
 Vue.use(Vuex);
@@ -16,26 +15,6 @@ export default new Vuex.Store({
     },
 
     state: {
-        rooms: ['bedroom', 'living', 'uno', 'bathroom', 'gameroom', 'office', 'kitchen'],
-        routines: [{
-            routine: 'buen-dia',
-            actions: [{device: 'luz-1', room: 'bedroom', action: 'cambiar-estado',
-                value: [true, 'encendido']}, {
-                device: 'luz-1',
-                room: 'bedroom',
-                action: 'cambiar-estado',
-                value: [true, 'encendido']
-            }]
-        }, {
-            routine: 'a-dormir',
-            actions: [{device: 'luz-1', room: 'bedroom', action: 'cambiar-estado',
-                value: [true, 'encendido']}, {
-                device: 'luz-1',
-                room: 'bedroom',
-                action: 'cambiar-estado',
-                value: [true, 'encendido']
-            }]
-        }],
         selectedRoom: "",
         selectedRoutine: "",
         editRoomPressed: false,
@@ -44,14 +23,56 @@ export default new Vuex.Store({
         editActionsPressed: false,
         supportedDevices: [
             {
-            type: 'lamp',
-            name: 'Lámpara',
+                type: 'lamp',
+                name: 'Lámpara',
                 id: "go46xmbqeomjrsjr",
                 icon: 'mdi-lightbulb',
-            actions: [
-                { name: 'estado', component: "OnOff", props: {apiId: ['turnOn', 'turnOff'], statusParam: "status"}},
-                { name: 'cambiar-color', component: "ColorPicker", props: {apiId: 'setColor'}, statusParam: "color"},
-                { name: 'cambiar-intensidad', component: "NumberPicker", props: {apiId: 'setBrightness', min: 0, max: 100, label: "Brillo", statusParam: "brightness"}}]
+                actions: [
+                    {
+                        name: 'Estado',
+                        component: "OnOff",
+                        props: {apiId: ['turnOn', 'turnOff'], statusParam: "status", disable: false}
+                    },
+                    {name: 'Cambiar color', component: "ColorPicker", props: {apiId: 'setColor', statusParam: "color"}},
+                    {
+                        name: 'Cambiar brillo',
+                        component: "NumberPicker",
+                        props: {
+                            apiId: 'setBrightness',
+                            min: 0,
+                            max: 100,
+                            label: "Cambiar brillo",
+                            statusParam: "brightness"
+                        }
+                    }]
+            },
+            {
+                type: 'blinds',
+                name: 'Cortina',
+                id: "eu0v2xgprrhhg41g",
+                icon: 'mdi-blinds',
+                actions: [
+                    {
+                        name: 'Estado',
+                        component: "SwitchButton",
+                        props: {
+                            apiId: ['open', 'close'],
+                            statusParam: "status",
+                            msg: ['ABRIR', 'CERRAR'],
+                            possibleStatus: ['opened', 'closed']
+                        }
+                    },
+                    {
+                        name: 'Porcentaje de cerrado',
+                        component: "NumberPicker",
+                        props: {
+                            apiId: 'setLevel',
+                            min: 0,
+                            max: 100,
+                            label: "Porcentaje de cerrado",
+                            statusParam: "level"
+                        }
+                    }]
             },
             {
                 type: 'vacuum',
@@ -59,23 +80,48 @@ export default new Vuex.Store({
                 name: 'Aspiradora',
                 icon: 'mdi-robot-vacuum',
                 actions: [
-                    {slug: 'state', name: 'cambiar-estado', component: "OnOff", props: {}},
-                    {slug: 'resume', name: 'estado-de-reproducción', component: "PlayPause", props: {}},
-                    {slug: 'change-location', name: 'cambiar-ubicación', component: "SelectFromArray", props:{getter: "getRoomsForSelect", label: "Habitaciones"}},
-                    {slug: 'return-to-base', name: 'volver-a-estación-de-carga'},
-                    {slug: 'set-mode', name: 'establecer-modo', component: "SelectFromArray", props:{getter: "getVacuumModes", label: "Modos"}},
-                    {slug: 'change-charge-location', name: 'cambiar-ubicación-de-base-de-carga', component: "SelectFromArray", props:{getter: "getRoomsForSelect", label: "Habitaciones"}} ]
-            },
-            {
-                type: 'alarm',
-                id: "mxztsyjzsrq7iaqc",
-                name: 'Alarma',
-                icon: 'mdi-shield-home',
-                actions: [
-                    {slug: 'activate-house', name: 'activar modo casa'},
-                    {slug: 'activate-regular', name: 'activar modo normal'},
-                    {slug: 'change-code', name: 'cambiar código', component: "SecurityCode", props: {}},
-                    {slug: 'deactivate', name: 'desactivar'}]
+                    {
+                        name: 'Cambiar estado',
+                        component: "OnOff",
+                        props: {apiId: ['start', 'pause'], statusParam: "status", disable: true}
+                    },
+                    {
+                        name: 'Volver a estación',
+                        component: "Button",
+                        props: {apiId: 'dock', label: 'Volver a estación de carga'}
+                    },
+                    {
+                        name: 'Cambiar ubicación',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: ["location", "id"],
+                            apiId: "setLocation",
+                            getter: "getRoomsForSelect",
+                            label: "Habitaciones",
+                            title: "Cambiar ubicación"
+                        }
+                    },
+                    {
+                        name: 'Establecer modo',
+                        component: "SelectFromArray",
+                        props: {
+                            apiId: 'setMode',
+                            statusParam: "mode",
+                            getter: "getVacuumModes",
+                            label: "Modos",
+                            title: "Establecer modo"
+                        }
+                    },
+                    {
+                        name: 'Cambiar ubicación base de carga',
+                        component: "SelectFromArray",
+                        props: {
+                            apiId: '',
+                            getter: "getRoomsForSelect",
+                            label: "Habitaciones",
+                            title: "Cambiar ubicación de base de carga"
+                        }
+                    }]
             },
             {
                 type: 'oven',
@@ -83,11 +129,55 @@ export default new Vuex.Store({
                 name: 'Horno',
                 icon: 'mdi-stove',
                 actions: [
-                    {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
-                    {slug: 'set-temperature', name: 'establecer-temperatura', component: "NumberPicker", props: {min: 90, max: 230, label: "Temperatura"}},
-                    {slug: 'set-source', name: 'establecer-fuente-de-calor', component: "SelectFromArray", props: {getter: "getHeatSources"}},
-                    {slug: 'set-grill', name: 'establecer-modo-grill'},
-                    {slug: 'set-convection', name: 'establecer-modo-conveccion'}]
+                    {
+                        name: 'Cambiar estado',
+                        component: "OnOff",
+                        props: {apiId: ['turnOn', 'turnOff'], statusParam: "status", disable: false}
+                    },
+                    {
+                        name: 'Establecer temperatura',
+                        component: "NumberPicker",
+                        props: {
+                            min: 90,
+                            max: 230,
+                            label: "Temperatura",
+                            apiId: 'setTemperature',
+                            statusParam: 'temperature'
+                        }
+                    },
+                    {
+                        name: 'Establecer fuente de calor',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: 'heat',
+                            getter: "getHeatSources",
+                            label: "Fuentes de calor",
+                            title: "Cambiar fuente de calor",
+                            apiId: "setHeat"
+                        }
+                    },
+                    {
+                        name: 'Establecer modo grill',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: 'grill',
+                            apiId: 'setGrill',
+                            getter: "getGrillModes",
+                            label: "Modos grill",
+                            title: "Cambiar modo grill"
+                        }
+                    },
+                    {
+                        name: 'Establecer modo de convección',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: 'convection',
+                            apiId: 'setConvection',
+                            getter: "getConvectionModes",
+                            label: "Modos de convección",
+                            title: "Cambiar modo de convección"
+                        }
+                    }]
             },
             {
                 type: 'ac',
@@ -95,89 +185,127 @@ export default new Vuex.Store({
                 name: 'Aire acondicionado',
                 icon: 'mdi-fan',
                 actions: [
-                    {slug: 'state', name: 'cambiar-estado', component: "OnOff"},
-                    {slug: 'set-temperature', name: 'establecer-temperatura', component: "NumberPicker", props: {min: 18, max: 38, label: "Temperatura"}},
-                    {slug: 'set-mode', name: 'establecer-modo'},
-                    {slug: 'set-horizontal', name: 'establecer-posicion-de-aspas-horizontales'},
-                    {slug: 'set-vertical', name: 'establecer-posicion-de-aspas-verticales'},
-                    {slug: 'set-fan-speed', name: 'establecer-velocidad-de-ventilador'}]
+                    {
+                        name: 'Cambiar estado',
+                        component: "OnOff",
+                        props: {apiId: ['turnOn', 'turnOff'], statusParam: "status", disable: false}
+                    },
+                    {
+                        name: 'Establecer temperatura',
+                        component: "NumberPicker",
+                        props: {
+                            min: 18,
+                            max: 38,
+                            label: "Temperatura",
+                            apiId: 'setTemperature',
+                            statusParam: 'temperature'
+                        }
+                    },
+                    {
+                        name: 'Establecer modo',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: 'mode',
+                            getter: "getACModes",
+                            label: "Modos de aire",
+                            title: "Cambiar modo de aire",
+                            apiId: "setMode"
+                        }
+                    },
+                    {
+                        name: 'Establecer posición de aspas horizontales',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: 'verticalSwing',
+                            getter: "getVerticalSwings",
+                            label: "Modos de swing vertical",
+                            title: "Cambiar swing vertical",
+                            apiId: "setVerticalSwing"
+                        }
+                    },
+                    {
+                        name: 'Establecer posición de aspas verticales',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: 'horizontalSwing',
+                            getter: "getVerticalSwings",
+                            label: "Modos de swing horizontal",
+                            title: "Cambiar swing horizontal",
+                            apiId: "setHorizontalSwing"
+                        }
+                    },
+                    {
+                        name: 'Establecer velocidad de ventilador',
+                        component: "SelectFromArray",
+                        props: {
+                            statusParam: 'fanSpeed',
+                            getter: "getFanSpeeds",
+                            label: "Velocidades de aire",
+                            title: "Cambiar velocidad de aire",
+                            apiId: "setFanSpeed"
+                        }
+                    }]
             }
-        ],
-        devices: [{
-            name: "luz-1",
-            id: "fffdac4e75b47e97",
-            room: "bedroom",
-            type: "light",
-            hash: 3208380,
-            group: "grupo-1"
-        },
-            {
-                name: "aspiradora-1",
-                id: "d14cc2eaa9795ae2",
-                room: "bedroom",
-                type: "vacuum",
-                group: "grupo-1"
-            },
-            {
-                name: "horno-1",
-                room: "bedroom",
-                type: "oven",
-                group: "grupo-1"
-            },
-            {
-                name: "aire-1",
-                room: "bedroom",
-                type: "a/c",
-                group: "grupo-1"
-            },
-            {
-                name: "alarma-1",
-                room: "bedroom",
-                type: "alarm",
-                group: "grupo-1"
-            },
-            {
-                name: "aspiradora",
-                room: "living",
-                type: "vacuum",
-                group: "grupo-1"
-            }]
+        ]
+
     },
+
     getters: {
         getDeviceTypeObj: (state) => (name) => {
             return state.supportedDevices.find(d => d.name === name)
         },
-        getRooms: (state) => {
-            return state.rooms
-        },
         getVacuumModes: () => {
-          return [{apiValue: "vacuum", value: "aspirar"}, {apiValue: "mop", value: "trapear"}]
+            return [{apiValue: "vacuum", value: "Aspirar"}, {apiValue: "mop", value: "Trapear"}]
         },
-        getRoomsForSelect: (state) => {
-            return state.rooms.map(r => ({apiValue: r.name, value: r.name}))
+        getRoomsForSelect: (state, getters) => {
+            return getters['room/getRooms'].map(r => ({apiValue: r.id, value: r.name}))
         },
         getHeatSources: () => {
-            return [{apiValue: "top", value: "superior"},
-                {apiValue: "bottom", value: "inferior"},
+            return [{apiValue: "top", value: "Superior"},
+                {apiValue: "bottom", value: "Inferior"},
                 {apiValue: "conventional", value: "convencional"}]
         },
-        getRoutines: (state) => {
-            return state.routines.map(e => e.routine)
+        getGrillModes: () => {
+            return [{apiValue: "large", value: "Grande"},
+                {apiValue: "eco", value: "Ecológico"},
+                {apiValue: "off", value: "Apagado"}]
         },
-        getRoutine: (state) => (name) => {
-            return state.routines.find(e => e.routine === name)
+        getConvectionModes: () => {
+            return [{apiValue: "normal", value: "Normal"},
+                {apiValue: "eco", value: "Ecológico"},
+                {apiValue: "off", value: "Apagado"}]
         },
-        groupsNoSlug: (state) => (room) => {
-            return state.devices.filter(d => d.room === room).map(d => textToSlug(d.group));
+        getACModes: () => {
+            return [{apiValue: "cool", value: "Frío"},
+                {apiValue: "heat", value: "Calor"},
+                {apiValue: "fan", value: "Ventilador"}]
         },
-        deviceExists: (state) => (type, name) => {
-            return state.devices.find(d => d.type === type && d.name === name);
+        getVerticalSwings: () => {
+            return [{apiValue: "auto", value: "Automático"},
+                {apiValue: "22", value: "22 grados"},
+                {apiValue: "45", value: "45 grados"},
+                {apiValue: "67", value: "67 grados"},
+                {apiValue: "90", value: "90 grados"}]
         },
-        getDevice: (state) => (name, room) => {
-            return state.devices.find(d => d.room === room && d.name === name);
+        getHorizontalSwings: () => {
+            return [{apiValue: "auto", value: "Automático"},
+                {apiValue: "-90", value: "-90 grados"},
+                {apiValue: "-45", value: "-45 grados"},
+                {apiValue: "0", value: "0 grados"},
+                {apiValue: "45", value: "45 grados"},
+                {apiValue: "90", value: "90 grados"}
+            ]
+        },
+        getFanSpeeds: () => {
+            return [{apiValue: "auto", value: "Automático"},
+                {apiValue: "25", value: "25%"},
+                {apiValue: "50", value: "50%"},
+                {apiValue: "75", value: "75%"},
+                {apiValue: "100", value: "100%"},
+            ]
         },
         getIcon: (state) => (type) => {
-          return state.supportedDevices.find(d => d.type === type).icon
+            return state.supportedDevices.find(d => d.type === type).icon
         },
         selectedRoom: (state) => state.selectedRoom,
         selectedRoutine: (state) => state.selectedRoutine
@@ -209,51 +337,17 @@ export default new Vuex.Store({
             state.editActionsPressed = value
         },
         addRoom(state, room) {
-            state.rooms.push(textToSlug(room));
+            state.rooms.push(room);
         },
         addDevice(state, device) {
-            device.name = textToSlug(device.name)
-            device.group = textToSlug(device.group)
             state.devices.push(device);
-        },
-        addActionToRoutine(state, payLoad) {
-          const routine = state.routines.find(r => r.routine === payLoad.routine)
-            routine.actions.push(payLoad.action)
-        },
-        deleteActionFromRoutine(state, payLoad) {
-          state.routines.find(r => r.routine === payLoad.routine).actions.splice(payLoad.idx, 1)
         },
         selectRoom(state, room) {
             state.selectedRoom = room;
         },
         selectRoutine(state, routine) {
             state.selectedRoutine = routine;
-        },
-        deleteRoom(state, room) {
-            state.rooms = state.rooms.filter(el => el !== room)
-        },
-        deleteRoutine(state, routine) {
-            state.routines = state.routines.filter(el => el.name !== routine)
-        },
-        deleteDevice(state, payLoad) {
-            state.devices = state.devices.filter(el => !(el.name === textToSlug(payLoad.name) && el.room === textToSlug(payLoad.room)))
-        },
-        editDeviceName(state, payLoad) {
-            const idx = state.devices.findIndex(el => el.name === textToSlug(payLoad.name) && el.room === textToSlug(payLoad.room))
-            const device = state.devices[idx]
-            device.name = textToSlug(payLoad.newName)
-            Vue.set(state.devices, idx, device)
-        },
-        editRoomName(state, payLoad) {
-            const idx = state.rooms.findIndex(e => e === textToSlug(payLoad.name));
-            Vue.set(state.rooms, idx, textToSlug(payLoad.newName))
-        },
-        editRoutineName(state, payLoad) {
-            const idx = state.routines.findIndex(e => e.name === textToSlug(payLoad.name));
-            const routine = state.routines[idx]
-            routine.name = textToSlug(routine.name)
-            Vue.set(state.routines, idx, routine)
         }
-    },
-
+    }
 });
+

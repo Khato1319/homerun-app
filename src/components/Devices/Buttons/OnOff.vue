@@ -2,13 +2,13 @@
   <v-slide-x-transition>
     <v-btn class="mx-2"
            fab
-           dark
            large
-           :color="componentState ? 'blue-grey lighten-4' : 'primary'"
+           :color="componentState ?  'primary' : 'blue-grey lighten-5'"
            @click="clickHandler"
            elevation="8"
+           :disabled="checkDisabled()"
     >
-      <v-icon :color="componentState ? 'primary' : 'white'"
+      <v-icon :color="componentState ? 'white' : 'black'"
       >mdi-power</v-icon>
     </v-btn>
   </v-slide-x-transition>
@@ -17,13 +17,24 @@
 <script>
   export default {
     name: "OnOff",
-    props: ['onClick', 'apiId', 'name', 'state', 'deviceView', 'statusParam'],
+    props: ['apiId', 'name', 'state', 'deviceView', 'statusParam', 'disable'],
     data() {
       return {
+        clicked: null
       }
     },
-
+    mounted() {
+      if (this.deviceView) {
+        this.clicked = this.componentState
+      }
+    },
     methods: {
+      checkDisabled() {
+        if (this.disable && this.deviceView) {
+          return this.state.batteryLevel < 5
+        }
+        return false
+      },
       getActionValue() {
         return {
           displayValue: this.componentState ? 'encender' : 'apagar',
@@ -31,14 +42,18 @@
         }
       },
       clickHandler() {
+        this.clicked = !this.clicked
         if (this.deviceView) {
-          this.$store.dispatch('device/applyAction', {name: this.name, action: this.componentState ? "turnOff" : "turnOn"})
+          this.$store.dispatch('device/applyAction', {name: this.name, action: this.componentState ? this.apiId[1] : this.apiId[0]})
         }
       }
     },
     computed: {
       componentState() {
-        return this.state[this.statusParam] === "on"
+        if (this.deviceView) {
+          return this.state[this.statusParam] === "on" || this.state[this.statusParam] === "active"
+        }
+        return this.clicked
         // return this.$store.getters["device/getDevice"](this.name).state[this.statusParam] === "on"
       }
     }

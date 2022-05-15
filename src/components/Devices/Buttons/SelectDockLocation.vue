@@ -16,18 +16,15 @@
 
 <script>
 export default {
-  name: "SelectFromArray",
+  name: "SelectDockLocation",
   props: ["getter", "label", 'title', 'deviceView','apiId','name', 'state', 'statusParam'],
   data() {
     return {
-      value: null
+      value: ""
     }
   },
-  beforeMount() {
-    if (this.deviceView) {
-      this.$store.dispatch('room/getAll')
-      this.value = this.componentState
-    }
+  mounted() {
+    this.value = this.componentState
   },
   methods: {
     getActionValue() {

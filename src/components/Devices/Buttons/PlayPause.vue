@@ -4,12 +4,12 @@
            fab
            dark
            large
-           @click="()=>{clicked = !clicked; $emit('onClick')}"
+           @click="clickHandler"
            color="primary"
            elevation="8"
     >
       <v-icon>
-        {{ clicked ? 'mdi-play' : 'mdi-pause' }}
+        {{ componentState ? 'mdi-play' : 'mdi-pause' }}
       </v-icon>
     </v-btn>
   </v-slide-x-transition>
@@ -18,18 +18,28 @@
 <script>
   export default {
     name: "PlayPause",
-    props: ['onClick'],
+    props: ['apiId', 'name', 'state', 'deviceView', 'statusParam'],
     data() {
       return {
-        clicked: false,
       }
     },
     methods: {
       getActionValue() {
         return {
-          displayValue: this.clicked ? 'reanudar' : 'pausar',
-          actionName: this.clicked ? this.apiId[0] : this.apiId[1]
+          displayValue: this.componentState ? 'reanudar' : 'pausar',
+          actionName: this.componentState ? this.apiId[0] : this.apiId[1]
         }
+      },
+      clickHandler() {
+        if (this.deviceView) {
+          this.$store.dispatch('device/applyAction', {name: this.name, action: this.componentState ? "turnOff" : "turnOn"})
+        }
+      }
+    },
+    computed: {
+      componentState() {
+        return this.state[this.statusParam] === "play"
+        // return this.$store.getters["device/getDevice"](this.name).state[this.statusParam] === "on"
       }
     }
   }

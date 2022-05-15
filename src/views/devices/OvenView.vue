@@ -1,17 +1,14 @@
 <template>
-<div>
-  {{converter(deviceName)}} Oven
-  <CloseButton @onClick="close"></CloseButton>
-</div>
+  <GenericView :device-name="$route.params.deviceName" device-type="oven"
+               dispositivo="horno"></GenericView>
 </template>
 
 <script>
-import CloseButton from "@/components/ViewButtons/CloseButton";
-import {slugToText} from "../../../utils/Utils";
+import GenericView from "@/views/devices/GenericView";
 export default {
   name: "OvenView",
   components: {
-    CloseButton
+    GenericView
   },
   methods: {
     close() {
@@ -21,7 +18,6 @@ export default {
   data() {
     return {
       deviceName: this.$route.params.deviceName,
-      converter: slugToText
     }
   }
 }

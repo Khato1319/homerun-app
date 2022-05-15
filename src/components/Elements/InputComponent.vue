@@ -24,19 +24,15 @@
 
 <script>
 import { mapState } from "vuex";
-import {slugToText} from "../../../utils/Utils";
 export default {
 
     props: ['placeholder', 'setter', 'inputValue', 'reference'],
     data() {
         return {
-          inputVal: this.converter(this.inputValue)
+          inputVal: this.inputValue
         }
     },
     methods: {
-      converter(string) {
-        return slugToText(string)
-      },
       inputSubmit() {
         return this.inputVal
       },

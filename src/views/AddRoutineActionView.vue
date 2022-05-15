@@ -21,19 +21,18 @@
           label="Dispositivo"
           required
       ></v-select>
-
       <v-select
           v-model="action"
           :disabled="deviceType === ''"
-          :items="actions.map(a => converter(a.name))"
+          :items="actions.map(a => a.name)"
           :rules="[v => !!v || 'El item es obligatorio']"
           :label="deviceType === ''? 'Seleccione un dispositivo primero' : 'Acción'"
           required
       ></v-select>
-      <v-card v-if="actionObj && actionObj.component" color="white" class="elevation-4 pa-2 mt-2 mb-5 d-flex justify-center align-content-center">
+      <v-card v-if="actionObj && actionObj.component !== 'Button'" color="white" class="elevation-4 pa-2 mt-2 mb-5 d-flex justify-center align-content-center">
           <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
       </v-card>
-{{actionObj}}
+
       <v-btn
           :disabled="!valid"
           color="success"
@@ -46,8 +45,6 @@
 </template>
 
 <script>
-import {slugToText, textToSlug} from "../../utils/Utils";
-
 import CloseButton from "@/components/ViewButtons/CloseButton";
 import OnOff from "@/components/Devices/Buttons/OnOff";
 import NumberPicker from "@/components/Devices/Buttons/NumberPicker";
@@ -64,10 +61,13 @@ export default {
     PlayPause,
     ColorPicker
   },
+  mounted() {
+    this.$store.dispatch('device/getAll')
+  },
   data() {
     return {
       routine: this.$route.params.routine,
-      devices: this.$store.state.devices.map(d => `${slugToText(d.name)} - ${slugToText(d.room)}`).sort(),
+      devices: this.$store.getters['device/getDevices'].map(d => `${d.name} - ${d.room.name}`).sort(),
       device: '',
       deviceName: '',
       deviceType: '',
@@ -77,9 +77,9 @@ export default {
   },
   watch: {
     device(val) {
-      [this.deviceName, this.deviceRoom] = val.split(' - ').map(x => textToSlug(x))
-      const device = this.$store.state.devices.find(d => d.name === this.deviceName && d.room === this.deviceRoom)
-      this.deviceType = device.type
+      [this.deviceName, this.deviceRoom] = val.split(' - ')
+      const device = this.$store.getters['device/getDevice'](this.deviceName)
+      this.deviceType = device.type.name
       this.action = ''
     }
   },
@@ -95,31 +95,29 @@ export default {
       }
     },
     actionObj() {
-      return this.actions.find(a => a.name === textToSlug(this.action))
+      return this.actions.find(a => a.name === this.action)
     }
   },
   methods: {
     validate() {
-      this.action = textToSlug(this.action)
       let actionValue = undefined;
-      if(this.actionObj.component)
+      if(this.actionObj.component !== 'Button')
         actionValue = this.$refs.actionComp.getActionValue()
 
 
-      const deviceId = "fffdac4e75b47e97"
       const payload = {
         routineName: this.routine,
-        actionName: actionValue.actionName,
-        deviceId: deviceId,
-        param: actionValue.value,
+        actionName: actionValue ? actionValue.actionName : this.actionObj.props.apiId,
+        deviceName: this.deviceName,
+        param: actionValue?.value,
         meta: {
-          value: actionValue.displayValue,
+          value: actionValue ? actionValue.displayValue : undefined,
           name: this.action
         }
       }
       if (this.$store.getters['routine/getRoutine'](this.routine)) {
 
-        this.$store.dispatch("routine/addAction", payload) // todo: pasarle rutina modificada
+        this.$store.dispatch("routine/addAction", payload)
       }
       else {
         // const deviceId = this.$store.getters.device.getDevice(this.deviceName).id
@@ -134,9 +132,6 @@ export default {
 
       // this.$store.commit('addActionToRoutine', {routine: this.routine, action: {device: this.deviceName, room: this.deviceRoom, action: this.action, value: actionValue}})
       this.close()
-    },
-    converter(s) {
-      return slugToText(s)
     },
     close() {
       this.$router.go(-1)

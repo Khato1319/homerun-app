@@ -41,6 +41,8 @@ class Api {
     }
 
     static async put(url, data) {
+        console.log(JSON.stringify(data))
+        console.log(url)
         return await Api.fetch(url,
             {
                 method: "PUT",

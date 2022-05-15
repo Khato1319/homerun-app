@@ -4,7 +4,6 @@
   <CloseButton @onClick="close"></CloseButton>
   <v-form
       ref="form"
-      v-model="valid"
       lazy-validation
   >
     <v-text-field
@@ -47,6 +46,7 @@
                   @blur="() => this.value = false"
         required
     ></v-text-field>
+
     <v-btn
         :disabled="!valid"
         color="success"
@@ -61,7 +61,7 @@
 
 <script>
 import CloseButton from "@/components/ViewButtons/CloseButton";
-import {hashCode, slugToText} from "../../utils/Utils";
+import {hashCode} from "../../utils/Utils";
 import {mapState} from "vuex";
 export default {
   name: "AddDeviceView",
@@ -75,7 +75,6 @@ export default {
       group: "",
       type: "",
       deviceName: "",
-      converter: slugToText,
       value: true
 
     }
@@ -113,10 +112,12 @@ export default {
       return this.$route.params.room;
     },
     roomName() {
-      return this.converter(this.room);
+      return this.room;
     },
     groupsForRoom() {
-      return new Set(this.$store.state.devices.filter(d=>d.room === this.room).map(d => this.converter(d.group)))
+      if (this.$store.getters['device/getDevices'].length === 0)
+        return []
+      return new Set(this.$store.getters['device/getDevices'].filter(d=> d.room.name === this.roomName).map(d => d.meta.group))
     }
   }
 }
