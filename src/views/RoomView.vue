@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Habitación {{
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Habitación </span>{{
         roomName }}</div>
 
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>

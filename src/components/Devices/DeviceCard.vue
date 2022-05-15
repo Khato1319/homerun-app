@@ -113,7 +113,6 @@ export default {
       document.activeElement.blur();
       this.editingName = true;
       setTimeout(() => this.$refs.inputElem.focus(), 200)
-      // todo: editado de dispositivo
     },
     deleteDeviceDialog() {
       document.activeElement.blur();
@@ -125,7 +124,6 @@ export default {
       this.editingName = false
     },
     async deleteDevice() {
-      // todo: borrado de dispositivo
       console.log('borrando')
       await this.$store.dispatch('device/delete', this.device)
       this.dialog = false;

@@ -6,7 +6,7 @@
     <EditButton class='edit-button' toggler="toggleEditActionsPressed" edit-button-getter="editActionsPressed"></EditButton>
     <CloseButton @onClick="close"/>
 
-      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Rutina {{
+      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Rutina </span> {{
           routine}}</div>
 
     <v-card v-for="(action, idx) in actions" :key="action.meta.name + action.device.id">

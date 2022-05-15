@@ -8,7 +8,8 @@
   >
     <v-text-field
         v-model="deviceName"
-        :counter="10"
+        :counter="60"
+        :rules="[v => v.length <= 60 && v.length >= 3 || 'El nombre debe tener entre 3 y 60 caracteres']"
         label="Nombre"
         required
     ></v-text-field>
@@ -23,11 +24,14 @@
 
     <v-text-field
         v-model="group"
-        :counter="10"
+        :counter="60"
         label="Grupo"
+        :rules="[v => v.length <= 60 && v.length >= 3 || 'El nombre debe tener entre 3 y 60 caracteres']"
         required
-        messages="Si se ingresa un grupo nuevo, este será creado"
     ></v-text-field>
+    <div class="text-sm-left" style="font-size: 12px">
+      Si se ingresa un grupo nuevo, este será creado.
+    </div>
 
     <v-btn x-small v-for="groupp in groupsForRoom" :key="groupp"
     @click="()=> group = groupp" style="margin: 2px">{{groupp}}</v-btn>
@@ -102,7 +106,8 @@ export default {
   computed: {
     ...mapState(['devices', 'rooms']),
     valid() {
-      return this.deviceName !== "" && this.group !== "" &&
+        return this.deviceName.length >= 3 && this.deviceName.length <= 60 &&
+            this.group.length >= 3 && this.group.length <= 60 &&
           (!this.checkbox || this.password !== "")
     },
     possibleDevices() {
