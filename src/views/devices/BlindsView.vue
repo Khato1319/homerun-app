@@ -2,7 +2,7 @@
   <GenericView :device-name="$route.params.deviceName" device-type="blinds"
                device-id="" dispositivo="Cortina">
     <div class="text-sm-left ml-3 mt-6 primary--text">Estado: {{statusOutput}}</div>
-    <v-progress-linear class="ma-3" style="max-width: 95%" :buffer-value="level" :value="currentLevel" color="primary"></v-progress-linear>
+    <v-progress-linear class="ma-3 max-w-95"  :buffer-value="level" :value="currentLevel" color="primary"></v-progress-linear>
   </GenericView>
 </template>
 
@@ -60,5 +60,7 @@ export default {
 </script>
 
 <style scoped>
-
+.max-w-95 {
+  max-width: 95%
+}
 </style>

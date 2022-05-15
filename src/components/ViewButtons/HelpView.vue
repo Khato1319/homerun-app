@@ -8,7 +8,7 @@
       </v-col>
       <CloseButton @onClick="goHome"/>
     </v-row>
-    <v-row justify="center" style="overflow-y: auto; height: 74vh">
+    <v-row justify="center" class="overflow-container">
       <v-col>
         <v-expansion-panels>
           <v-expansion-panel>
@@ -97,9 +97,8 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte superior y, luego toca <v-btn style="height: 35px; pointer-events: none"  rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn></li>
-                      <li>Toca <v-btn style="width: 25px;
-  height: 25px; pointer-events: none" fab x-small><v-icon>mdi-pencil</v-icon></v-btn> en la habitacion que quieras editar</li>
+                      <li>Desplázate hasta la parte superior y, luego toca <HelpEditButton></HelpEditButton></li>
+                      <li>Toca <HelpEditNameButton></HelpEditNameButton> en la habitacion que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
                     </ol>
                   </v-expansion-panel-content>
@@ -115,9 +114,8 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <v-btn style="height: 35px; pointer-events: none"  rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn></li>
-                      <li>Toca <v-btn style="width: 25px;
-  height: 25px; pointer-events: none" fab x-small><v-icon>mdi-pencil</v-icon></v-btn> en la rutina que quieras editar</li>
+                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton></HelpEditButton></li>
+                      <li>Toca <HelpEditNameButton></HelpEditNameButton> en la rutina que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
 
                     </ol>
@@ -136,9 +134,8 @@
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
                       <li>Toca la habitacion donde quieras editar el dispositivo</li>
-                      <li>Desplázate a la solapa derecha, y luego toca <v-btn style="height: 35px; pointer-events: none"  rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn></li>
-                      <li>Toca <v-btn style="width: 25px;
-  height: 25px; pointer-events: none" fab x-small><v-icon>mdi-pencil</v-icon></v-btn> en el dispositivo que quieras editar</li>
+                      <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton></HelpEditButton></li>
+                      <li>Toca <HelpEditNameButton></HelpEditNameButton> en el dispositivo que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
 
                     </ol>
@@ -168,9 +165,8 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte superior y, luego toca <v-btn style="height: 35px; pointer-events: none"  rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn></li>
-                      <li>Toca <v-btn style="width: 25px;
-  height: 25px; pointer-events: none" fab x-small><v-icon>mdi-delete</v-icon></v-btn> en la habitacion que quieras eliminar</li>
+                      <li>Desplázate hasta la parte superior y, luego toca <HelpEditButton></HelpEditButton></li>
+                      <li>Toca <HelpDeleteButton></HelpDeleteButton> en la habitacion que quieras eliminar</li>
                       <li>En la confirmacion de la accion, toca <b>Borrar</b></li>
                     </ol>
                   </v-expansion-panel-content>
@@ -186,9 +182,8 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <v-btn style="height: 35px; pointer-events: none"  rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn></li>
-                      <li>Toca <v-btn style="width: 25px;
-  height: 25px; pointer-events: none" fab x-small><v-icon>mdi-delete</v-icon></v-btn> en la rutina que quieras eliminar</li>
+                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton></HelpEditButton></li>
+                      <li>Toca <HelpDeleteButton></HelpDeleteButton> en la rutina que quieras eliminar</li>
                       <li>Para confirmar la acción, toca <b>Borrar</b></li>
                     </ol>
                   </v-expansion-panel-content>
@@ -206,9 +201,8 @@
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
                       <li>Toca la habitación donde quieras eliminar el dispositivo</li>
-                      <li>Desplázate a la solapa derecha, y luego toca <v-btn style="height: 35px; pointer-events: none"  rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn></li>
-                      <li>Toca <v-btn style="width: 25px;
-  height: 25px; pointer-events: none" fab x-small><v-icon>mdi-delete</v-icon></v-btn> en el dispositivo que quieras editar</li>
+                      <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton></HelpEditButton></li>
+                      <li>Toca <HelpDeleteButton></HelpDeleteButton> en el dispositivo que quieras eliminar</li>
                       <li>Para confirmar la acción, toca <b>Borrar</b></li>
                     </ol>
                   </v-expansion-panel-content>
@@ -227,9 +221,12 @@
 <script>
 
 import CloseButton from "@/components/ViewButtons/CloseButton";
+import HelpEditButton from "@/components/Devices/Buttons/HelpEditButton";
+import HelpEditNameButton from "@/components/Devices/Buttons/HelpEditNameButton";
+import HelpDeleteButton from "@/components/Devices/Buttons/HelpDeleteButton";
 export default {
   name: "HelpView",
-  components: {CloseButton},
+  components: {HelpEditNameButton, HelpEditButton, CloseButton, HelpDeleteButton},
   methods: {
     goHome(){
       this.$router.push('/')
@@ -240,6 +237,10 @@ export default {
 </script>
 
 <style scoped>
+.overflow-container {
+  overflow-y: auto;
+  height: 74vh
+}
 .ordered-list{
   font-size: 20px;
   text-align: start;

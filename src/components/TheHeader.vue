@@ -13,7 +13,7 @@
       <span>Página principal de HomeRun</span>
     </v-tooltip>
 
-    <v-toolbar-title class="white--text mr-auto" style="font-family:Shrikhand,Nunito">HomeRun</v-toolbar-title>
+    <v-toolbar-title class="white--text mr-auto toolbar-title" >HomeRun</v-toolbar-title>
 
     <v-tooltip bottom>
       <template v-slot:activator="{on, attrs}">
@@ -40,4 +40,8 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+
+.toolbar-title {
+  font-family: Shrikhand, sans-serif;
+}
 </style>

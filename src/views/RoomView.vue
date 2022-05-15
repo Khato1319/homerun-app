@@ -6,7 +6,7 @@
     <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
     <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
     <CloseButton @onClick="close"/>
-    <div style="overflow-y: scroll; height: 74vh">
+    <div class="overflow-container">
       <div v-for="group in groups" :key="group" >
         <v-slide-x-transition mode="out-in">
           <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium">
@@ -86,6 +86,10 @@ export default {
 </script>
 
 <style scoped>
+.overflow-container {
+  overflow-y: scroll;
+  height: 74vh
+}
 .edit-button {
   top: 25px;
   right: 60px;

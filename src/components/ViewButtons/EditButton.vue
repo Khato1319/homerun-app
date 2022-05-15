@@ -1,6 +1,6 @@
 <template>
   <v-slide-x-transition>
-    <v-btn  style="height: 35px"
+    <v-btn  class="edit-btn"
                               elevation="4"
                               :color="color"
                               :key="editing ? 'editing' : 'not-editing'"
@@ -37,7 +37,9 @@ export default {
 </script>
 
 <style scoped>
-
+.edit-btn {
+  height: 35px
+}
 
 .edit-text {
   font-size: 14px;

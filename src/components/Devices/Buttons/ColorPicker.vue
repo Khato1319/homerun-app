@@ -17,12 +17,7 @@
                 @change="changeHandler"
             >
               <template v-slot:append>
-                <!--                <v-text-field-->
-                <!--                    v-model="red"-->
-                <!--                    class="mt-0 pt-0"-->
-                <!--                    type="number"-->
-                <!--                    style="width: 45px"-->
-                <!--                ></v-text-field>-->
+
               </template>
             </v-slider>
           </v-col>
@@ -36,12 +31,7 @@
                 @change="changeHandler"
             >
               <template v-slot:append>
-                <!--                <v-text-field-->
-                <!--                    v-model="green"-->
-                <!--                    class="mt-0 pt-0"-->
-                <!--                    type="number"-->
-                <!--                    style="width: 45px"-->
-                <!--                ></v-text-field>-->
+
               </template>
             </v-slider>
           </v-col>
@@ -55,12 +45,7 @@
                 @change="changeHandler"
             >
               <template v-slot:append>
-                <!--                <v-text-field-->
-                <!--                    v-model="blue"-->
-                <!--                    class="mt-0 pt-0"-->
-                <!--                    type="number"-->
-                <!--                    style="width: 45px"-->
-                <!--                ></v-text-field>-->
+
               </template>
             </v-slider>
           </v-col>

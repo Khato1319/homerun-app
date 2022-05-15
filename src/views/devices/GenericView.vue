@@ -2,7 +2,7 @@
   <div >
     <div   class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">{{dispositivo}}</span> "{{deviceName}}"</div>
     <CloseButton @onClick="close"/>
-    <div style="overflow-y: scroll; height: 74vh">
+    <div class="overflow-container">
       <v-card   v-if="this.$slots.default" color="white" class="pa-2 ma-2">
         <slot></slot>
       </v-card>
@@ -79,5 +79,8 @@ export default {
 </script>
 
 <style scoped>
-
+.overflow-container {
+  overflow-y: scroll;
+  height: 74vh
+}
 </style>

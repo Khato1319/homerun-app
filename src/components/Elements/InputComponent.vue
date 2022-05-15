@@ -5,9 +5,8 @@
       color="blue lighten-4"  :elevation="8" depressed x-large class="ma-6" >
 
     <input
-        style="width: 200px; height: 50px ; font-size: 18px"
         :style = "{textAlign: inputVal === '' ? 'left': 'center'}"
-        @click.stop class="blue lighten-4 text-uppercase px-2"
+        @click.stop class="blue lighten-4 text-uppercase px-2 input-comp"
         type="text" v-model="inputVal"
         @keydown.enter="submitValue"
         :placeholder="placeholder"
@@ -49,5 +48,10 @@ export default {
 ::placeholder {
   color: #000000;
   opacity: 20%
+}
+.input-comp {
+  width: 200px;
+  height: 50px;
+  font-size: 18px
 }
 </style>

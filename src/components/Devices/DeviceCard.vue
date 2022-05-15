@@ -2,9 +2,9 @@
   <v-card
       elevation="4"
       rounded
-      class="pa-2 ma-4 white--text"
+      class="pa-2 ma-4 white--text device-card"
       color="primary"
-      style="position: relative ; max-width: 300px"
+
   >
     <DialogModal @setDialog='(val) => this.dialog = val' :dialog="dialog" @acceptEvent="deleteDevice"
                  @cancelEvent="() => this.dialog = false">
@@ -24,10 +24,10 @@
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
     </v-fab-transition>
-    <div class="d-flex" style="max-width: 100%">
-      <div class="d-flex flex-column" style="max-width: 100%">
-        <div class="d-flex align-center" style="max-width: 100%">
-          <input style="color: white ; max-width: 70%" class='ma-1 title-input text-md-left font-weight-bold' @keypress.enter='submitValue' ref='inputElem' :disabled="!editPressed || !editingName" type="text" v-model="input"/>
+    <div class="d-flex max-100" >
+      <div class="d-flex flex-column max-100" >
+        <div class="d-flex align-center max-100" >
+          <input  class='ma-1 title-input text-md-left font-weight-bold device-name' @keypress.enter='submitValue' ref='inputElem' :disabled="!editPressed || !editingName" type="text" v-model="input"/>
 
           <v-btn class="mx-2 d-flex "
                  fab
@@ -56,6 +56,7 @@
                   :type="value ? 'password' : 'text'"
                   :hint="incorrectMsg"
                   required
+                  @keypress.enter="checkPwd"
                   ref="pwdInput"
                   @blur="() => {this.incorrectMsg = ''; this.color = 'white'; this.value = true}"
     ></v-text-field>
@@ -159,10 +160,17 @@ export default {
 </script>
 
 <style scoped>
-/*.v-input--is-focused .v-input__slot {*/
-/*  border: 2px solid #005fcc !important;*/
-/*  border-bottom-color: rgba(0, 0, 0, 0.38) !important;*/
-/*}*/
+.device-name {
+  color: white ;
+  max-width: 70%
+}
+.max-100 {
+  max-width: 100%
+}
+.device-card {
+  position: relative;
+  max-width: 300px
+}
 #delete-button {
   line-height: 12px;
   width: 25px;

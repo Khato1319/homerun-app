@@ -1,9 +1,8 @@
 <template>
-  <div style="position: relative" >
+  <div class="relative" >
       <v-btn
           width="200"
           height="50"
-          style="font-size: 18px"
           :color="selectedValue === element ? 'primary' : 'blue lighten-4'"
           :elevation="selectedValue === element ? 4 : 8"
           depressed
@@ -11,7 +10,7 @@
           @click="toggle"
           v-if="!editPressed || !editing"
       >
-        <span class="text-truncate" style="max-width:150px">{{element}}</span>
+        <span class="text-truncate max-w-150" >{{element}}</span>
       </v-btn>
 
       <v-slide-x-transition>
@@ -110,9 +109,16 @@ export default {
 </script>
 
 <style scoped>
+.max-w-150 {
+  max-width: 150px
+}
+.relative {
+  position: relative
+}
 .element-button {
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 18px
 }
 
 #delete-button {

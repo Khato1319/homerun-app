@@ -10,7 +10,8 @@
     <v-text-field
         v-model="deviceName"
         :counter="60"
-        :rules="[v => v.length <= 60 && v.length >= 3 || 'El nombre debe tener entre 3 y 60 caracteres']"
+        :rules="[v => v.length <= 60 && v.length >= 3 || 'El nombre debe tener entre 3 y 60 caracteres',
+        v => v.match(/^[A-Za-z0-9_. ]+$/) || 'El nombre debe tener letras, números o _']"
         label="Nombre"
         required
     ></v-text-field>
@@ -28,12 +29,12 @@
         :counter="60"
         label="Grupo (opcional)"
     ></v-text-field>
-    <div class="text-sm-left" style="font-size: 12px">
+    <div class="text-sm-left group-label" >
       Si se ingresa un grupo nuevo, este será creado.
     </div>
 
     <v-btn x-small v-for="groupp in groupsForRoom" :key="groupp"
-    @click="()=> group = groupp" style="margin: 2px">{{groupp}}</v-btn>
+    @click="()=> group = groupp" class="group-btn">{{groupp}}</v-btn>
 
     <v-checkbox
         v-model="checkbox"
@@ -110,6 +111,7 @@ export default {
     ...mapState(['devices', 'rooms']),
     valid() {
         return this.deviceName.length >= 3 && this.deviceName.length <= 60 &&
+            this.deviceName.match(/^[A-Za-z0-9_. ]+$/) &&
             // this.group.length >= 3 && this.group.length <= 60 &&
           (!this.checkbox || this.password !== "")
     },
@@ -136,5 +138,10 @@ export default {
 </script>
 
 <style scoped>
-
+.group-btn {
+  margin: 2px
+}
+.group-label {
+  font-size: 12px
+}
 </style>

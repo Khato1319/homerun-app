@@ -25,7 +25,11 @@
           :label="deviceType === ''? 'Seleccione un dispositivo primero' : 'Acción'"
           required
       ></v-select>
-      <v-card v-if="actionObj && actionObj.component !== 'Button'" color="white" class="elevation-4 pa-2 mt-2 mb-5 d-flex justify-center align-content-center">
+      <div v-if="actionObj && actionObj.component !== 'Button'"   class="primary--text font-weight-bold text-sm-caption">
+        Seleccione el estado final del dispositivo deseado
+      </div>
+      <v-card v-if="actionObj && actionObj.component !== 'Button'" color="white" class="elevation-4 pa-2 mt-2 mb-5">
+
           <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
       </v-card>
 

@@ -13,7 +13,7 @@
                 <v-tab @click="restorePage">
                   Rutinas
                 </v-tab>
-                <v-tab-item key="roomView" style="overflow-y: scroll; height: 80vh ">
+                <v-tab-item key="roomView" class="overflow-container">
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons cols="6"
                                      :prop="roomButtonsProp">
@@ -27,7 +27,7 @@
                   <EditButton class='edit-button' toggler="toggleEditRoomPressed" key='roomEdit'
                               setter="toggleEditRoomPressed" v-show="!addingRoom && selectedRoom === ''" edit-button-getter="editRoomPressed"/>
                 </v-tab-item>
-                <v-tab-item key="routineView" class="scrollbar" style="overflow-y: scroll; height: 80vh ">
+                <v-tab-item key="routineView" class="scrollbar overflow-tab" >
                   <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
                              @onClick="addRoutine"/>
 
@@ -231,11 +231,20 @@ export default {
   top: 10px;
   right: 25px;
 }
+
+.overflow-container {
+  overflow-y: scroll; height: 80vh
+}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.overflow-tab {
+  overflow-y: scroll;
+  height: 80vh
 }
 
 ::placeholder {

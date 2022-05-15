@@ -4,7 +4,7 @@
 
       <div class="text-sm-left ml-3 mt-6 primary--text">Batería <span v-if="state.status === 'docked'">{{`(Cargando ${state.batteryLevel}%)`}}</span></div>
 
-    <v-progress-linear class="ma-3" style="max-width: 95%" :value="state.batteryLevel" :color="state.batteryLevel <= 5 ? 'red' : 'primary'"></v-progress-linear>
+    <v-progress-linear class="ma-3 progress-bar"  :value="state.batteryLevel" :color="state.batteryLevel <= 5 ? 'red' : 'primary'"></v-progress-linear>
     <div v-if="state.status !== 'docked' && state.batteryLevel <= 5" class="text-sm-caption ml-3 mt-6 red--text">Es necesario cargar el dispositivo</div>
   </GenericView>
 </template>
@@ -35,5 +35,7 @@ export default {
 </script>
 
 <style scoped>
-
+.progress-bar {
+  max-width: 95%
+}
 </style>
