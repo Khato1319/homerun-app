@@ -10,7 +10,7 @@
       <div v-for="group in groups" :key="group" >
         <v-slide-x-transition mode="out-in">
           <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium">
-            <div>
+            <div class="primary--text font-weight-medium">
               Grupo: {{group}}
             </div>
             <DevicesView :devices = "selectDevices(group)" :key="selectDevices(group).length"></DevicesView>
@@ -18,7 +18,7 @@
         </v-slide-x-transition>
       </div>
       <div class="pa-1 mt-3 mb-2 ml-4 font-weight-medium" v-if="selectDevices('').length > 0">
-        <div>
+        <div class="primary--text font-weight-medium">
           Sin grupo
         </div>
         <DevicesView :devices = "selectDevices('')" :key="selectDevices('').length"></DevicesView>
