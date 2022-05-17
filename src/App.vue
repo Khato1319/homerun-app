@@ -177,6 +177,7 @@ export default {
     },
     addToRoutines(value) {
       this.addingRoutine = false;
+      this.$store.commit('selectRoutine', value)
       this.$router.push({ name: 'addRoutine', params: { routine:  value}})
       // this.routines.push({routine: value, actions: undefined});
     },
