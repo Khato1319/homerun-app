@@ -81,7 +81,7 @@ export default {
       submittingPwd: false,
       incorrectMsg: '',
       color: 'white',
-      value: true,
+      value: false,
     }
   },
   components: {

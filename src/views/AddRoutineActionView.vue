@@ -111,7 +111,7 @@ export default {
       deviceType: '',
       deviceRoom: '',
       action: '',
-      value: true,
+      value: false,
       hash: null,
       password: "",
       passwordChecked: false,
