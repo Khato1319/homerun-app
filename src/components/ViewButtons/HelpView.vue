@@ -135,7 +135,7 @@
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
                       <li>Toca la habitacion donde quieras editar el dispositivo</li>
                       <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton></HelpEditButton></li>
-                      <li>Toca <HelpEditNameButton></HelpEditNameButton> en el dispositivo que quieras editar</li>
+                      <li>Toca  <HelpEditNameButton></HelpEditNameButton> en el dispositivo que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
 
                     </ol>

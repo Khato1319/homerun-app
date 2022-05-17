@@ -1,6 +1,9 @@
 <template>
-<div>
-  Agregando dispositivo a {{roomName}}
+<div class="font-weight-medium">
+  <div class="primary--text font-weight-bold">
+    Agregando dispositivo a {{roomName}}
+  </div>
+
   <v-spacer/>
   <CloseButton @onClick="close"/>
   <v-form

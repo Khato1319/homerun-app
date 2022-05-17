@@ -41,7 +41,7 @@
       },
       getActionValue() {
         return {
-          displayValue: this.componentState ? 'encender' : 'apagar',
+          displayValue: this.componentState ? 'Encender' : 'Apagar',
           actionName: this.componentState ? this.apiId[0] : this.apiId[1]
         }
       },
