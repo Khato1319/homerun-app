@@ -4,14 +4,14 @@
       rounded
       class="pa-2 ma-4 white--text device-card"
       color="primary"
-
   >
     <DialogModal @setDialog='(val) => this.dialog = val' :dialog="dialog" @acceptEvent="deleteDevice"
                  @cancelEvent="() => this.dialog = false">
       <template v-slot:title>
         Borrado de dispositivo
       </template>
-      ¿Está seguro de que quiere borrar el dispositivo {{ device }}? Se borrarán las acciones de rutinas asociadas.
+      ¿Está seguro de que quiere borrar el dispositivo {{ device }}?
+      Se borrarán las acciones de rutinas asociadas.
     </DialogModal>
     <v-fab-transition>
       <v-btn v-if="editPressed && !editingName" mode="out-in" fab x-small id="delete-button"
@@ -35,7 +35,7 @@
                  v-if="!submittingPwd"
                  large
                  color="blue lighten-4"
-                 @click="()=> {addToRecents(); goToDeviceView()}">
+                 @click="()=> {addToRecents(); goToDeviceView(); $store.commit('setEditTheRoomPressed', false)}">
             <v-icon color="black" >
               {{icon}}
             </v-icon>
@@ -51,7 +51,7 @@
                   label="Ingrese la contraseña"
                   class="white--text mx-3 my-2"
                   :color="color"
-                  :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+                  :append-icon="value ? 'mdi-eye-off' : 'mdi-eye'"
                   @click:append="() => (value = !value)"
                   :type="value ? 'password' : 'text'"
                   :hint="incorrectMsg"
@@ -60,7 +60,7 @@
                   ref="pwdInput"
                   @blur="() => {this.incorrectMsg = ''; this.color = 'white'; this.value = true}"
     ></v-text-field>
-    <v-btn         color="success" v-if="submittingPwd" @click="checkPwd" class="text-sm-button" :disabled="password === ''">Ingresar</v-btn>
+    <v-btn color="success" v-if="submittingPwd" @click="checkPwd" class="text-sm-button" :disabled="password === ''">Ingresar</v-btn>
 
   </v-card>
 </template>

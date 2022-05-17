@@ -10,16 +10,15 @@ export default{
       getDevices: (state) => {
           return state.devices
       },
-    getDevice: (state) => (name) => {
-      return state.devices.find(r => r.name === name)
-    },
+        getDevice: (state) => (name) => {
+          return state.devices.find(r => r.name === name)
+        },
         getDeviceById: (state) => (id) => {
             return state.devices.find(r => r.id === id)
         }
     },
     actions: {
         async create({dispatch, rootGetters}, payload) {
-
             const toTitleCase = (phrase)=> {
                 return phrase
                     .toLowerCase()
@@ -42,8 +41,6 @@ export default{
             await dispatch("getAll")
 
             await dispatch('bindToRoom', {deviceName: payload.name, deviceRoom: payload.room})
-
-
 
             if (rootGetters['device/getDevice'](payload.name).type.name === 'vacuum') {
                 const roomId = rootGetters['room/getRoom'](payload.room).id

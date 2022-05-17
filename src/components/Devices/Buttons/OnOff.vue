@@ -1,7 +1,9 @@
 <template>
   <v-slide-x-transition>
     <div>
-      <div class="text-sm-left ml-3 mt-6 mb-3 primary--text">Estado: {{componentState ? 'Encendido' : 'Apagado'}}</div>
+      <div class="text-sm-left ml-3 mt-6 mb-3 primary--text">
+        Estado: {{componentState ? 'Encendido' : 'Apagado'}}
+      </div>
 
       <v-btn class="mx-2"
              fab

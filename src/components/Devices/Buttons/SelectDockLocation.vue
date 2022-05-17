@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="mt-5">
       <div class="text-sm-left ml-3 mt-6 mb-3 primary--text">{{title}}</div>
       <v-select

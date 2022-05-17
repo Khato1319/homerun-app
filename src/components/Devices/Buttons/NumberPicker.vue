@@ -1,25 +1,19 @@
 <template>
-
-
-<div >
-  <div class="text-sm-left ml-3 mt-6 mb-6 primary--text">{{label}}: {{value}}{{statusParam === 'temperature' ? '°C':''}}{{label.toLowerCase().includes('porcentaje') ? '%':''}}
+  <div >
+    <div class="text-sm-left ml-3 mt-6 mb-6 primary--text">
+      {{label}}: {{value}}{{statusParam === 'temperature' ? '°C':''}}{{label.toLowerCase().includes('porcentaje') ? '%':''}}
+    </div>
+    <v-slider
+        thumb-color="primary"
+        thumb-label
+        thumb-size="28"
+        v-model="value"
+        :min = "this.min"
+        :max = "this.max"
+        @change="changeHandler"
+        :disabled="checkDisabled()"
+    ></v-slider>
   </div>
-  <v-slider
-      thumb-color="primary"
-      thumb-label
-      thumb-size="28"
-      v-model="value"
-      :min = "this.min"
-      :max = "this.max"
-      @change="changeHandler"
-      :disabled="checkDisabled()"
-
-  ></v-slider>
-</div>
-
-
-
-
 </template>
 
 <script>
@@ -67,14 +61,11 @@ export default {
         return this.state[this.statusParam]
       }
       return this.value
-      // return this.$store.getters["device/getDevice"](this.name).state[this.statusParam] === "on"
     }
   }
-
 }
 </script>
 
-<style>
-
+<style scoped>
 
 </style>

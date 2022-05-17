@@ -1,14 +1,14 @@
 <template>
-  <div >
-    <div   class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">{{dispositivo}}</span> "{{deviceName}}"</div>
+  <div>
+    <div class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">{{dispositivo}}</span> "{{deviceName}}"</div>
     <CloseButton @onClick="close"/>
     <div class="overflow-container">
       <v-card   v-if="this.$slots.default" color="white" class="pa-2 ma-2">
-        <slot></slot>
+        <slot/>
       </v-card>
       <v-card  v-for="action in actions"  :key="action.name" color="white" class="pa-2 ma-2">
         <div  >
-          <component   :state='state' :is="action.component" v-bind="action.props" :name="deviceName" :deviceView="true" @valueChanged="processChange"></component>
+          <component   :state='state' :is="action.component" v-bind="action.props" :name="deviceName" :deviceView="true" @valueChanged="processChange"/>
         </div>
       </v-card>
     </div>

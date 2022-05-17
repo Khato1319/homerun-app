@@ -1,6 +1,6 @@
 <template>
-  <GenericView :device-name="$route.params.deviceName" device-type="vacuum"
-               dispositivo="Aspiradora">
+  <GenericView :device-name="$route.params.deviceName"
+               device-type="vacuum" dispositivo="Aspiradora">
 
       <div class="text-sm-left ml-3 mt-6 primary--text">Batería <span v-if="state.status === 'docked'">{{`(Cargando ${state.batteryLevel}%)`}}</span></div>
 

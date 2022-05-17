@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >Dispositivos recientes</div>
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >
+      Dispositivos Recientes</div>
     <DevicesView :devices="recentDevices"/>
   </div>
 </template>

@@ -1,66 +1,65 @@
 <template>
-<div class="font-weight-medium">
-  <div class="primary--text font-weight-bold">
-    Agregando dispositivo a {{roomName}}
-  </div>
-
-  <v-spacer/>
-  <CloseButton @onClick="close"/>
-  <v-form
-      ref="form"
-      lazy-validation
-  >
-    <v-text-field
-        v-model="deviceName"
-        :counter="60"
-        :rules="[v => v.length <= 60 && v.length >= 3 || 'El nombre debe tener entre 3 y 60 caracteres',
-        v => v.match(/^[A-Za-z0-9_. ]+$/) || 'El nombre debe tener letras, números o _']"
-        label="Nombre"
-        required
-    ></v-text-field>
-
-    <v-select
-        v-model="type"
-        :items="possibleDevices"
-        :rules="[v => !!v || 'El item es obligatorio']"
-        label="Tipo de dispositivo"
-        required
-    ></v-select>
-
-    <v-text-field
-        v-model="group"
-        :counter="60"
-        label="Grupo (opcional)"
-    ></v-text-field>
-    <div class="text-sm-left group-label" >
-      Si se ingresa un grupo nuevo, este será creado.
+  <div>
+    <div class="primary--text font-weight-bold">
+      Agregando dispositivo a {{roomName}}
     </div>
+    <v-spacer/>
+    <CloseButton @onClick="close"/>
+    <v-form
+        ref="form"
+        lazy-validation
+    >
+      <v-text-field
+          v-model="deviceName"
+          :counter="60"
+          :rules="[v => v.length <= 60 && v.length >= 3 || 'El nombre debe tener entre 3 y 60 caracteres',
+          v => v.match(/^[A-Za-z0-9_. ]+$/) || 'El nombre debe tener letras, números o _']"
+          label="Nombre"
+          required
+      ></v-text-field>
 
-    <v-btn x-small v-for="groupp in groupsForRoom" :key="groupp"
-    @click="()=> group = groupp" class="group-btn">{{groupp}}</v-btn>
+      <v-select
+          v-model="type"
+          :items="possibleDevices"
+          :rules="[v => !!v || 'El item es obligatorio']"
+          label="Tipo de dispositivo"
+          required
+      ></v-select>
 
-    <v-checkbox
-        v-model="checkbox"
-        label="Requerir autenticación"
-        required
-    ></v-checkbox>
-    <v-text-field v-if="checkbox"
-        v-model="password"
-        label="Contraseña"
-                  :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
-                  @click:append="() => (value = !value)"
-                  :type="value ? 'password' : 'text'"
-                  @blur="() => this.value = false"
-        required
-    ></v-text-field>
+      <v-text-field
+          v-model="group"
+          :counter="60"
+          label="Grupo (opcional)"
+      ></v-text-field>
+      <div class="text-sm-left group-label" >
+        Si se ingresa un grupo nuevo, este será creado.
+      </div>
 
-    <v-btn
-        :disabled="!valid"
-        color="success"
-        @click="validate"
-    >Agregar</v-btn>
-  </v-form>
-</div>
+      <v-btn x-small v-for="groupp in groupsForRoom" :key="groupp"
+      @click="()=> group = groupp" class="group-btn">{{groupp}}</v-btn>
+
+      <v-checkbox
+          v-model="checkbox"
+          label="Requerir autenticación"
+          required
+      ></v-checkbox>
+      <v-text-field v-if="checkbox"
+          v-model="password"
+          label="Contraseña"
+                    :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="() => (value = !value)"
+                    :type="value ? 'password' : 'text'"
+                    @blur="() => this.value = false"
+          required
+      ></v-text-field>
+
+      <v-btn
+          :disabled="!valid"
+          color="success"
+          @click="validate"
+      >Agregar</v-btn>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -119,7 +118,7 @@ export default {
           (!this.checkbox || this.password !== "")
     },
     possibleDevices() {
-      return this.$store.state.supportedDevices.map(device => device.name)
+      return this.$store.state.supportedDevices.map(device => device.name).sort()
     },
     room() {
       return this.$route.params.room;

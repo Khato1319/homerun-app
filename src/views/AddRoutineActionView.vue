@@ -1,14 +1,14 @@
 <template>
   <div>
-    Agregando acción a rutina {{routine}}
+    <div class="primary--text font-weight-bold">
+      Agregando acción a rutina {{routine}}
+    </div>
     <v-spacer/>
     <CloseButton @onClick="close"/>
     <v-form
         ref="form"
-
         lazy-validation
     >
-
 
       <v-select
           v-model="device"
@@ -28,8 +28,8 @@
       <div v-if="actionObj && actionObj.component !== 'Button'"   class="primary--text font-weight-bold text-sm-caption">
         Seleccione el estado final del dispositivo deseado
       </div>
-      <v-card v-if="actionObj && actionObj.component !== 'Button'" color="white" class="elevation-4 pa-2 mt-2 mb-5">
 
+      <v-card v-if="actionObj && actionObj.component !== 'Button'" color="white" class="elevation-4 pa-2 mt-2 mb-5">
           <component :is="actionObj.component" ref="actionComp"  v-bind="actionObj.props"></component>
       </v-card>
 
@@ -112,7 +112,6 @@ export default {
       let actionValue = undefined;
       if(this.actionObj.component !== 'Button')
         actionValue = this.$refs.actionComp.getActionValue()
-
 
       const payload = {
         routineName: this.routine,

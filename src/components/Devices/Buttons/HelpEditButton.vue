@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="edit-btn"  rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn>
+  <v-btn class="edit-btn" rounded color="primary"><v-icon >mdi-pencil</v-icon></v-btn>
 </template>
 
 <script>

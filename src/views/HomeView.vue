@@ -7,7 +7,7 @@
 
 <script>
 // @ is an alias to /src
-import RecentsView from "@/components/RecentsView";
+import RecentsView from "@/views/RecentsView";
 
 export default {
   name: 'HomeView',

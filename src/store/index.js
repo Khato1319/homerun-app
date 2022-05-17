@@ -33,7 +33,10 @@ export default new Vuex.Store({
                         component: "OnOff",
                         props: {apiId: ['turnOn', 'turnOff'], statusParam: "status", disable: false}
                     },
-                    {name: 'Cambiar color', component: "ColorPicker", props: {apiId: 'setColor', statusParam: "color"}},
+                    {
+                        name: 'Cambiar color',
+                        component: "ColorPicker",
+                        props: {apiId: 'setColor', statusParam: "color"}},
                     {
                         name: 'Cambiar brillo',
                         component: "NumberPicker",
@@ -111,16 +114,6 @@ export default new Vuex.Store({
                             getter: "getVacuumModes",
                             label: "Modos",
                             title: "Establecer modo"
-                        }
-                    },
-                    {
-                        name: 'Cambiar ubicación base de carga',
-                        component: "SelectFromArray",
-                        props: {
-                            apiId: '',
-                            getter: "getRoomsForSelect",
-                            label: "Habitaciones",
-                            title: "Cambiar ubicación de base de carga"
                         }
                     }]
             },

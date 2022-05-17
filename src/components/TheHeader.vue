@@ -5,8 +5,7 @@
   >
     <v-tooltip bottom>
       <template v-slot:activator="{on, attrs}">
-        <!--    Podría ponerse un espacio porque por ahora queda muy pegado-->
-        <v-btn text width="40" height="50" @click="$emit('onClick')" class="mr-2" v-bind="attrs" v-on="on">
+        <v-btn text width="40" height="50" @click="$emit('onClickLogo')" class="mr-2" v-bind="attrs" v-on="on">
           <v-img height="50" width="50" src="@/assets/HR-Logo-Nameless-Shape.png"/>
         </v-btn>
       </template>
@@ -17,7 +16,7 @@
 
     <v-tooltip bottom>
       <template v-slot:activator="{on, attrs}">
-        <v-btn color="white" class="mr-2" fab small outlined @click=openHelp v-bind="attrs" v-on="on">
+        <v-btn color="white" class="mr-2" fab small outlined @click="$emit('onClickHelp')" v-bind="attrs" v-on="on">
           <v-icon>mdi-help</v-icon>
         </v-btn>
       </template>
@@ -29,12 +28,6 @@
 <script>
 export default {
   name: "TheHeader",
-
-  methods: {
-    openHelp(){
-      this.$router.push('/help')
-    }
-  }
 }
 </script>
 

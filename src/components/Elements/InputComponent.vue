@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
     props: ['placeholder', 'setter', 'inputValue', 'reference'],
     data() {
@@ -36,9 +34,6 @@ export default {
       focus() {
         this.$refs.inputElem.focus();
       },
-    },
-    computed: {
-      ...mapState(['devices', 'rooms']),
     }
 }
 

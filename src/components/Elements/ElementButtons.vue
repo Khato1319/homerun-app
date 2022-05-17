@@ -1,7 +1,7 @@
 <template >
   <v-container >
     <v-row class='d-flex justify-center grid-row my-6' >
-      <ElementButton v-for="element in elements" :key="element" :element="element" :prop="prop"/>
+      <ElementButton v-for="element in elements.sort()" :key="element" :element="element" :prop="prop"/>
       <slot/>
     </v-row>
   </v-container>

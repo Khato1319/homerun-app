@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Habitación </span>"{{
-        roomName }}"</div>
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >
+      <span class="font-weight-bold">Habitación </span>"{{roomName }}"
+    </div>
 
-    <AddButton v-if='!editing' @onClick="addDevice"></AddButton>
-    <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"></EditButton>
+    <AddButton v-if='!editing' @onClick="addDevice"/>
+    <EditButton toggler='toggleEditTheRoomPressed' class='edit-button' edit-button-getter="editTheRoomPressed"/>
     <CloseButton @onClick="close"/>
     <div class="overflow-container">
       <div v-for="group in groups" :key="group" >
@@ -13,7 +14,7 @@
             <div class="primary--text font-weight-medium">
               Grupo: {{group}}
             </div>
-            <DevicesView :devices = "selectDevices(group)" :key="selectDevices(group).length"></DevicesView>
+            <DevicesView :devices = "selectDevices(group)" :key="selectDevices(group).length"/>
           </div>
         </v-slide-x-transition>
       </div>
@@ -21,7 +22,7 @@
         <div class="primary--text font-weight-medium">
           Sin grupo
         </div>
-        <DevicesView :devices = "selectDevices('')" :key="selectDevices('').length"></DevicesView>
+        <DevicesView :devices = "selectDevices('')" :key="selectDevices('').length"/>
       </div>
   </div>
 
@@ -64,7 +65,7 @@ export default {
       this.editing = !this.editing
     },
     selectDevices(group) {
-      return this.roomDevices.filter(e => e.meta.group === group)
+      return this.roomDevices.filter(e => e.meta.group === group).sort()
     }
   },
   computed: {

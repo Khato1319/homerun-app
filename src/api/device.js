@@ -16,7 +16,6 @@ class DeviceApi {
     }
 
     static async delete( id) {
-
         return await Api.delete(DeviceApi.getUrl(id))
     }
 
@@ -31,11 +30,8 @@ class DeviceApi {
     static async action(id, actionName, param) {
         const url = DeviceApi.getUrl(id)+ `/${actionName}`
         const par = param ? [param] : param
-        console.log(url)
-        console.log(par)
         return await Api.put(url, par)
     }
-
 }
 
 export {DeviceApi}

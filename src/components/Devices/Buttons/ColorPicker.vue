@@ -67,7 +67,6 @@ export default {
   },
   mounted() {
     const state = this.componentState
-
     this.red = state.r
     this.green = state.g
     this.blue = state.b
@@ -97,7 +96,6 @@ export default {
         b: parseInt(result[3], 16)
       } : null;
     },
-
     rgbToHex(r, g, b) {
       return this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b)
     },
@@ -113,7 +111,6 @@ export default {
   computed: {
     componentState() {
       return this.hexToRgb(this.state[this.statusParam])
-      // return this.$store.getters["device/getDevice"](this.name).state[this.statusParam] === "on"
     }
   }
 }

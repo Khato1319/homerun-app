@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <TheHeader @onClick="restorePage" @help-event="handleHelp"/>
+      <TheHeader @onClickLogo="restorePage" @onClickHelp="()=>{restorePage();openHelp()}"/>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
         <v-layout>
           <v-row no-gutters>
@@ -15,11 +15,9 @@
                 </v-tab>
                 <v-tab-item key="roomView" class="overflow-container">
                   <v-slide-x-transition mode="out-in">
-                    <ElementButtons cols="6"
-                                     :prop="roomButtonsProp">
+                    <ElementButtons cols="6" :prop="roomButtonsProp">
                       <InputComponent v-show="addingRoom" ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"
                                       @valueSubmitted="addToRooms" input-value=""/>
-
                     </ElementButtons>
                   </v-slide-x-transition>
                   <AddButton key='roomAdd' v-show="!editRoomPressed && selectedRoom === ''" @onClick="addRoom"/>
@@ -38,7 +36,6 @@
                                      :prop="routineButtonsProp">
                       <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
                                       setter="selectRoutine" @valueSubmitted="addToRoutines" input-value=""/>
-
                     </ElementButtons>
                   </v-slide-x-transition>
                 </v-tab-item>
@@ -155,14 +152,6 @@ export default {
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
     },
-    handleHelp() {
-      switch(this.tab) {
-        case 0: // router push pagina de help de habitaciones
-              break;
-        case 1: // router push pagina de help de rutinas
-              break;
-      }
-    },
     ...mapActions("room", {
       $createRoom: "create",
       $modifyRoom: "modify",
@@ -206,6 +195,9 @@ export default {
       this.$store.commit('setEditRoutinePressed', false);
       if(this.$route.fullPath !== "/")
         this.$router.push("/");
+    },
+    openHelp(){
+      this.$router.push('/help')
     }
 
   },

@@ -1,46 +1,48 @@
 <template>
   <div>
-    <v-scroll-x-transition>
-      <AddButton v-if=!editing @onClick="addDevice"></AddButton>
-    </v-scroll-x-transition>
-    <EditButton class='edit-button' toggler="toggleEditActionsPressed" edit-button-getter="editActionsPressed"></EditButton>
+    <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >
+      <span class="font-weight-bold">Rutina </span> "{{routine}}"
+    </div>
+
+    <AddButton v-if=!editing @onClick="addDevice"/>
+    <EditButton class='edit-button' toggler="toggleEditActionsPressed" edit-button-getter="editActionsPressed"/>
     <CloseButton @onClick="close"/>
 
-      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" ><span class="font-weight-bold">Rutina </span> "{{
-          routine}}"</div>
-
-    <v-card v-for="(action, idx) in actions" :key="action.meta.name + action.device.id">
-      <v-card-text >
-        <div class="d-flex justify-center align-center">
-          {{actionDeviceString(action.device.id)}} - {{action.meta.name}}<span v-if="action.meta.value">: &#8205;</span>
-          <div class="color-circle" v-if="action.meta.value && action.meta.value.match('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')" :style="{ backgroundColor: action.meta.value }">
-            {{action.meta.display}}
+    <div class="overflow-container py-3">
+      <v-card class="mx-4" v-for="(action, idx) in actions" :key="action.meta.name + action.device.id">
+        <v-card-text >
+          <div class="d-flex justify-center align-center">
+            {{actionDeviceString(action.device.id)}} - {{action.meta.name}}<span v-if="action.meta.value">: &#8205;</span>
+            <div class="color-circle" v-if="action.meta.value && action.meta.value.match('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')"
+                 :style="{ backgroundColor: action.meta.value }">
+              {{action.meta.display}}
+            </div>
+            <span v-else-if="action.meta.value">{{action.meta.value}}</span>
           </div>
-          <span v-else-if="action.meta.value">{{action.meta.value}}</span>
-        </div>
 
+        </v-card-text>
+        <v-fab-transition>
+          <v-btn v-if="editing" mode="out-in" fab x-small id="delete-button"
+                 @click="()=>deleteActionModal(idx)" >
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </v-fab-transition>
+      </v-card>
+      <v-btn
+          color="success"
+          class="ma-4"
+          @click="execute"
+      >
+        Ejecutar
+      </v-btn>
 
-      </v-card-text>
-      <v-fab-transition>
-        <v-btn v-if="editing" mode="out-in" fab x-small id="delete-button"
-               @click="()=>deleteActionModal(idx)" >
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
-      </v-fab-transition>
-    </v-card>
-    <v-btn
-        color="success"
-        class="ma-4"
-        @click="execute"
-    >
-      Ejecutar
-    </v-btn>
+    </div>
 
     <v-snackbar
         :timeout="3000"
         :value="showSnackBar"
         absolute
-        left
+        centered
         bottom
         color="primary"
     >
@@ -53,8 +55,9 @@
       <template v-slot:title>
         Borrado de acción
       </template>
-      ¿Está seguro de que quiere borrar la acción de "{{ selectedAction && selectedAction.meta.name }}" sobre "{{selectedAction && this.$store.getters['device/getDeviceById'](selectedAction.device.id).name}}"?
-      <div v-if="actions.length === 1">La rutina terminará borrándose</div>
+      ¿Está seguro de que quiere borrar la acción de "{{ selectedAction && selectedAction.meta.name }}"
+      sobre "{{selectedAction && this.$store.getters['device/getDeviceById'](selectedAction.device.id).name}}"?
+      <div v-if="actions.length === 1">La rutina vacía se eliminará.</div>
     </DialogModal>
 
   </div>
@@ -98,10 +101,10 @@ export default {
   },
   methods: {
     async execute() {
+        // forEach()
         await this.$store.dispatch('routine/executeRoutine', this.routine)
         this.showSnackBar = true;
         setTimeout(() => this.showSnackBar = false, 5000)
-        // this.showSnackBar = false;
     },
     actionDeviceString(id) {
       const device = this.$store.getters['device/getDeviceById'](id)
@@ -119,7 +122,6 @@ export default {
       this.$store.dispatch('routine/removeAction', {routineName: this.routine, index: this.actionIdx})
       if (lastAction)
         this.$router.go(-1)
-
       this.dialog = false
     },
     ...mapGetters(['selectedRoutine']),
@@ -128,7 +130,6 @@ export default {
     },
     close() {
       this.$store.commit('selectRoutine',"");
-      console.log("volviendo a home")
       this.$router.push({ path: '/' })
     },
   },
@@ -144,6 +145,11 @@ export default {
 </script>
 
 <style scoped>
+.overflow-container {
+  overflow-y: scroll;
+  height: 74vh
+}
+
 .edit-button {
   top: 25px;
   right: 60px;

@@ -10,7 +10,7 @@ import BlindsView from "@/views/devices/BlindsView";
 import store from '../store'
 import RoutineView from "@/views/RoutineView";
 import AddRoutineActionView from "@/views/AddRoutineActionView";
-import HelpView from "@/components/ViewButtons/HelpView";
+import HelpView from "@/views/HelpView";
 import AirConditionerView from "@/views/devices/AirConditionerView";
 
 Vue.use(VueRouter)
@@ -133,7 +133,6 @@ const routes = [
   {
     path: '/help',
     name: 'help',
-
     component: HelpView
   }
 ]

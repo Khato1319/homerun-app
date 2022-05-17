@@ -92,13 +92,11 @@ export default {
     editElement() {
       document.activeElement.blur();
       this.editing = true;
-
     },
     toggle() {
       if (!this.editPressed && this.selectedValue !== this.element) {
         this.$store.commit(this.prop.setter, this.element);
         const toPush = {name: this.prop.routerName, params: {[this.prop.routerName]: this.element}}
-        console.log(toPush)
         this.editing = false
         this.$router.push(toPush)
       } else {

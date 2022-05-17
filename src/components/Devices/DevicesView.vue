@@ -1,8 +1,10 @@
 <template>
   <v-container>
     <v-row class="d-flex justify-center">
-      <DeviceCard  class="pa-2" v-for="device in devices" :hash="device.meta.hash" :key="device.name" :device="device.name" :room="device.room.name" :type="device.type.name" ></DeviceCard>
-
+      <DeviceCard  class="pa-2" v-for="device in devices"
+                   :hash="device.meta.hash" :key="device.name"
+                   :device="device.name" :room="device.room.name"
+                   :type="device.type.name"/>
     </v-row>
   </v-container>
 </template>

@@ -14,7 +14,7 @@
           <v-expansion-panel>
             <v-expansion-panel-header>
               <div class="primary--text text-sm-start mb-2 mt-2">
-                Agregar habitaciones, rutinas y dispositivos
+                Agregar habitaciones, rutinas, dispositivos y acciones
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
@@ -65,7 +65,25 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Toca la habitacion donde quieras agregar el dispositivo</li>
+                      <li>Toca la habitación donde quieras agregar el dispositivo</li>
+                      <li>Desplázate a la solapa derecha, y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
+                      <li>Completa la información de tu dispositivo (nombre, tipo, grupo y autenticación)</li>
+                      <li>Cuando termines toca <b>Agregar</b></li>
+                    </ol>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    ¿Cómo agrego un dispositivo?
+                    <template v-slot:actions>
+                      <v-icon color="primary">$expand</v-icon>
+                    </template>
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <ol class="ordered-list">
+                      <li>En la parte superior, toca <b>Habitaciones</b></li>
+                      <li>Toca la habitación donde quieras agregar el dispositivo</li>
                       <li>Desplázate a la solapa derecha, y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
                       <li>Completa la información de tu dispositivo (nombre, tipo, grupo y autenticación)</li>
                       <li>Cuando termines toca <b>Agregar</b></li>
@@ -74,10 +92,7 @@
                 </v-expansion-panel>
               </v-expansion-panels>
             </v-expansion-panel-content>
-
           </v-expansion-panel>
-
-
 
           <v-expansion-panel>
             <v-expansion-panel-header>
@@ -97,9 +112,10 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte superior y, luego toca <HelpEditButton></HelpEditButton></li>
-                      <li>Toca <HelpEditNameButton></HelpEditNameButton> en la habitacion que quieras editar</li>
+                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
+                      <li>Toca <HelpButton icon="mdi-pencil"/> en la habitación que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
+                      <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -114,10 +130,10 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton></HelpEditButton></li>
-                      <li>Toca <HelpEditNameButton></HelpEditNameButton> en la rutina que quieras editar</li>
+                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
+                      <li>Toca <HelpButton icon="mdi-pencil"/> en la rutina que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
-
+                      <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -133,19 +149,17 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Toca la habitacion donde quieras editar el dispositivo</li>
-                      <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton></HelpEditButton></li>
-                      <li>Toca  <HelpEditNameButton></HelpEditNameButton> en el dispositivo que quieras editar</li>
+                      <li>Toca la habitación donde quieras editar el dispositivo</li>
+                      <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton/></li>
+                      <li>Toca <HelpButton icon="mdi-pencil"/> en el dispositivo que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
-
+                      <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
             </v-expansion-panel-content>
           </v-expansion-panel>
-
-
 
           <v-expansion-panel>
             <v-expansion-panel-header>
@@ -165,9 +179,10 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte superior y, luego toca <HelpEditButton></HelpEditButton></li>
-                      <li>Toca <HelpDeleteButton></HelpDeleteButton> en la habitacion que quieras eliminar</li>
-                      <li>En la confirmacion de la accion, toca <b>Borrar</b></li>
+                      <li>Desplázate hasta la parte superior y, luego toca <HelpEditButton/></li>
+                      <li>Toca <HelpButton icon="mdi-delete"/> en la habitación que quieras eliminar</li>
+                      <li>Para confirmar la acción, toca <b>Borrar</b></li>
+                      <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -182,13 +197,13 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton></HelpEditButton></li>
-                      <li>Toca <HelpDeleteButton></HelpDeleteButton> en la rutina que quieras eliminar</li>
+                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
+                      <li>Toca <HelpButton icon="mdi-delete"/> en la rutina que quieras eliminar</li>
                       <li>Para confirmar la acción, toca <b>Borrar</b></li>
+                      <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
-
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
@@ -201,9 +216,10 @@
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
                       <li>Toca la habitación donde quieras eliminar el dispositivo</li>
-                      <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton></HelpEditButton></li>
-                      <li>Toca <HelpDeleteButton></HelpDeleteButton> en el dispositivo que quieras eliminar</li>
+                      <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton/></li>
+                      <li>Toca <HelpButton icon="mdi-delete"/> en el dispositivo que quieras eliminar</li>
                       <li>Para confirmar la acción, toca <b>Borrar</b></li>
+                      <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -211,7 +227,6 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
-
 
       </v-col>
     </v-row>
@@ -222,11 +237,10 @@
 
 import CloseButton from "@/components/ViewButtons/CloseButton";
 import HelpEditButton from "@/components/Devices/Buttons/HelpEditButton";
-import HelpEditNameButton from "@/components/Devices/Buttons/HelpEditNameButton";
-import HelpDeleteButton from "@/components/Devices/Buttons/HelpDeleteButton";
+import HelpButton from "@/components/Devices/Buttons/HelpButton";
 export default {
   name: "HelpView",
-  components: {HelpEditNameButton, HelpEditButton, CloseButton, HelpDeleteButton},
+  components: {HelpEditButton, CloseButton, HelpButton},
   methods: {
     goHome(){
       this.$router.push('/')
