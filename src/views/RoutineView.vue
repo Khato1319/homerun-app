@@ -41,9 +41,8 @@
     <v-snackbar
         :timeout="3000"
         :value="showSnackBar"
+        class="snack-bar"
         absolute
-        centered
-        bottom
         color="primary"
     >
       Se ha ejecutado la rutina correctamente.
@@ -101,7 +100,6 @@ export default {
   },
   methods: {
     async execute() {
-        // forEach()
         await this.$store.dispatch('routine/executeRoutine', this.routine)
         this.showSnackBar = true;
         setTimeout(() => this.showSnackBar = false, 5000)
@@ -152,6 +150,11 @@ export default {
 
 .edit-button {
   top: 25px;
+  right: 60px;
+}
+
+.snack-bar {
+  top: 0;
   right: 60px;
 }
 

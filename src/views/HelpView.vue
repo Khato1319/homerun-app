@@ -75,17 +75,17 @@
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    ¿Cómo agrego un dispositivo?
+                    ¿Cómo agrego una acción?
                     <template v-slot:actions>
                       <v-icon color="primary">$expand</v-icon>
                     </template>
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Toca la habitación donde quieras agregar el dispositivo</li>
+                      <li>En la parte superior, toca <b>Rutinas</b></li>
+                      <li>Toca la rutina donde quieras agregar la acción</li>
                       <li>Desplázate a la solapa derecha, y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
-                      <li>Completa la información de tu dispositivo (nombre, tipo, grupo y autenticación)</li>
+                      <li>Completa la información de la acción (dispositivo, acción a realizar y valor si lo tuvieras)</li>
                       <li>Cuando termines toca <b>Agregar</b></li>
                     </ol>
                   </v-expansion-panel-content>
@@ -164,7 +164,7 @@
           <v-expansion-panel>
             <v-expansion-panel-header>
               <div class="primary--text text-sm-start mb-2 mt-2">
-                Eliminar habitaciones, rutinas y dispoitivos
+                Eliminar habitaciones, rutinas, dispositivos y acciones
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
@@ -179,9 +179,9 @@
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
                       <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte superior y, luego toca <HelpEditButton/></li>
+                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-delete"/> en la habitación que quieras eliminar</li>
-                      <li>Para confirmar la acción, toca <b>Borrar</b></li>
+                      <li>Para confirmar el borrado, toca <b>Borrar</b></li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
@@ -199,7 +199,7 @@
                       <li>En la parte superior, toca <b>Rutinas</b></li>
                       <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-delete"/> en la rutina que quieras eliminar</li>
-                      <li>Para confirmar la acción, toca <b>Borrar</b></li>
+                      <li>Para confirmar el borrado, toca <b>Borrar</b></li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
@@ -218,7 +218,26 @@
                       <li>Toca la habitación donde quieras eliminar el dispositivo</li>
                       <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-delete"/> en el dispositivo que quieras eliminar</li>
-                      <li>Para confirmar la acción, toca <b>Borrar</b></li>
+                      <li>Para confirmar el borrado, toca <b>Borrar</b></li>
+                      <li>Al finalizar, toca <b>Listo</b></li>
+                    </ol>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    ¿Cómo elimino una acción?
+                    <template v-slot:actions>
+                      <v-icon color="primary">$expand</v-icon>
+                    </template>
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <ol class="ordered-list">
+                      <li>En la parte superior, toca <b>Rutinas</b></li>
+                      <li>Toca la rutina donde quieras eliminar la acción</li>
+                      <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton/></li>
+                      <li>Toca <HelpButton icon="mdi-delete"/> en la acción que quieras eliminar</li>
+                      <li>Para confirmar el borrado, toca <b>Borrar</b></li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
                   </v-expansion-panel-content>
