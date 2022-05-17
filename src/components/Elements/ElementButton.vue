@@ -54,8 +54,10 @@ export default {
     },
     async editPressed(val, prev) {
       let value;
-      if (this.editing && val === false && prev === true && this.element !== (value = this.$refs.inputElem.inputSubmit())){
-        await this.changeName(value)
+      if (this.editing && val === false && prev === true){
+        if (this.element !== (value = this.$refs.inputElem.inputSubmit()))
+          await this.changeName(value)
+        this.editing = false;
       }
     },
   },
