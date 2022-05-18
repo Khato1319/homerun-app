@@ -29,10 +29,12 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte inferior y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
+                      <li>En la parte superior izquierda, toca <b>Habitaciones</b></li>
+                      <li>Desplázate hasta la parte inferior derecha, y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
                       <li>Cuando termines de colocar el nombre, presiona <b>enter</b> en tu teclado</li>
                     </ol>
+                    <p class="ordered-list">Recuerda que los nombres deben tener entre 3 y 60 caracteres
+                      (incluyendo letras del alfabeto inglés, números y guiones bajos)</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
@@ -45,13 +47,15 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Desplázate hasta la parte inferior y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
+                      <li>En la parte superior izquierda, toca <b>Rutinas</b></li>
+                      <li>Desplázate hasta la parte inferior derecha, y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
                       <li>Cuando termines de colocar el nombre, presiona <b>Enter</b> en tu teclado</li>
-                      <li>Desplázate a la solapa derecha y, luego seleccione un dispositivo que quiera añadir</li>
+                      <li>Desplázate a la solapa derecha, y luego seleccione un dispositivo que quiera añadir</li>
                       <li>Selecciona la acción que quieras que realice el dispositivo</li>
                       <li>Cuando termines, toca <b>Agregar</b></li>
                     </ol>
+                    <p class="ordered-list">Recuerda que los nombres deben tener entre 3 y 60 caracteres
+                      (incluyendo letras del alfabeto inglés, números y guiones bajos)</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
@@ -64,12 +68,14 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Toca la habitación donde quieras agregar el dispositivo</li>
+                      <li>En la parte superior izquierda, toca <b>Habitaciones</b></li>
+                      <li>Toca la habitación donde quieras agregar un dispositivo</li>
                       <li>Desplázate a la solapa derecha, y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
                       <li>Completa la información de tu dispositivo (nombre, tipo, grupo y autenticación)</li>
                       <li>Cuando termines toca <b>Agregar</b></li>
                     </ol>
+                    <p class="ordered-list">Recuerda que los nombres deben tener entre 3 y 60 caracteres
+                      (incluyendo letras del alfabeto inglés, números y guiones bajos)</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
@@ -82,7 +88,7 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Rutinas</b></li>
+                      <li>En la parte superior izquierda, toca <b>Rutinas</b></li>
                       <li>Toca la rutina donde quieras agregar la acción</li>
                       <li>Desplázate a la solapa derecha, y luego toca <v-icon color="primary">mdi-plus-circle</v-icon></li>
                       <li>Completa la información de la acción (dispositivo, acción a realizar y valor si lo tuvieras)</li>
@@ -111,12 +117,14 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
+                      <li>En la parte superior izquierda, toca <b>Habitaciones</b></li>
+                      <li>Desplázate hasta la parte superior derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-pencil"/> en la habitación que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
+                    <p class="ordered-list">Recuerda que los nombres deben tener entre 3 y 60 caracteres
+                      (incluyendo letras del alfabeto inglés, números y guiones bajos)</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
@@ -129,32 +137,36 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
+                      <li>En la parte superior izquierda, toca <b>Rutinas</b></li>
+                      <li>Desplázate hasta la parte superior derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-pencil"/> en la rutina que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
+                    <p class="ordered-list">Recuerda que los nombres deben tener entre 3 y 60 caracteres
+                      (incluyendo letras del alfabeto inglés, números y guiones bajos)</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    ¿Como edito un dispositivo?
+                    ¿Cómo edito un dispositivo?
                     <template v-slot:actions>
                       <v-icon color="primary">$expand</v-icon>
                     </template>
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Toca la habitación donde quieras editar el dispositivo</li>
+                      <li>En la parte superior izquierda, toca <b>Habitaciones</b></li>
+                      <li>Toca la habitación donde quieras editar un dispositivo</li>
                       <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-pencil"/> en el dispositivo que quieras editar</li>
                       <li>Cuando termines de modificar el nombre, toca <b>enter</b> en tu teclado</li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
+                    <p class="ordered-list">Recuerda que los nombres deben tener entre 3 y 60 caracteres
+                      (incluyendo letras del alfabeto inglés, números y guiones bajos)</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -178,12 +190,14 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
+                      <li>En la parte superior izquierda, toca <b>Habitaciones</b></li>
+                      <li>Desplázate hasta la parte superior derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-delete"/> en la habitación que quieras eliminar</li>
                       <li>Para confirmar el borrado, toca <b>Borrar</b></li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
+                    <p class="ordered-list">Recuerda que al eliminar una habitación se eliminarán
+                    los dispositivos asociados a esta, y las acciones que utilicen dichos dispositivos</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
@@ -196,8 +210,8 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Desplázate hasta la parte superior, y luego toca <HelpEditButton/></li>
+                      <li>En la parte superior izquierda, toca <b>Rutinas</b></li>
+                      <li>Desplázate hasta la parte superior derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-delete"/> en la rutina que quieras eliminar</li>
                       <li>Para confirmar el borrado, toca <b>Borrar</b></li>
                       <li>Al finalizar, toca <b>Listo</b></li>
@@ -214,13 +228,15 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Habitaciones</b></li>
-                      <li>Toca la habitación donde quieras eliminar el dispositivo</li>
+                      <li>En la parte superior izquierda, toca <b>Habitaciones</b></li>
+                      <li>Toca la habitación donde quieras eliminar un dispositivo</li>
                       <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-delete"/> en el dispositivo que quieras eliminar</li>
                       <li>Para confirmar el borrado, toca <b>Borrar</b></li>
                       <li>Al finalizar, toca <b>Listo</b></li>
                     </ol>
+                    <p class="ordered-list">Recuerda que al eliminar un dispositivo se eliminarán
+                    las acciones que lo utilicen</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
@@ -233,8 +249,8 @@
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <ol class="ordered-list">
-                      <li>En la parte superior, toca <b>Rutinas</b></li>
-                      <li>Toca la rutina donde quieras eliminar la acción</li>
+                      <li>En la parte superior izquierda, toca <b>Rutinas</b></li>
+                      <li>Toca la rutina donde quieras eliminar una acción</li>
                       <li>Desplázate a la solapa derecha, y luego toca <HelpEditButton/></li>
                       <li>Toca <HelpButton icon="mdi-delete"/> en la acción que quieras eliminar</li>
                       <li>Para confirmar el borrado, toca <b>Borrar</b></li>

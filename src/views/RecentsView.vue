@@ -4,7 +4,7 @@
       Dispositivos Recientes</div>
     <div :class="recentDevices.length === 0 ? 'fill-height d-flex flex-column justify-center align-content-center' : ''">
       <div v-if="recentDevices.length === 0">
-        <div class="text--blue-grey lighten-4"> La pestaña "Dispositivos Recientes" está vacía.</div>
+        <div class="text--blue-grey lighten-4"> La pestaña <b>Dispositivos Recientes</b> está vacía.</div>
         <div class="text--blue-grey text-sm-body-2 help-height" >Cuando modifiques algún dispositivo, aparecerá aquí para que lo puedas acceder más rápidamente.</div>
       </div>
       <DevicesView :devices="recentDevices"/>

@@ -27,7 +27,7 @@
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons cols="6" :prop="roomButtonsProp" :adding="addingRoom">
                       <template v-slot:no-elements-title>
-                        La pestaña "Habitaciones" está vacía.
+                        La pestaña <b>Habitaciones</b> está vacía.
                       </template>
                       <template v-slot:no-elements-body >
                         Prueba crear una utilizando el <v-icon color="primary">mdi-plus-circle</v-icon> o ve a <router-link to="/help">Ayuda</router-link> para saber más.
@@ -45,7 +45,7 @@
                     <ElementButtons cols="6"
                                      :prop="routineButtonsProp" :adding="addingRoutine">
                       <template v-slot:no-elements-title>
-                        La pestaña "Rutinas" está vacía.
+                        La pestaña <b>Rutinas</b> está vacía.
                       </template>
                       <template v-slot:no-elements-body >
                         Prueba crear una utilizando el <v-icon color="primary">mdi-plus-circle</v-icon> o ve a <router-link to="/help">Ayuda</router-link> para saber más.

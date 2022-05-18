@@ -4,7 +4,7 @@
       <span class="font-weight-bold">Habitación </span>"{{roomName }}"
     </div>
     <div v-if="roomDevices.length === 0" class="fill-height d-flex flex-column justify-center content-center pa-2">
-      <div class="text--blue-grey lighten-4">La habitación {{roomName}} no tiene dispositivos</div>
+      <div class="text--blue-grey lighten-4">La habitación <b>{{roomName}}</b> no tiene dispositivos</div>
       <div class="text-sm-body-2 help-height" >Prueba agregar uno utilizando el <v-icon color="primary">mdi-plus-circle</v-icon>, o ve a <router-link to="/help">Ayuda</router-link> para saber más.</div>
     </div>
 
