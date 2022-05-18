@@ -49,6 +49,7 @@ export default {
     }
   },
   async beforeMount() {
+    this.$store.commit('setEditTheRoomPressed', false)
     await this.$store.dispatch('device/getAll')
     await this.$store.dispatch('room/getAll')
   },

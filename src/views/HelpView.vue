@@ -97,7 +97,7 @@
           <v-expansion-panel>
             <v-expansion-panel-header>
               <div class="primary--text text-sm-start mb-2 mt-2">
-                Editar habitaciones, rutinas y dispoitivos
+                Editar habitaciones, rutinas y dispositivos
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>

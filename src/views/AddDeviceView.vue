@@ -46,10 +46,10 @@
       <v-text-field v-if="checkbox"
           v-model="password"
           label="Contraseña"
-                    :append-icon="value ? 'mdi-eye-off':'mdi-eye'"
-                    @click:append="() => (value = !value)"
-                    :type="value ? 'password' : 'text'"
-                    @blur="() => this.value = false"
+          :append-icon="value ? 'mdi-eye-off' : 'mdi-eye'"
+          @click:append="() => (value = !value)"
+          :type="value ? 'password' : 'text'"
+          @blur="() => this.value = false"
           required
       ></v-text-field>
 
@@ -78,8 +78,7 @@ export default {
       group: "",
       type: "",
       deviceName: "",
-      value: false
-
+      value: true
     }
   },
   methods: {

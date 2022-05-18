@@ -33,7 +33,7 @@
         Borrado de {{prop.name}}
       </template>
       ¿Está seguro de que quiere borrar la {{ prop.name }} {{ element }}?
-      <span v-if="prop.name === 'habitación'">Se borrarán todos los dispositivos asociados.</span>
+      <span v-if="prop.name === 'habitación'"> Se borrarán todos los dispositivos asociados.</span>
     </DialogModal>
   </div>
 </template>

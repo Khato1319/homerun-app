@@ -2,12 +2,8 @@
   <div>
     <div>
 
-      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-bold primary--text" >Agregando acción a rutina "{{
-
-
-
-          routine
-        }}"</div>
+      <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-bold primary--text" >
+        Agregando acción a rutina "{{routine}}"</div>
     <v-spacer/>
     <CloseButton @onClick="close"/>
     <v-form
@@ -38,12 +34,9 @@
             @blur="() => {this.incorrectMsg = ''; this.color = 'primary'; this.value = true}"
         ></v-text-field>
         <v-btn color="success" v-if="deviceName" @click="checkPwd" class="text-sm-button" :disabled="password === ''">Ingresar</v-btn>
-
       </div>
 
-
-
-      <div v-if="(passwordChecked || (device && hash === null))">
+      <div v-if="((device && hash === null) || passwordChecked)">
         <div v-if="hash !== null && !(actionObj && actionObj.component !== 'Button')" class="primary--text text-sm-caption font-weight-medium">
           Acceso concedido. Seleccione la acción para agregar a la rutina
         </div>
