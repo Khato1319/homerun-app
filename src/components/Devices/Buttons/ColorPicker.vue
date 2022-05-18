@@ -1,58 +1,63 @@
 <template>
-  <v-card class="e4">
-    <v-responsive
-        :style="{ background: `rgb(${red}, ${green}, ${blue})` }"
-        height="50px"
-    ></v-responsive>
+  <div>
+    <div class="text-sm-left ml-3 mt-6 mb-3 primary--text">
+      Seleccionar color
+    </div>
+    <v-card class="e4">
+      <v-responsive
+          :style="{ background: `rgb(${red}, ${green}, ${blue})` }"
+          height="50px"
+      ></v-responsive>
 
-    <v-card-text>
-      <v-container fluid>
-        <v-row no-gutters>
-          <v-col cols="12">
-            <v-slider
-                v-model="red"
-                :max="255"
-                label="R"
-                class="align-center"
-                @change="changeHandler"
-            >
-              <template v-slot:append>
+      <v-card-text>
+        <v-container fluid>
+          <v-row no-gutters>
+            <v-col cols="12">
+              <v-slider
+                  v-model="red"
+                  :max="255"
+                  label="R"
+                  class="align-center"
+                  @change="changeHandler"
+              >
+                <template v-slot:append>
 
-              </template>
-            </v-slider>
-          </v-col>
+                </template>
+              </v-slider>
+            </v-col>
 
-          <v-col cols="12">
-            <v-slider
-                v-model="green"
-                :max="255"
-                label="G"
-                class="align-center"
-                @change="changeHandler"
-            >
-              <template v-slot:append>
+            <v-col cols="12">
+              <v-slider
+                  v-model="green"
+                  :max="255"
+                  label="G"
+                  class="align-center"
+                  @change="changeHandler"
+              >
+                <template v-slot:append>
 
-              </template>
-            </v-slider>
-          </v-col>
+                </template>
+              </v-slider>
+            </v-col>
 
-          <v-col cols="12">
-            <v-slider
-                v-model="blue"
-                :max="255"
-                label="B"
-                class="align-center"
-                @change="changeHandler"
-            >
-              <template v-slot:append>
+            <v-col cols="12">
+              <v-slider
+                  v-model="blue"
+                  :max="255"
+                  label="B"
+                  class="align-center"
+                  @change="changeHandler"
+              >
+                <template v-slot:append>
 
-              </template>
-            </v-slider>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card-text>
-  </v-card>
+                </template>
+              </v-slider>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
