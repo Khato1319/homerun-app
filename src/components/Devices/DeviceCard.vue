@@ -35,7 +35,7 @@
                  v-if="!submittingPwd"
                  large
                  color="blue lighten-4"
-                 @click="()=> {addToRecents(); goToDeviceView(); $store.commit('setEditTheRoomPressed', false)}">
+                 @click="handleClickToView">
             <v-icon color="black" >
               {{icon}}
             </v-icon>
@@ -96,6 +96,14 @@ export default {
     }
   },
   methods: {
+    async handleClickToView() {
+      this.addToRecents();
+      await this.goToDeviceView();
+      this.$store.commit('setEditTheRoomPressed', false)
+
+
+
+    },
     checkPwd() {
       // const hash = this.$store.getters.getDevice(this.device, this.room).hash
       // console.log(hash)
@@ -125,21 +133,21 @@ export default {
       this.editingName = false
     },
     async deleteDevice() {
-      console.log('borrando')
       await this.$store.dispatch('device/delete', this.device)
       this.dialog = false;
     },
-    goToDeviceView() {
+    async goToDeviceView() {
       if (this.hasPassword) {
         this.submittingPwd = true;
       }
      else {
+       await this.submitValue()
         this.goToDevice()
       }
     },
     goToDevice() {
       this.$store.commit('selectRoom', this.room);
-      this.$router.push({name: this.type, params: {deviceName: this.device, room: this.room}})
+      this.$router.push({name: this.type, params: {deviceName: this.input, room: this.room}})
     },
     addToRecents() {
       this.addToRecent(this.device)
