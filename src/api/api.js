@@ -20,6 +20,10 @@ class Api {
         } catch(error) {
             if (error.name === "AbortError")
                 throw {code: 98, description: error.message.toLowerCase()}
+            else if (error.name === "TypeError")
+                throw { code: 99, description: [ error.message.toLowerCase() ] };
+            else
+                throw error;
         } finally {
             clearTimeout(timer)
         }

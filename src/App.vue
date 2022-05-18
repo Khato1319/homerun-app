@@ -2,6 +2,16 @@
   <div id="app">
     <v-app class="overflow-hidden">
       <TheHeader @onClickLogo="restorePage" @onClickHelp="()=>{restorePage();openHelp()}"/>
+      <v-snackbar
+          :timeout="3000"
+          :value="showSnackBar"
+          class="my-10 mx-10"
+          color="red accent-2"
+          :left="isHomeView"
+          :right="!isHomeView"
+      >
+        {{ snackBarMessage }}
+      </v-snackbar>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
         <v-layout>
           <v-row no-gutters>
@@ -27,16 +37,10 @@
                     </ElementButtons>
                   </v-slide-x-transition>
                   <AddButton key='roomAdd' v-show="!editRoomPressed && selectedRoom === ''" @onClick="addRoom"/>
-
                   <EditButton class='edit-button' toggler="toggleEditRoomPressed" key='roomEdit'
                               setter="toggleEditRoomPressed" v-show="!addingRoom && selectedRoom === ''" edit-button-getter="editRoomPressed"/>
                 </v-tab-item>
                 <v-tab-item key="routineView" class="scrollbar overflow-tab" >
-                  <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
-                             @onClick="addRoutine"/>
-
-                  <EditButton class='edit-button' key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
-                              toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons cols="6"
                                      :prop="routineButtonsProp" :adding="addingRoutine">
@@ -51,6 +55,11 @@
                                       setter="selectRoutine" @valueSubmitted="addToRoutines" input-value=""/>
                     </ElementButtons>
                   </v-slide-x-transition>
+                  <AddButton key="routineAdd" v-show="!editRoutinePressed && selectedRoutine === ''"
+                             @onClick="addRoutine"/>
+
+                  <EditButton class='edit-button' key='routineEdit' v-show="!addingRoutine && selectedRoutine === ''"
+                              toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                 </v-tab-item>
               </v-tabs>
             </v-col>
@@ -62,8 +71,12 @@
                 </v-card>
               </v-slide-x-reverse-transition>
             </v-col>
+            <div >
+
+            </div>
           </v-row>
         </v-layout>
+
       </v-container>
     </v-app>
   </div>
@@ -88,12 +101,10 @@ export default {
   },
   watch: {
     selectedRoom(val) {
-
       if(val !== '') {
         this.$store.commit('setEditRoomPressed', false);
         this.addingRoom = false;
       }
-
     },
     selectedRoutine(val) {
       if (val !== '') {
@@ -107,6 +118,14 @@ export default {
     addingRoutine() {
       setTimeout(() => this.$refs.routineInput.focus(), 300)
     },
+    snackBarErrorMessage(message){
+      if(message !== ""){
+        this.showSnackBar=true
+        this.snackBarMessage=message
+        console.log("En snackbar")
+        setTimeout(() => {this.showSnackBar = false; this.$store.state.snackBarErrorMessage=""}, 5000)
+      }
+    }
   },
   provide() {
     return {
@@ -119,6 +138,8 @@ export default {
       tab: null,
       addingRoom: false,
       addingRoutine: false,
+      showSnackBar: false,
+      snackBarMessage: "",
       routineButtonsProp: {
         setter: 'selectRoutine',
         selected: "selectedRoutine",
@@ -181,18 +202,12 @@ export default {
 
     async addToRooms(value) {
       this.addingRoom = false;
-
-      try {
-        await this.$createRoom(this.toTitleCase(value))
-      } catch(e) {
-        console.log(e)
-      }
+      await this.$createRoom(this.toTitleCase(value))
     },
     addToRoutines(value) {
       this.addingRoutine = false;
       this.$store.commit('selectRoutine', value)
       this.$router.push({ name: 'addRoutine', params: { routine:  value}})
-      // this.routines.push({routine: value, actions: undefined});
     },
     addRoom() {
       this.addingRoom = !this.addingRoom;
@@ -228,6 +243,12 @@ export default {
     editRoutinePressed() {
       return this.$store.state.editRoutinePressed
     },
+    snackBarErrorMessage(){
+      return this.$store.state.snackBarErrorMessage
+    },
+    isHomeView(){
+      return  this.$route.name === 'home'
+    }
   }
 }
 </script>

@@ -1,11 +1,11 @@
 <template>
-  <div class="overflow-y-hidden" style="height: 85vh">
+  <div class="overflow-y-hidden main-container">
     <div  class="ma-4 text-left text-caption text-md-body-1 font-weight-medium primary--text" >
       <span class="font-weight-bold">Habitación </span>"{{roomName }}"
     </div>
     <div v-if="roomDevices.length === 0" class="fill-height d-flex flex-column justify-center content-center pa-2">
-      <div class="text--blue-grey lighten-4">La habitación {{RoomName}} no tiene dispositivos</div>
-      <div class="text-sm-body-2" style="height: 200px">Prueba agregar uno utilizando el <v-icon color="primary">mdi-plus-circle</v-icon>, o ve a <router-link to="/help">Ayuda</router-link> para saber más.</div>
+      <div class="text--blue-grey lighten-4">La habitación {{roomName}} no tiene dispositivos</div>
+      <div class="text-sm-body-2 help-height" >Prueba agregar uno utilizando el <v-icon color="primary">mdi-plus-circle</v-icon>, o ve a <router-link to="/help">Ayuda</router-link> para saber más.</div>
     </div>
 
     <AddButton v-if='!editing' @onClick="addDevice"/>
@@ -92,6 +92,12 @@ export default {
 </script>
 
 <style scoped>
+.main-container{
+  height: 85vh
+}
+.help-height{
+  height: 200px
+}
 .overflow-container {
   overflow-y: scroll;
   height: 74vh

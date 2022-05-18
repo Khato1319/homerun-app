@@ -77,7 +77,6 @@ export default{
             const id = getters.getDevice(deviceName).id
 
             await dispatch('routine/deleteDevice',{deviceId: id}, { root: true })
-
             await DeviceApi.delete(id);
             await dispatch("getAll");
         },

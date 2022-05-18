@@ -21,6 +21,9 @@ export default new Vuex.Store({
         editTheRoomPressed: false,
         editRoutinePressed: false,
         editActionsPressed: false,
+
+        snackBarErrorMessage: "",
+
         supportedDevices: [
             {
                 type: 'lamp',
