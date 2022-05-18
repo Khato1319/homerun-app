@@ -1,5 +1,9 @@
 <template >
-  <v-container >
+  <v-container :class="!adding && elements.length === 0? 'fill-height' : ''">
+    <div v-if="!adding && elements.length === 0" class="flex-column d-flex justify-center content-center pa-2">
+      <div class="text--blue-grey lighten-4"><slot name="no-elements-title"></slot></div>
+      <div class="text-sm-body-2"><slot name="no-elements-body"> </slot> </div>
+    </div>
     <v-row class='d-flex justify-center grid-row my-6' >
       <ElementButton v-for="element in elements.sort()" :key="element" :element="element" :prop="prop"/>
       <slot/>
@@ -25,7 +29,7 @@ export default {
       return this.$store.getters[this.prop.elements].map(e => e.name)
     }
   },
-  props: ['prop']
+  props: ['prop', 'adding']
 }
 </script>
 

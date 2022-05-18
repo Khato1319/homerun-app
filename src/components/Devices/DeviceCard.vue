@@ -99,14 +99,9 @@ export default {
     async handleClickToView() {
       this.addToRecents();
       await this.goToDeviceView();
-      this.$store.commit('setEditTheRoomPressed', false)
-
-
-
+      this.$store.commit('setEditTheRoomPressed', false);
     },
     checkPwd() {
-      // const hash = this.$store.getters.getDevice(this.device, this.room).hash
-      // console.log(hash)
       console.log(hashCode(this.password))
       if (hashCode(this.password) === this.hash) {
         this.goToDevice()
@@ -116,7 +111,6 @@ export default {
         this.incorrectMsg = 'La contraseña es incorrecta'
         this.$refs.pwdInput.focus();
       }
-
     },
     editElement() {
       document.activeElement.blur();

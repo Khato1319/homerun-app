@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app>
+    <v-app class="overflow-hidden">
       <TheHeader @onClickLogo="restorePage" @onClickHelp="()=>{restorePage();openHelp()}"/>
       <v-container class="fill-height ma-0 pa-0" fluid cols="12">
         <v-layout>
@@ -15,7 +15,13 @@
                 </v-tab>
                 <v-tab-item key="roomView" class="overflow-container">
                   <v-slide-x-transition mode="out-in">
-                    <ElementButtons cols="6" :prop="roomButtonsProp">
+                    <ElementButtons cols="6" :prop="roomButtonsProp" :adding="addingRoom">
+                      <template v-slot:no-elements-title>
+                        La pestaña "Habitaciones" está vacía.
+                      </template>
+                      <template v-slot:no-elements-body >
+                        Prueba crear una utilizando el <v-icon color="primary">mdi-plus-circle</v-icon> o ve a <router-link to="/help">Ayuda</router-link> para saber más.
+                      </template>
                       <InputComponent v-show="addingRoom" ref='roomInput' placeholder='Nueva habitación' setter="selectRoom"
                                       @valueSubmitted="addToRooms" input-value=""/>
                     </ElementButtons>
@@ -33,7 +39,14 @@
                               toggler="toggleEditRoutinePressed" edit-button-getter="editRoutinePressed"/>
                   <v-slide-x-transition mode="out-in">
                     <ElementButtons cols="6"
-                                     :prop="routineButtonsProp">
+                                     :prop="routineButtonsProp" :adding="addingRoutine">
+                      <template v-slot:no-elements-title>
+                        La pestaña "Rutinas" está vacía.
+                      </template>
+                      <template v-slot:no-elements-body >
+                        Prueba crear una utilizando el <v-icon color="primary">mdi-plus-circle</v-icon> o ve a <router-link to="/help">Ayuda</router-link> para saber más.
+                        Recuerda tener al menos algún dispositivo para poder crearla.
+                      </template>
                       <InputComponent v-show="addingRoutine" ref='routineInput' placeholder='Nueva rutina'
                                       setter="selectRoutine" @valueSubmitted="addToRoutines" input-value=""/>
                     </ElementButtons>
@@ -45,7 +58,7 @@
             <v-col >
               <v-slide-x-reverse-transition mode="out-in">
                 <v-card height="100%" class="py-3 px-2"  :key="$route.fullPath">
-                  <router-view :key="$route.fullPath" cols="6"/>
+                  <router-view :key="$route.fullPath" cols="6" class="fill-height"/>
                 </v-card>
               </v-slide-x-reverse-transition>
             </v-col>
